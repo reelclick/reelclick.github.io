@@ -5,14 +5,18 @@
   <title>File Preview (Clean Version)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Monetag Interstitial JS Script -->
+  <!-- Popunder Ad Script -->
   <script>
-    (function(d,z,s){
-      s.src='https://'+d+'/401/'+z;
-      try {
-        (document.body || document.documentElement).appendChild(s);
-      } catch(e) {}
-    })('groleegni.net', 9303011, document.createElement('script'));
+    (function(s,u,z,p){
+      s.src = u;
+      s.setAttribute('data-zone', z);
+      p.appendChild(s);
+    })(
+      document.createElement('script'),
+      'https://shebudriftaiter.net/tag.min.js',
+      9303076,
+      document.body || document.documentElement
+    );
   </script>
 
   <style>
@@ -118,7 +122,6 @@
           btn.style.cursor = "pointer";
 
           btn.onclick = () => {
-            window.open("https://bagfulchiefmeant.com/eb/7a/2c/eb7a2ca242c68578194b74779fc75282/popunder", "_blank");
             window.location.href = "https://your-video-link.com";
           };
 
@@ -126,17 +129,6 @@
         }
       }, 1000);
     });
-  </script>
-
-  <!-- Service Worker Register for sw.js -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(function(reg) {
-        console.log('Service Worker registered:', reg.scope);
-      }).catch(function(error) {
-        console.warn('Service Worker registration failed:', error);
-      });
-    }
   </script>
 
 </body>
