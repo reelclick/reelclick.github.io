@@ -1,227 +1,172 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>File Preview (Clean Version)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File No. 1</title>
   <style>
     body {
       background-color: #111;
       color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 30px 15px;
+      padding: 20px;
     }
-    .file-no {
-      font-size: 22px;
-      font-weight: bold;
+    h1 {
+      font-size: 28px;
       margin-bottom: 10px;
-      animation: fadeIn 2s ease-out;
     }
-    .preview-image {
+    .preview {
       width: 100%;
       max-width: 400px;
       border: 3px solid #444;
       border-radius: 10px;
-      margin: 20px auto 10px;
-      animation: popIn 1.5s ease-out;
+      margin: 20px auto;
     }
-    #watchBtn {
-      padding: 12px 30px;
-      font-size: 18px;
-      background: gray;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: not-allowed;
-      opacity: 0.6;
-      transition: background 0.3s ease, opacity 0.3s ease;
-      margin-top: 20px;
+    .warning {
+      background: #222;
+      padding: 10px 15px;
+      border: 2px dashed #f39c12;
+      border-radius: 6px;
+      margin: 15px auto;
+      max-width: 300px;
+      color: #f39c12;
+      font-size: 16px;
     }
-    #watchBtn.active {
-      background: #00ff99;
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      margin: 10px auto;
       cursor: pointer;
-      opacity: 1;
+      border: none;
+      border-radius: 6px;
+      background-color: #2980b9;
+      color: white;
+      transition: 0.3s ease;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
     }
-      100% { transform: scale(1); opacity: 1; }
+    .hidden {
+      display: none;
+    }
+    .status {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #0f0;
+    }
+    #bottomWatchNow {
+      margin-top: 100px;
+    }
+    .side-banner {
+      position: absolute;
+      right: 10px;
+      top: 100px;
     }
   </style>
-
-<!-- Interstitial Ad on Page Load -->
-<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
-
 </head>
 <body>
 
-  <div class="file-no">📁 FILE NO. 23</div>
-
-  <!-- Interstitial Native Banner -->
-<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
-
-  
-<!-- Banner Above Image -->
-<script type="text/javascript">
-  atOptions = {
-    'key' : '2d91df4f50fb1625b0c506337ab754aa',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
-
-  <!-- Preview Image -->
-  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
-
-  
-  
-  <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 20px;">
-  <div style="background:#222; border:1px solid #444; padding:10px 15px; border-radius:10px; display:flex; align-items:center; gap:10px;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png" alt="Chrome" style="width:24px; vertical-align:middle; margin-right:8px;">
-    <span style="font-size:15px; color:#fff;">For best experience, use only <b>Chrome</b> browser.<br/>Avoid: UC Browser, Opera Mini, Facebook Browser.</span>
+  <!-- ✅ Banner Ad (Top) -->
+  <div style="margin: 10px auto;">
+    <script type="text/javascript">
+      atOptions = {
+        'key': '2d91df4f50fb1625b0c506337ab754aa',
+        'format': 'iframe',
+        'height': 250,
+        'width': 300,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
   </div>
 
+  <h1>✅ File No. 1</h1>
+
+  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview" />
+
+  <!-- ✅ Side Banner -->
+  <div class="side-banner">
+    <script type="text/javascript">
+      atOptions = {
+        'key': 'cf5cb342fae6405df8a7d66c45da223a',
+        'format': 'iframe',
+        'height': 300,
+        'width': 160,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
   </div>
-  <button id="unlockBtn" style="padding:12px 30px; font-size:18px; background:orange; color:white; border:none; border-radius:8px; cursor:pointer; margin-bottom:15px;">Unlock Video</button>
-  
-  <button id="scrollToWatchBtn" style="padding:12px 30px; font-size:18px; background:#00ccff; color:white; border:none; border-radius:8px; margin-top:10px; display:none;">
-    Go to Watch Now
-  </button>
 
-  <div id="unlockStatus" style="margin-top: 10px; font-size: 16px;">Click "Unlock Video" and keep the new tab open for 10 seconds.</div>
+  <div class="warning">⚠️ Use only Chrome browser</div>
 
-  
-<!-- Native Banner Above Watch Button -->
-<script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-<div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+  <button id="unlockBtn">🔓 Unlock Video</button>
+  <div id="status" class="status"></div>
 
-  
-<!-- Animated Arrow Guide -->
-<div style="font-size: 22px; color: #0f0; margin-top: 20px; animation: blink 1s infinite; font-weight: bold;">
-  ⬇️⬇️⬇️
-</div>
-<div style="font-size: 14px; color: #ccc; margin-bottom: 10px;">
-  This is your final link. Click "Watch Now" to continue.
-</div>
-<style>
-@keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0.3; }
-  100% { opacity: 1; }
-}
-</style>
+  <!-- ✅ Native Banner -->
+  <div style="margin: 20px auto;">
+    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+  </div>
 
-  <button id="watchBtn" disabled>Watch Now</button>
+  <div id="scrollBtnContainer" class="hidden">
+    <button id="scrollToWatchBtn">⬇️ Scroll to Watch Now</button>
+  </div>
 
-  <!-- Background Audio -->
-  <audio id="bgMusic" autoplay loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
-  </audio>
+  <div id="bottomWatchNow">
+    <button id="watchNowBtn" class="hidden">▶️ Watch Now</button>
+  </div>
 
   <script>
-    window.addEventListener('load', function () {
-      
-    
-    let unlockBtn = document.getElementById("unlockBtn");
-    let watchBtn = document.getElementById("watchBtn");
-    let unlockStatus = document.getElementById("unlockStatus");
-    let newTab;
-    let unlockSeconds = 10;
-    let unlockInterval;
-
-    unlockBtn.onclick = function() {
-      
-    try {
-      newTab = window.open("https://sawutser.top/4/9305599", "_blank");
-      if (!newTab || newTab.closed || typeof newTab.closed == 'undefined') {
-        unlockStatus.innerText = "Popup was blocked. Please enable popups for this site and try again.";
-        return;
-      }
-    } catch (e) {
-      unlockStatus.innerText = "Popup blocked or failed to open. Please allow popups and try again.";
-      return;
-    }
-    
-      if (!newTab) {
-        unlockStatus.innerText = "Please allow popups and try again.";
-        return;
-      }
-
-      unlockStatus.innerText = "Keep the new tab open for 10 seconds...";
-
-      unlockInterval = setInterval(() => {
-        if (newTab.closed) {
-          clearInterval(unlockInterval);
-          unlockSeconds = 10;
-          unlockStatus.innerText = "You closed the tab too soon. Please click Unlock again and keep the new tab open for 10 seconds to continue.";
-          return;
-        }
-
-        unlockSeconds--;
-        unlockStatus.innerText = `Keep the tab open... ${unlockSeconds}s remaining`;
-
-        if (unlockSeconds <= 0) {
-          clearInterval(unlockInterval);
-          watchBtn.disabled = false;
-          watchBtn.classList.add("active");
-          watchBtn.style.cursor = "pointer";
-          unlockStatus.innerText = "Unlocked! Click 'Watch Now'.";
-
+    const unlockBtn = document.getElementById("unlockBtn");
+    const watchNowBtn = document.getElementById("watchNowBtn");
+    const status = document.getElementById("status");
+    const scrollBtnContainer = document.getElementById("scrollBtnContainer");
     const scrollToWatchBtn = document.getElementById("scrollToWatchBtn");
-    scrollToWatchBtn.onclick = function () {
-      document.getElementById("watchBtn").scrollIntoView({ behavior: "smooth" });
+
+    let popupWindow = null;
+    let timerStarted = false;
+    let timer;
+
+    unlockBtn.onclick = () => {
+      popupWindow = window.open("https://sawutser.top/4/9305599", "_blank");
+      status.textContent = "⏳ Please keep the tab open for 10 seconds...";
+      if (!timerStarted) {
+        timerStarted = true;
+        let seconds = 10;
+        timer = setInterval(() => {
+          if (popupWindow && !popupWindow.closed) {
+            seconds--;
+            if (seconds > 0) {
+              status.textContent = `⏳ Keep the tab open... ${seconds}s remaining`;
+            } else {
+              clearInterval(timer);
+              status.textContent = "✅ Tab open 10s! Click below to watch video.";
+              scrollBtnContainer.classList.remove("hidden");
+              watchNowBtn.classList.remove("hidden");
+            }
+          } else {
+            clearInterval(timer);
+            timerStarted = false;
+            status.textContent = "❌ Tab was closed early. Try again.";
+          }
+        }, 1000);
+      }
     };
-    scrollToWatchBtn.style.display = "inline-block";
 
-        }
-      }, 1000);
+    scrollToWatchBtn.onclick = () => {
+      document.getElementById("bottomWatchNow").scrollIntoView({ behavior: "smooth" });
     };
 
-    // Override original watchBtn logic with popunder
-    watchBtn.onclick = function() {
-      
-    if (!watchBtn.classList.contains("active")) {
-      unlockStatus.innerText = "Please complete the Unlock step first by keeping the tab open for 10 seconds.";
-      return;
-    }
-    
-
-      // Popunder Ad
-      
-
-      // Final redirect
-      (function(){var s=document.createElement('script');s.src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js';document.body.appendChild(s);})();
-      window.location.href = 'https://your-video-link.com';
+    watchNowBtn.onclick = () => {
+      window.open("https://example.com/your-video-link", "_blank");
+      // ✅ Trigger Popunder Ad
+      const pop = document.createElement('script');
+      pop.src = '//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js';
+      document.body.appendChild(pop);
     };
-
-  });
   </script>
-
-<!-- One Click Ad -->
-
-
-<!-- Bottom Banner Ad -->
-<script type="text/javascript">
-  atOptions = {
-    'key' : '6aaa8f99c5ca76c3d10d20de626c2079',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script type="text/javascript" src="//bagfulchiefmeant.com/6aaa8f99c5ca76c3d10d20de626c2079/invoke.js"></script>
-
-
-<!-- Popunder Ad (load on page start) -->
-<script type='text/javascript' src='//bagfulchiefmeant.com/eb/7a/2c/eb7a2ca242c68578194b74779fc75282.js'></script>
-
 </body>
 </html>
