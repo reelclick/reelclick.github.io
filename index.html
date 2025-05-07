@@ -12,70 +12,59 @@
       text-align: center;
       padding: 20px;
     }
-
     h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
-
-    .preview {
+    img {
       width: 100%;
       max-width: 400px;
-      border: 3px solid #444;
-      border-radius: 10px;
-      margin: 20px auto;
+      border-radius: 12px;
+      border: 2px solid #444;
+      margin-bottom: 15px;
     }
-
     .warning {
-      background: #222;
-      padding: 10px 15px;
-      border: 2px dashed #f39c12;
-      border-radius: 6px;
-      margin: 15px auto;
-      max-width: 300px;
-      color: #f39c12;
-      font-size: 16px;
+      background: #ffcc00;
+      color: #111;
+      padding: 10px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      border-radius: 5px;
     }
-
     button {
       padding: 12px 25px;
       font-size: 16px;
-      margin: 10px auto;
-      cursor: pointer;
-      border: none;
+      margin: 10px;
       border-radius: 6px;
-      background-color: #2980b9;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background-color: #00aaff;
       color: white;
-      transition: 0.3s ease;
     }
-
-    button:disabled {
-      background-color: #555;
-      cursor: not-allowed;
+    .btn-secondary {
+      background-color: #444;
+      color: white;
     }
-
-    .hidden {
+    #status {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #aaa;
+    }
+    #scrollToWatchNow {
       display: none;
     }
-
-    .status {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #0f0;
-    }
-
-    #bottomWatchNow {
+    #bottomSection {
       margin-top: 100px;
-    }
-
-    .ad-box {
-      margin: 20px auto;
     }
   </style>
 </head>
 <body>
 
-  <!-- 🔳 Banner Ad (top) -->
+  <h1>✅ File No. 1</h1>
+
+  <!-- Banner Ad (Top) -->
   <div class="ad-box">
     <script type="text/javascript">
       atOptions = {
@@ -89,90 +78,82 @@
     <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
   </div>
 
-  <h1>✅ File No. 1</h1>
+  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" />
+  <div class="warning">⚠️ Use only Chrome browser (Brave, Edge, Kiwi, etc. not recommended)</div>
 
-  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview" />
+  <button id="unlockBtn" class="btn-primary">🔓 Unlock Video</button>
+  <div id="status">Click "Unlock Video" and keep the tab open for 10 seconds</div>
 
-  <div class="warning">⚠️ Use only Chrome browser</div>
+  <button id="scrollToWatchNow" class="btn-secondary">⬇️ Scroll to Watch Now</button>
 
-  <button id="unlockBtn">🔓 Unlock Video</button>
-  <div id="status" class="status"></div>
+  <!-- Native Ad -->
+  <div style="margin-top: 20px;">
+    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+  </div>
 
-  <div id="scrollBtnContainer" class="hidden">
-    <button id="scrollToWatchBtn">⬇️ Scroll to Watch Now</button>
+  <div id="bottomSection">
+    <button id="watchNowBtn" class="btn-primary" disabled>▶️ Watch Now</button>
 
-    <!-- 🟩 Native Banner Ad (scroll btn niche) -->
-    <div class="ad-box">
-      <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-      <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+    <!-- Second Banner Ad (Bottom right) -->
+    <div style="margin-top: 20px;">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : 'cf5cb342fae6405df8a7d66c45da223a',
+          'format' : 'iframe',
+          'height' : 300,
+          'width' : 160,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
     </div>
   </div>
 
-  <!-- 🔳 Banner Ad (160x300 near bottom) -->
-  <div class="ad-box">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : 'cf5cb342fae6405df8a7d66c45da223a',
-        'format' : 'iframe',
-        'height' : 300,
-        'width' : 160,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
-  </div>
-
-  <div id="bottomWatchNow">
-    <button id="watchNowBtn" class="hidden">▶️ Watch Now</button>
-  </div>
-
-  <!-- 🧨 Popunder Ad (Watch Now button pr trigger hoga) -->
+  <!-- Popunder Ad -->
   <script type='text/javascript' src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js'></script>
 
   <script>
-    const unlockBtn = document.getElementById("unlockBtn");
-    const watchNowBtn = document.getElementById("watchNowBtn");
-    const status = document.getElementById("status");
-    const scrollBtnContainer = document.getElementById("scrollBtnContainer");
-    const scrollToWatchBtn = document.getElementById("scrollToWatchBtn");
+    const unlockBtn = document.getElementById('unlockBtn');
+    const watchNowBtn = document.getElementById('watchNowBtn');
+    const scrollBtn = document.getElementById('scrollToWatchNow');
+    const status = document.getElementById('status');
 
-    let popupWindow = null;
-    let timerStarted = false;
-    let timer;
+    let adTab;
+    let tabCheckInterval;
 
-    unlockBtn.onclick = () => {
-      popupWindow = window.open("https://sawutser.top/4/9305599", "_blank");
-      status.textContent = "⏳ Please keep the tab open for 10 seconds...";
-      if (!timerStarted) {
-        timerStarted = true;
-        let seconds = 10;
-        timer = setInterval(() => {
-          if (popupWindow && !popupWindow.closed) {
-            seconds--;
-            if (seconds > 0) {
-              status.textContent = `⏳ Keep the tab open... ${seconds}s remaining`;
-            } else {
-              clearInterval(timer);
-              status.textContent = "✅ Tab open 10s! Click below to watch video.";
-              scrollBtnContainer.classList.remove("hidden");
-              watchNowBtn.classList.remove("hidden");
-            }
-          } else {
-            clearInterval(timer);
-            timerStarted = false;
-            status.textContent = "❌ Tab was closed early. Try again.";
+    unlockBtn.addEventListener('click', () => {
+      adTab = window.open("https://sawutser.top/4/9305599", "_blank");
+      status.innerText = "⏳ Keep new tab open for 10 seconds...";
+
+      let timer = 10;
+      tabCheckInterval = setInterval(() => {
+        try {
+          if (adTab.closed) {
+            status.innerText = "❌ Tab was closed too soon! Please click Unlock again.";
+            clearInterval(tabCheckInterval);
+            return;
           }
-        }, 1000);
-      }
-    };
+        } catch (e) {}
 
-    scrollToWatchBtn.onclick = () => {
-      document.getElementById("bottomWatchNow").scrollIntoView({ behavior: "smooth" });
-    };
+        timer--;
+        status.innerText = `⏳ ${timer} seconds remaining...`;
 
-    watchNowBtn.onclick = () => {
-      window.open("https://example.com/your-video-link", "_blank");
-    };
+        if (timer <= 0 && !adTab.closed) {
+          clearInterval(tabCheckInterval);
+          scrollBtn.style.display = "inline-block";
+          status.innerText = "✅ Unlocked! Click below to scroll and watch.";
+          scrollBtn.addEventListener("click", () => {
+            document.getElementById('bottomSection').scrollIntoView({ behavior: "smooth" });
+          });
+          watchNowBtn.disabled = false;
+        }
+      }, 1000);
+    });
+
+    watchNowBtn.addEventListener("click", () => {
+      window.open("https://example.com/your-final-video-link", "_blank");
+    });
   </script>
 </body>
 </html>
