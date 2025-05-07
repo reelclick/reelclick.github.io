@@ -2,46 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>File Preview with Ads</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Preview Page</title>
   <style>
     body {
-      background: #111;
+      background-color: #111;
       color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
+      padding: 30px 15px;
     }
-    .ad-box {
-      width: 100%;
-      max-width: 336px;
-      margin: 15px auto;
+    .file-no {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
     .preview-image {
       width: 100%;
       max-width: 400px;
       border: 3px solid #444;
       border-radius: 10px;
-      margin-top: 10px;
+      margin: 20px auto 10px;
+    }
+    #watchBtn {
+      padding: 12px 30px;
+      font-size: 18px;
+      background: gray;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: not-allowed;
+      opacity: 0.6;
+      transition: background 0.3s ease, opacity 0.3s ease;
+      margin-top: 20px;
+    }
+    #watchBtn.active {
+      background: #00ff99;
+      cursor: pointer;
+      opacity: 1;
     }
   </style>
 </head>
 <body>
 
-  <!-- 🔥 Banner Ad (Above Preview Image) -->
-  <div class="ad-box">
-    <script>
-      (function(d, z, s) {
-        s.src = 'https://' + d + '/400/' + z;
-        try {
-          (document.body || document.documentElement).appendChild(s)
-        } catch (e) {}
-      })('vemtoutcheeg.com', 9303129, document.createElement('script'));
-    </script>
-  </div>
+  <!-- Page Push Ad -->
+  <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',9303129,document.createElement('script'))</script>
 
-  <!-- 🔥 Preview Image -->
-  <img class="preview-image" src="https://i.imgur.com/EXAMPLE.jpg" alt="Preview" />
+  <div class="file-no">📁 FILE NO. 23</div>
+
+  <!-- Vintage Banner Ad -->
+  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9303082,document.createElement('script'))</script>
+
+  <!-- Preview Image -->
+  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
+
+  <button id="watchBtn" disabled>Watch Now</button>
+
+  <!-- One Click Popunder Ad -->
+  <script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9303076,document.body||document.documentElement)</script>
+
+  <!-- Interstitial Ad -->
+  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
+
+  <script>
+    window.addEventListener('load', function () {
+      let seconds = 15;
+      const btn = document.getElementById("watchBtn");
+
+      const countdown = setInterval(() => {
+        seconds--;
+
+        if (seconds < 0) {
+          clearInterval(countdown);
+          btn.disabled = false;
+          btn.classList.add("active");
+
+          btn.onclick = () => {
+            window.location.href = "https://your-video-link.com";
+          };
+
+          btn.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 1000);
+    });
+  </script>
 
 </body>
 </html>
