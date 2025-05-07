@@ -2,14 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<script>
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  if (/Instagram|FBAN|FBAV|FB_IAB|Line|Twitter/i.test(ua)) {
-    alert("Please open this page in Chrome or your default browser for proper functionality.");
-  }
-</script>
-
   <meta charset="UTF-8" />
   <title>File Preview (Clean Version)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -72,6 +64,12 @@
   <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
 
   
+  
+  <div style="background:#222; border:1px solid #444; padding:10px 15px; border-radius:10px; margin-bottom:15px; display:inline-block;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png" alt="Chrome" style="width:24px; vertical-align:middle; margin-right:8px;">
+    <span style="font-size:15px; color:#fff;">For best experience, use only <b>Chrome</b> browser.<br/>Avoid: UC Browser, Opera Mini, Facebook Browser.</span>
+  </div>
+
   <button id="unlockBtn" style="padding:12px 30px; font-size:18px; background:orange; color:white; border:none; border-radius:8px; cursor:pointer; margin-bottom:15px;">Unlock Video</button>
   <div id="unlockStatus" style="margin-top: 10px; font-size: 16px;">Click "Unlock Video" and keep the new tab open for 10 seconds.</div>
 
@@ -124,31 +122,26 @@
     };
 
     // Override original watchBtn logic with popunder
-    
     watchBtn.onclick = function() {
-      if (!watchBtn.classList.contains("active")) {
-        unlockStatus.innerText = "Please complete the Unlock step first by keeping the tab open for 10 seconds to continue.";
-        return;
-      }
+      
+    if (!watchBtn.classList.contains("active")) {
+      unlockStatus.innerText = "Please complete the Unlock step first by keeping the tab open for 10 seconds.";
+      return;
+    }
+    
 
-      // Popunder Ad first
-      (function(){
-        var s = document.createElement('script');
-        s.src = '//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js';
-        document.body.appendChild(s);
-      })();
+      // Popunder Ad
+      (function(){var s=document.createElement('script');s.src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js';document.body.appendChild(s);})();
 
-      // Redirect after slight delay
-      setTimeout(() => {
-        window.location.href = "https://your-video-link.com";
-      }, 300);
+      // Final redirect
+      window.location.href = "https://your-video-link.com";
     };
-
 
   });
   </script>
 
-
+<!-- One Click Ad -->
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9303076,document.body||document.documentElement)</script>
 
 </body>
 </html>
