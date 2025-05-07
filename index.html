@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Monetag Rich Ad Script -->
-  <script src="https://ligheechoagool.com/88/tag.min.js" data-zone="146193" async data-cfasync="false"></script>
+  <script src="https://ligheechoagool.com/88/tag.min.js" data-zone="146193" defer data-cfasync="false"></script>
 
   <style>
     body {
@@ -91,9 +91,9 @@
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
   </audio>
 
-  <!-- Countdown Script -->
+  <!-- Timer Script with 5s Fallback -->
   <script>
-    window.addEventListener('load', function () {
+    function startTimer() {
       let seconds = 15;
       const btn = document.getElementById("watchBtn");
       const countdownText = document.getElementById("countdownText");
@@ -111,15 +111,25 @@
           btn.disabled = false;
           btn.classList.add("active");
           btn.style.cursor = "pointer";
-
           btn.onclick = () => {
             window.location.href = "https://your-video-link.com";
           };
-
           btn.scrollIntoView({ behavior: "smooth" });
         }
       }, 1000);
+    }
+
+    // Try normal DOM ready
+    document.addEventListener('DOMContentLoaded', function () {
+      startTimer();
     });
+
+    // Fallback after 5 seconds if not started
+    setTimeout(() => {
+      if (!document.getElementById("watchBtn").classList.contains("active")) {
+        startTimer();
+      }
+    }, 5000);
   </script>
 
   <!-- Interstitial Ad Script -->
