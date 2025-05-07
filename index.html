@@ -56,7 +56,6 @@
       margin-top: 10px;
       font-weight: bold;
     }
-
     @keyframes pulse {
       0% { transform: scale(1); opacity: 0.9; }
       50% { transform: scale(1.1); opacity: 1; }
@@ -85,13 +84,18 @@
   <div id="lockedSection">
     <p id="lockedText">Please unlock the Watch Now button first</p>
     <button class="scroll-btn" id="scrollToUnlock">Scroll to Unlock Button</button>
-    <button class="watch-btn" id="watchNow" disabled>Watch Now</button>
   </div>
+
+  <!-- Appears only after unlock -->
+  <button class="scroll-btn" id="scrollToBottom" style="display:none;">Scroll to Watch Now</button>
+
+  <button class="watch-btn" id="watchNow" disabled>Watch Now</button>
 
   <script>
     const unlockBtn = document.getElementById("unlockBtn");
     const watchNow = document.getElementById("watchNow");
     const scrollToUnlock = document.getElementById("scrollToUnlock");
+    const scrollToBottom = document.getElementById("scrollToBottom");
     const status = document.getElementById("status");
     const timerEl = document.getElementById("timer");
     const earlyReturnWarning = document.getElementById("earlyReturnWarning");
@@ -110,6 +114,8 @@
       earlyReturnWarning.style.display = "none";
       lockedText.style.display = "block";
       scrollToUnlock.style.display = "inline-block";
+      scrollToBottom.style.display = "none";
+      watchNow.disabled = true;
 
       if (timer) clearInterval(timer);
 
@@ -135,17 +141,21 @@
       lockedText.style.display = "none";
       timerEl.style.display = "none";
       earlyReturnWarning.style.display = "none";
+      scrollToBottom.style.display = "inline-block"; // Show scroll-to-watch button
     }
 
     scrollToUnlock.addEventListener("click", () => {
       unlockBtn.scrollIntoView({ behavior: "smooth" });
     });
 
+    scrollToBottom.addEventListener("click", () => {
+      watchNow.scrollIntoView({ behavior: "smooth" });
+    });
+
     watchNow.addEventListener("click", () => {
       window.open("https://example.com/video", "_blank");
     });
 
-    // Check if user returns early from unlock tab
     window.addEventListener("focus", () => {
       if (count < 10 && !inFallback) {
         inFallback = true;
