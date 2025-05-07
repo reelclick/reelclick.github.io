@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset=\"UTF-8\" />
   <title>File Preview with Ads</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
   <style>
     body {
       background-color: #111;
@@ -11,18 +11,22 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 30px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     .file-no {
       font-size: 22px;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
     .preview-image {
       width: 100%;
       max-width: 400px;
       border: 3px solid #444;
       border-radius: 10px;
-      margin: 20px auto 10px;
+      margin-bottom: 20px;
     }
     #watchBtn {
       padding: 12px 30px;
@@ -34,7 +38,6 @@
       cursor: not-allowed;
       opacity: 0.6;
       transition: background 0.3s ease, opacity 0.3s ease;
-      margin-top: 20px;
     }
     #watchBtn.active {
       background: #00ff99;
@@ -48,15 +51,15 @@
   <!-- Page Push Ad -->
   <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',9303129,document.createElement('script'))</script>
 
-  <div class="file-no">📁 FILE NO. 23</div>
+  <div class=\"file-no\">📁 FILE NO. 23</div>
 
   <!-- Vintage Banner Ad -->
   <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9303082,document.createElement('script'))</script>
 
   <!-- Preview Image -->
-  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
+  <img src=\"https://i.imgur.com/Cv0Rj5z.png\" alt=\"Preview\" class=\"preview-image\" />
 
-  <button id="watchBtn" disabled>Watch Now</button>
+  <button id=\"watchBtn\" disabled>Watch Now</button>
 
   <!-- One Click Popunder Ad -->
   <script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9303076,document.body||document.documentElement)</script>
@@ -67,7 +70,7 @@
   <script>
     window.addEventListener('load', function () {
       let seconds = 15;
-      const btn = document.getElementById("watchBtn");
+      const btn = document.getElementById(\"watchBtn\");
 
       const countdown = setInterval(() => {
         seconds--;
@@ -75,13 +78,13 @@
         if (seconds < 0) {
           clearInterval(countdown);
           btn.disabled = false;
-          btn.classList.add("active");
+          btn.classList.add(\"active\");
 
           btn.onclick = () => {
-            window.location.href = "https://your-video-link.com";
+            window.location.href = \"https://your-video-link.com\";
           };
 
-          btn.scrollIntoView({ behavior: "smooth" });
+          btn.scrollIntoView({ behavior: \"smooth\" });
         }
       }, 1000);
     });
