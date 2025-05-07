@@ -3,54 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Preview File</title>
-
-  <!-- In-Page Push · Bright tag -->
-  <script>
-    (function(d, z, s) {
-      s.src = 'https://' + d + '/400/' + z;
-      try {
-        (document.body || document.documentElement).appendChild(s);
-      } catch (e) {}
-    })('vemtoutcheeg.com', 9303102, document.createElement('script'));
-  </script>
-
-  <!-- Vignette · Wise tag -->
-  <script>
-    (function(d, z, s) {
-      s.src = 'https://' + d + '/401/' + z;
-      try {
-        (document.body || document.documentElement).appendChild(s);
-      } catch (e) {}
-    })('gizokraijaw.net', 9303082, document.createElement('script'));
-  </script>
-
-  <!-- Interstitial · Amazing tag -->
-  <script>
-    (function(d, z, s) {
-      s.src = 'https://' + d + '/401/' + z;
-      try {
-        (document.body || document.documentElement).appendChild(s);
-      } catch (e) {}
-    })('groleegni.net', 9303011, document.createElement('script'));
-  </script>
+  <title>Preview Page</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .ad-box {
+      width: 100%;
+      max-width: 336px;
+      margin: 15px auto;
+    }
+    .preview-image {
+      width: 100%;
+      max-width: 400px;
+      border: 3px solid #444;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
-<body style="background:#111; color:#fff; font-family:sans-serif; text-align:center; padding:20px">
+<body>
 
-  <h1>Preview Image</h1>
-  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" style="width:100%; max-width:400px; border:3px solid #444; border-radius:10px; margin:20px 0" />
+  <!-- 🔥 Banner Ad (Above Preview Image) -->
+  <div class="ad-box">
+    <script>
+      (function(d, z, s) {
+        s.src = 'https://' + d + '/400/' + z;
+        try {
+          (document.body || document.documentElement).appendChild(s)
+        } catch (e) {}
+      })('vemtoutcheeg.com', 9303129, document.createElement('script'));
+    </script>
+  </div>
 
-  <!-- Watch Now Button -->
-  <a href="#" style="display:inline-block; padding:10px 20px; background:#e91e63; color:#fff; border-radius:8px; text-decoration:none; font-size:18px;">Watch Full Video</a>
-
-  <!-- Onclick · Beautiful tag (Popunder Ad) -->
-  <script>
-    (function(s,u,z,p){
-      s.src = u;
-      s.setAttribute('data-zone', z);
-      p.appendChild(s);
-    })(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9303076,document.body || document.documentElement);
-  </script>
+  <!-- 🔥 Preview Image -->
+  <img class="preview-image" src="https://i.imgur.com/EXAMPLE.jpg" alt="Preview" />
 
 </body>
 </html>
