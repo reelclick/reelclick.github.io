@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +70,9 @@
   <div class="file-no">📁 FILE NO. 23</div>
 
   <!-- Preview Image -->
+<!-- Native Banner Ad -->
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
+
   <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
 
   <!-- Circular Timer -->
@@ -87,9 +91,8 @@
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
   </audio>
 
-  <!-- Timer Script with 5s Fallback -->
   <script>
-    function startTimer() {
+    window.addEventListener('load', function () {
       let seconds = 15;
       const btn = document.getElementById("watchBtn");
       const countdownText = document.getElementById("countdownText");
@@ -107,55 +110,19 @@
           btn.disabled = false;
           btn.classList.add("active");
           btn.style.cursor = "pointer";
+
           btn.onclick = () => {
             window.location.href = "https://your-video-link.com";
           };
+
           btn.scrollIntoView({ behavior: "smooth" });
         }
       }, 1000);
-    }
-
-    // DOM ready
-    document.addEventListener('DOMContentLoaded', function () {
-      startTimer();
     });
-
-    // Fallback after 5 sec
-    setTimeout(() => {
-      if (!document.getElementById("watchBtn").classList.contains("active")) {
-        startTimer();
-      }
-    }, 5000);
   </script>
 
-  <!-- Interstitial Ad -->
-  <script>
-    (function(d,z,s){
-      s.src='https://'+d+'/401/'+z;
-      try{
-        (document.body||document.documentElement).appendChild(s)
-      }catch(e){}
-    })('groleegni.net',9303011,document.createElement('script'))
-  </script>
-
-  <!-- Native Banner -->
-  <script>
-    (function(s,u,z,p){
-      s.src = u;
-      s.setAttribute('data-zone', z);
-      p.appendChild(s);
-    })(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9303076,document.body||document.documentElement);
-  </script>
-
-  <!-- One Click Popunder + Vintage Banner -->
-  <script>
-    (function(d,z,s){
-      s.src='https://'+d+'/401/'+z;
-      try{
-        (document.body||document.documentElement).appendChild(s)
-      }catch(e){}
-    })('gizokraijaw.net',9303082,document.createElement('script'))
-  </script>
+<!-- One Click Popunder Ad -->
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9303076,document.body||document.documentElement)</script>
 
 </body>
 </html>
