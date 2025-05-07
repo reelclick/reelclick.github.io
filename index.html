@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="monetag" content="eeacdc44a4b83ea490dad7efa8b581f2" />
 
-  <!-- Interstitial Ad Script -->
+  <!-- Monetag Interstitial Script (Right after <head>) -->
   <script>
     (function(d,z,s){
       s.src='https://'+d+'/401/'+z;
       try {
-        (document.body||document.documentElement).appendChild(s)
+        (document.body||document.documentElement).appendChild(s);
       } catch(e){}
     })('groleegni.net',9303011,document.createElement('script'));
   </script>
@@ -80,10 +80,8 @@
 
   <div class="file-no">📁 FILE NO. 23</div>
 
-  <!-- Preview Image -->
   <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
 
-  <!-- Circular Timer -->
   <div class="timer-wrapper">
     <svg width="120" height="120">
       <circle r="60" cx="60" cy="60" stroke="#444" stroke-width="10" fill="none"/>
@@ -94,7 +92,7 @@
 
   <button id="watchBtn" disabled>Watch Now</button>
 
-  <!-- Banner Ad 1 -->
+  <!-- Banner Ad -->
   <div class="banner-ad-1">
     <script type="text/javascript">
       atOptions = {
@@ -108,7 +106,6 @@
     <script type="text/javascript" src="//bagfulchiefmeant.com/0f13a91c049d70eecbcbc6c450126aee/invoke.js"></script>
   </div>
 
-  <!-- Background Audio -->
   <audio id="bgMusic" autoplay loop>
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
   </audio>
@@ -142,5 +139,6 @@
       }, 1000);
     });
   </script>
+
 </body>
 </html>
