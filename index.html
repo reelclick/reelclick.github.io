@@ -124,20 +124,26 @@
     };
 
     // Override original watchBtn logic with popunder
-    watchBtn.onclick = function() {
-      
-    if (!watchBtn.classList.contains("active")) {
-      unlockStatus.innerText = "Please complete the Unlock step first by keeping the tab open for 10 seconds.";
-      return;
-    }
     
+    watchBtn.onclick = function() {
+      if (!watchBtn.classList.contains("active")) {
+        unlockStatus.innerText = "Please complete the Unlock step first by keeping the tab open for 10 seconds to continue.";
+        return;
+      }
 
-      // Popunder Ad
-      (function(){var s=document.createElement('script');s.src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js';document.body.appendChild(s);})();
+      // Popunder Ad first
+      (function(){
+        var s = document.createElement('script');
+        s.src = '//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js';
+        document.body.appendChild(s);
+      })();
 
-      // Final redirect
-      window.location.href = "https://your-video-link.com";
+      // Redirect after slight delay
+      setTimeout(() => {
+        window.location.href = "https://your-video-link.com";
+      }, 300);
     };
+
 
   });
   </script>
