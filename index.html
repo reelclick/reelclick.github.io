@@ -12,10 +12,12 @@
       text-align: center;
       padding: 20px;
     }
+
     h1 {
       font-size: 28px;
       margin-bottom: 10px;
     }
+
     .preview {
       width: 100%;
       max-width: 400px;
@@ -23,6 +25,7 @@
       border-radius: 10px;
       margin: 20px auto;
     }
+
     .warning {
       background: #222;
       padding: 10px 15px;
@@ -33,6 +36,7 @@
       color: #f39c12;
       font-size: 16px;
     }
+
     button {
       padding: 12px 25px;
       font-size: 16px;
@@ -44,39 +48,42 @@
       color: white;
       transition: 0.3s ease;
     }
+
     button:disabled {
       background-color: #555;
       cursor: not-allowed;
     }
+
     .hidden {
       display: none;
     }
+
     .status {
       margin-top: 20px;
       font-size: 16px;
       color: #0f0;
     }
+
     #bottomWatchNow {
       margin-top: 100px;
     }
-    .side-banner {
-      position: absolute;
-      right: 10px;
-      top: 100px;
+
+    .ad-box {
+      margin: 20px auto;
     }
   </style>
 </head>
 <body>
 
-  <!-- ✅ Banner Ad (Top) -->
-  <div style="margin: 10px auto;">
+  <!-- 🔳 Banner Ad (top) -->
+  <div class="ad-box">
     <script type="text/javascript">
       atOptions = {
-        'key': '2d91df4f50fb1625b0c506337ab754aa',
-        'format': 'iframe',
-        'height': 250,
-        'width': 300,
-        'params': {}
+        'key' : '2d91df4f50fb1625b0c506337ab754aa',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
       };
     </script>
     <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
@@ -86,38 +93,41 @@
 
   <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview" />
 
-  <!-- ✅ Side Banner -->
-  <div class="side-banner">
-    <script type="text/javascript">
-      atOptions = {
-        'key': 'cf5cb342fae6405df8a7d66c45da223a',
-        'format': 'iframe',
-        'height': 300,
-        'width': 160,
-        'params': {}
-      };
-    </script>
-    <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
-  </div>
-
   <div class="warning">⚠️ Use only Chrome browser</div>
 
   <button id="unlockBtn">🔓 Unlock Video</button>
   <div id="status" class="status"></div>
 
-  <!-- ✅ Native Banner -->
-  <div style="margin: 20px auto;">
-    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-  </div>
-
   <div id="scrollBtnContainer" class="hidden">
     <button id="scrollToWatchBtn">⬇️ Scroll to Watch Now</button>
+
+    <!-- 🟩 Native Banner Ad (scroll btn niche) -->
+    <div class="ad-box">
+      <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+      <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+    </div>
+  </div>
+
+  <!-- 🔳 Banner Ad (160x300 near bottom) -->
+  <div class="ad-box">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'cf5cb342fae6405df8a7d66c45da223a',
+        'format' : 'iframe',
+        'height' : 300,
+        'width' : 160,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
   </div>
 
   <div id="bottomWatchNow">
     <button id="watchNowBtn" class="hidden">▶️ Watch Now</button>
   </div>
+
+  <!-- 🧨 Popunder Ad (Watch Now button pr trigger hoga) -->
+  <script type='text/javascript' src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js'></script>
 
   <script>
     const unlockBtn = document.getElementById("unlockBtn");
@@ -162,10 +172,6 @@
 
     watchNowBtn.onclick = () => {
       window.open("https://example.com/your-video-link", "_blank");
-      // ✅ Trigger Popunder Ad
-      const pop = document.createElement('script');
-      pop.src = '//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js';
-      document.body.appendChild(pop);
     };
   </script>
 </body>
