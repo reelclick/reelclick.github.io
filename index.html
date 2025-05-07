@@ -31,6 +31,14 @@
       margin-bottom: 20px;
       border-radius: 5px;
     }
+    .error-warning {
+      color: #ff4444;
+      font-weight: bold;
+      margin-top: 8px;
+      font-size: 16px;
+      display: none;
+      animation: fadeIn 1s ease-in-out;
+    }
     button {
       padding: 12px 25px;
       font-size: 16px;
@@ -49,8 +57,10 @@
     }
     #status {
       margin-top: 15px;
-      font-size: 14px;
-      color: #aaa;
+      font-size: 16px;
+      color: #00ffcc;
+      font-weight: bold;
+      animation: popIn 0.4s ease-in-out;
     }
     #scrollToWatchNow {
       display: none;
@@ -58,14 +68,23 @@
     #bottomSection {
       margin-top: 100px;
     }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
   <h1>✅ File No. 1</h1>
 
-  <!-- Top Banner Ad -->
-  <div class="ad-box">
+  <!-- Banner Ad Top -->
+  <div>
     <script type="text/javascript">
       atOptions = {
         'key' : '2d91df4f50fb1625b0c506337ab754aa',
@@ -83,6 +102,7 @@
 
   <button id="unlockBtn" class="btn-primary">🔓 Unlock Video</button>
   <div id="status">Click "Unlock Video" and keep the tab open for 10 seconds</div>
+  <div id="errorWarning" class="error-warning"></div>
 
   <button id="scrollToWatchNow" class="btn-secondary">⬇️ Scroll to Watch Now</button>
 
@@ -95,7 +115,7 @@
   <div id="bottomSection">
     <button id="watchNowBtn" class="btn-primary" disabled>▶️ Watch Now</button>
 
-    <!-- Bottom Banner Ad -->
+    <!-- Banner Ad Bottom -->
     <div style="margin-top: 20px;">
       <script type="text/javascript">
         atOptions = {
@@ -118,6 +138,7 @@
     const watchNowBtn = document.getElementById('watchNowBtn');
     const scrollBtn = document.getElementById('scrollToWatchNow');
     const status = document.getElementById('status');
+    const errorWarning = document.getElementById('errorWarning');
 
     let adTab;
     let mainTimer;
@@ -128,6 +149,8 @@
       adTab = window.open("https://sawutser.top/4/9305599", "_blank");
       currentSec = 0;
       isTabClosedEarly = false;
+      errorWarning.style.display = "none";
+
       status.innerText = "⏳ Keep tab open for 15 seconds";
 
       clearInterval(mainTimer);
@@ -138,6 +161,8 @@
         try {
           if (adTab.closed && currentSec < 10) {
             isTabClosedEarly = true;
+            errorWarning.style.display = "block";
+            errorWarning.innerText = "❗आपने टैब जल्दी बंद कर दी! टैब को 10 सेकंड तक खुला रखना था। अब कृपया 60 सेकंड तक प्रतीक्षा करें...";
           }
         } catch (e) {}
 
