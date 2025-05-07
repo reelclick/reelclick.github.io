@@ -2,192 +2,160 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>File No. 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
+      font-family: Arial, sans-serif;
       background-color: #111;
       color: #fff;
-      font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
     }
     h1 {
       font-size: 24px;
-      margin-bottom: 20px;
-    }
-    img {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 12px;
-      border: 2px solid #444;
       margin-bottom: 15px;
     }
+    .preview-image {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 10px;
+      border: 3px solid #555;
+    }
     .warning {
-      background: #ffcc00;
-      color: #111;
-      padding: 10px;
+      color: yellow;
       font-weight: bold;
-      margin-bottom: 20px;
-      border-radius: 5px;
+      margin: 10px 0;
     }
-    .error-warning {
-      color: #ff4444;
-      font-weight: bold;
-      margin-top: 8px;
-      font-size: 16px;
-      display: none;
-      animation: fadeIn 1s ease-in-out;
-    }
-    button {
-      padding: 12px 25px;
+    .unlock-btn, .scroll-btn, .watch-btn {
+      padding: 12px 24px;
       font-size: 16px;
       margin: 10px;
-      border-radius: 6px;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
-    }
-    .btn-primary {
-      background-color: #00aaff;
+      background-color: #2196F3;
       color: white;
     }
-    .btn-secondary {
-      background-color: #444;
-      color: white;
+    .watch-btn[disabled] {
+      background-color: #555;
+      cursor: not-allowed;
     }
-    #status {
-      margin-top: 15px;
-      font-size: 16px;
-      color: #00ffcc;
+    .status {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    #timer {
+      font-size: 22px;
+      margin-top: 10px;
+      animation: pulse 1s infinite;
+    }
+    .red-warning {
+      color: red;
+      font-size: 18px;
+      margin-top: 10px;
       font-weight: bold;
-      animation: popIn 0.4s ease-in-out;
-    }
-    #scrollToWatchNow {
-      display: none;
-    }
-    #bottomSection {
-      margin-top: 100px;
     }
 
-    @keyframes popIn {
-      0% { transform: scale(0.9); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
     }
   </style>
 </head>
 <body>
 
-  <h1>✅ File No. 1</h1>
+  <h1>File No. 1</h1>
 
-  <!-- Banner Ad Top -->
   <div>
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '2d91df4f50fb1625b0c506337ab754aa',
-        'format' : 'iframe',
-        'height' : 250,
-        'width' : 300,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
+    <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" />
   </div>
 
-  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" />
-  <div class="warning">⚠️ Use only Chrome browser (Brave, Edge, Kiwi, etc. not recommended)</div>
+  <div class="warning">⚠️ Use only Chrome browser</div>
 
-  <button id="unlockBtn" class="btn-primary">🔓 Unlock Video</button>
-  <div id="status">Click "Unlock Video" and keep the tab open for 10 seconds</div>
-  <div id="errorWarning" class="error-warning"></div>
+  <button class="unlock-btn" id="unlockBtn">Unlock Video</button>
 
-  <button id="scrollToWatchNow" class="btn-secondary">⬇️ Scroll to Watch Now</button>
-
-  <!-- Native Ad -->
-  <div style="margin-top: 20px;">
-    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+  <div class="status" id="status">Click Unlock and keep the tab open for 10 seconds</div>
+  <div id="timer">00 / 10s</div>
+  <div class="red-warning" id="earlyReturnWarning" style="display:none;">
+    ⚠️ Aapne tab jaldi close kar diya. Ab 60 second wait karein!
   </div>
 
-  <div id="bottomSection">
-    <button id="watchNowBtn" class="btn-primary" disabled>▶️ Watch Now</button>
-
-    <!-- Banner Ad Bottom -->
-    <div style="margin-top: 20px;">
-      <script type="text/javascript">
-        atOptions = {
-          'key' : 'cf5cb342fae6405df8a7d66c45da223a',
-          'format' : 'iframe',
-          'height' : 300,
-          'width' : 160,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
-    </div>
+  <div id="lockedSection">
+    <p id="lockedText">Please unlock the Watch Now button first</p>
+    <button class="scroll-btn" id="scrollToUnlock">Scroll to Unlock Button</button>
+    <button class="watch-btn" id="watchNow" disabled>Watch Now</button>
   </div>
-
-  <!-- Popunder Ad -->
-  <script type='text/javascript' src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js'></script>
 
   <script>
-    const unlockBtn = document.getElementById('unlockBtn');
-    const watchNowBtn = document.getElementById('watchNowBtn');
-    const scrollBtn = document.getElementById('scrollToWatchNow');
-    const status = document.getElementById('status');
-    const errorWarning = document.getElementById('errorWarning');
+    const unlockBtn = document.getElementById("unlockBtn");
+    const watchNow = document.getElementById("watchNow");
+    const scrollToUnlock = document.getElementById("scrollToUnlock");
+    const status = document.getElementById("status");
+    const timerEl = document.getElementById("timer");
+    const earlyReturnWarning = document.getElementById("earlyReturnWarning");
+    const lockedText = document.getElementById("lockedText");
 
-    let adTab;
-    let mainTimer;
-    let currentSec = 0;
-    let isTabClosedEarly = false;
+    let unlockWindow;
+    let timer;
+    let count = 0;
+    let inFallback = false;
 
-    unlockBtn.addEventListener('click', () => {
-      adTab = window.open("https://sawutser.top/4/9305599", "_blank");
-      currentSec = 0;
-      isTabClosedEarly = false;
-      errorWarning.style.display = "none";
+    unlockBtn.addEventListener("click", () => {
+      unlockWindow = window.open("https://sawutser.top/4/9305599", "_blank");
+      count = 0;
+      status.innerText = "Keep the tab open for 10 seconds...";
+      timerEl.innerText = "00 / 10s";
+      earlyReturnWarning.style.display = "none";
+      lockedText.style.display = "block";
+      scrollToUnlock.style.display = "inline-block";
 
-      status.innerText = "⏳ Keep tab open for 15 seconds";
+      if (timer) clearInterval(timer);
 
-      clearInterval(mainTimer);
-      mainTimer = setInterval(() => {
-        currentSec++;
-        status.innerText = `⏳ ${String(currentSec).padStart(2, '0')} / 60 seconds`;
+      timer = setInterval(() => {
+        count++;
+        timerEl.innerText = `${count < 10 ? '0'+count : count} / ${inFallback ? "60s" : "10s"}`;
 
-        try {
-          if (adTab.closed && currentSec < 10) {
-            isTabClosedEarly = true;
-            errorWarning.style.display = "block";
-            errorWarning.innerText = "❗आपने टैब जल्दी बंद कर दी! टैब को 10 सेकंड तक खुला रखना था। अब कृपया 60 सेकंड तक प्रतीक्षा करें...";
+        if (inFallback && count >= 60) {
+          unlockPassed();
+        } else if (!inFallback && count >= 10) {
+          if (!unlockWindow || unlockWindow.closed) {
+            unlockPassed();
           }
-        } catch (e) {}
-
-        if (currentSec >= 10 && !isTabClosedEarly) {
-          clearInterval(mainTimer);
-          unlockScrollButton();
-        } else if (isTabClosedEarly && currentSec >= 60) {
-          clearInterval(mainTimer);
-          unlockScrollButton();
         }
       }, 1000);
     });
 
-    function unlockScrollButton() {
-      scrollBtn.style.display = "inline-block";
-      status.innerText = "✅ Unlocked! Click below to scroll and watch.";
-      scrollBtn.addEventListener("click", () => {
-        document.getElementById('bottomSection').scrollIntoView({ behavior: "smooth" });
-      });
-      watchNowBtn.disabled = false;
+    function unlockPassed() {
+      clearInterval(timer);
+      watchNow.disabled = false;
+      status.innerText = "Unlocked! Click Watch Now";
+      scrollToUnlock.style.display = "none";
+      lockedText.style.display = "none";
+      timerEl.style.display = "none";
+      earlyReturnWarning.style.display = "none";
     }
 
-    watchNowBtn.addEventListener("click", () => {
-      window.open("https://example.com/your-final-video-link", "_blank");
+    scrollToUnlock.addEventListener("click", () => {
+      unlockBtn.scrollIntoView({ behavior: "smooth" });
+    });
+
+    watchNow.addEventListener("click", () => {
+      window.open("https://example.com/video", "_blank");
+    });
+
+    // Check if user returns early from unlock tab
+    window.addEventListener("focus", () => {
+      if (count < 10 && !inFallback) {
+        inFallback = true;
+        count = 0;
+        timerEl.innerText = "00 / 60s";
+        earlyReturnWarning.style.display = "block";
+        status.innerText = "You returned early!";
+      }
     });
   </script>
+
 </body>
 </html>
