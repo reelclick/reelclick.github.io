@@ -104,7 +104,41 @@
 <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
 <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
 
+
+<style>
+  .arrow-guide {
+    animation: bounce 1s infinite;
+    font-size: 24px;
+    margin-top: 10px;
+    color: #00ff99;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .guide-text {
+    font-size: 14px;
+    color: #ccc;
+    margin-top: 5px;
+  }
+</style>
+<div class="arrow-guide">⬇️</div>
+<div class="guide-text">Click "Watch Now" to unlock the main video</div>
+
   <button id="watchBtn" disabled>Watch Now</button>
+
+<!-- Banner below Watch Now button -->
+<script type="text/javascript">
+	atOptions = {
+		'key' : '6aaa8f99c5ca76c3d10d20de626c2079',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//bagfulchiefmeant.com/6aaa8f99c5ca76c3d10d20de626c2079/invoke.js"></script>
+
 
   <!-- Background Audio -->
   <audio id="bgMusic" autoplay loop>
@@ -123,6 +157,7 @@
     let unlockInterval;
 
     unlockBtn.onclick = function() {
+  window.open("https://sawutser.top/4/9305599", "_blank");
       
     try {
       newTab = window.open("https://sawutser.top/4/9305599", "_blank");
