@@ -5,9 +5,6 @@
   <title>File Preview (Clean Version)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Monetag Rich Ad Script -->
-  <script src="https://ligheechoagool.com/88/tag.min.js" data-zone="146193" defer data-cfasync="false"></script>
-
   <style>
     body {
       background-color: #111;
@@ -119,12 +116,10 @@
       }, 1000);
     }
 
-    // Try normal DOM ready
     document.addEventListener('DOMContentLoaded', function () {
       startTimer();
     });
 
-    // Fallback after 5 seconds if not started
     setTimeout(() => {
       if (!document.getElementById("watchBtn").classList.contains("active")) {
         startTimer();
