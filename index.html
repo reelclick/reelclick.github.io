@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>File Preview (Clean Version)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <style>
     body {
       background-color: #111;
@@ -116,10 +115,12 @@
       }, 1000);
     }
 
+    // DOM ready
     document.addEventListener('DOMContentLoaded', function () {
       startTimer();
     });
 
+    // Fallback after 5 sec
     setTimeout(() => {
       if (!document.getElementById("watchBtn").classList.contains("active")) {
         startTimer();
@@ -127,7 +128,7 @@
     }, 5000);
   </script>
 
-  <!-- Interstitial Ad Script -->
+  <!-- Interstitial Ad -->
   <script>
     (function(d,z,s){
       s.src='https://'+d+'/401/'+z;
@@ -137,8 +138,24 @@
     })('groleegni.net',9303011,document.createElement('script'))
   </script>
 
-  <!-- Popunder Ad Script -->
-  <script type='text/javascript' src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js'></script>
+  <!-- Native Banner -->
+  <script>
+    (function(s,u,z,p){
+      s.src = u;
+      s.setAttribute('data-zone', z);
+      p.appendChild(s);
+    })(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9303076,document.body||document.documentElement);
+  </script>
+
+  <!-- One Click Popunder + Vintage Banner -->
+  <script>
+    (function(d,z,s){
+      s.src='https://'+d+'/401/'+z;
+      try{
+        (document.body||document.documentElement).appendChild(s)
+      }catch(e){}
+    })('gizokraijaw.net',9303082,document.createElement('script'))
+  </script>
 
 </body>
 </html>
