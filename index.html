@@ -92,7 +92,18 @@
     let unlockInterval;
 
     unlockBtn.onclick = function() {
+      
+    try {
       newTab = window.open("https://sawutser.top/4/9305599", "_blank");
+      if (!newTab || newTab.closed || typeof newTab.closed == 'undefined') {
+        unlockStatus.innerText = "Popup was blocked. Please enable popups for this site and try again.";
+        return;
+      }
+    } catch (e) {
+      unlockStatus.innerText = "Popup blocked or failed to open. Please allow popups and try again.";
+      return;
+    }
+    
       if (!newTab) {
         unlockStatus.innerText = "Please allow popups and try again.";
         return;
