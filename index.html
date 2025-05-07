@@ -2,6 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<script>
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  if (/Instagram|FBAN|FBAV|FB_IAB|Line|Twitter/i.test(ua)) {
+    alert("Please open this page in Chrome or your default browser for proper functionality.");
+  }
+</script>
+
   <meta charset="UTF-8" />
   <title>File Preview (Clean Version)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
