@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>File Preview (Clean Version)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px 15px;
+    }
+    .file-no {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      animation: fadeIn 2s ease-out;
+    }
+    .preview-image {
+      width: 100%;
+      max-width: 400px;
+      border: 3px solid #444;
+      border-radius: 10px;
+      margin: 20px auto 10px;
+      animation: popIn 1.5s ease-out;
+    }
+    #watchBtn {
+      padding: 12px 30px;
+      font-size: 18px;
+      background: gray;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: not-allowed;
+      opacity: 0.6;
+      transition: background 0.3s ease, opacity 0.3s ease;
+      margin-top: 20px;
+    }
+    #watchBtn.active {
+      background: #00ff99;
+      cursor: pointer;
+      opacity: 1;
+    }
+    .timer-wrapper {
+      margin: 20px auto;
+      width: 120px;
+      height: 120px;
+    }
+    .circle {
+      stroke-dasharray: 377;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="file-no">📁 FILE NO. 23</div>
+
+  <!-- Preview Image -->
+  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
+
+  <!-- Circular Timer -->
+  <div class="timer-wrapper">
+    <svg width="120" height="120">
+      <circle r="60" cx="60" cy="60" stroke="#444" stroke-width="10" fill="none"/>
+      <circle id="progressCircle" r="60" cx="60" cy="60" stroke="#00ff99" stroke-width="10" fill="none" class="circle"/>
+      <text id="countdownText" x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#fff" font-size="22">15</text>
+    </svg>
+  </div>
+
+  <button id="watchBtn" disabled>Watch Now</button>
+
+  <!-- Background Audio -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    window.addEventListener('load', function () {
+      let seconds = 15;
+      const btn = document.getElementById("watchBtn");
+      const countdownText = document.getElementById("countdownText");
+      const progressCircle = document.getElementById("progressCircle");
+      const totalLength = 2 * Math.PI * 60;
+
+      const countdown = setInterval(() => {
+        countdownText.textContent = seconds;
+        progressCircle.style.strokeDashoffset = totalLength * ((15 - seconds + 1) / 15);
+        seconds--;
+
+        if (seconds < 0) {
+          clearInterval(countdown);
+          countdownText.textContent = "✔";
+          btn.disabled = false;
+          btn.classList.add("active");
+          btn.style.cursor = "pointer";
+
+          btn.onclick = () => {
+            window.location.href = "https://your-video-link.com";
+          };
+
+          btn.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>
