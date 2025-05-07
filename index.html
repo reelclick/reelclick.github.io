@@ -63,21 +63,6 @@
 <body>
 
   <h1>✅ File No. 1</h1>
-
-  <!-- Banner Ad (Top) -->
-  <div class="ad-box">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '2d91df4f50fb1625b0c506337ab754aa',
-        'format' : 'iframe',
-        'height' : 250,
-        'width' : 300,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
-  </div>
-
   <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" />
   <div class="warning">⚠️ Use only Chrome browser (Brave, Edge, Kiwi, etc. not recommended)</div>
 
@@ -86,32 +71,9 @@
 
   <button id="scrollToWatchNow" class="btn-secondary">⬇️ Scroll to Watch Now</button>
 
-  <!-- Native Ad -->
-  <div style="margin-top: 20px;">
-    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-  </div>
-
   <div id="bottomSection">
     <button id="watchNowBtn" class="btn-primary" disabled>▶️ Watch Now</button>
-
-    <!-- Second Banner Ad (Bottom right) -->
-    <div style="margin-top: 20px;">
-      <script type="text/javascript">
-        atOptions = {
-          'key' : 'cf5cb342fae6405df8a7d66c45da223a',
-          'format' : 'iframe',
-          'height' : 300,
-          'width' : 160,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
-    </div>
   </div>
-
-  <!-- Popunder Ad -->
-  <script type='text/javascript' src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js'></script>
 
   <script>
     const unlockBtn = document.getElementById('unlockBtn');
@@ -124,30 +86,45 @@
 
     unlockBtn.addEventListener('click', () => {
       adTab = window.open("https://sawutser.top/4/9305599", "_blank");
-      status.innerText = "⏳ Keep new tab open for 10 seconds...";
+      status.innerText = "⏳ Keep new tab open for 30 seconds...";
 
-      let timer = 10;
+      unlockBtn.disabled = true;
+
+      let timer = 30;
+      let unlocked = false;
+      let earlyClosed = false;
+
       tabCheckInterval = setInterval(() => {
+        timer--;
+
         try {
-          if (adTab.closed) {
-            status.innerText = "❌ Tab was closed too soon! Please click Unlock again.";
-            clearInterval(tabCheckInterval);
-            return;
+          if (adTab.closed && timer >= 15 && !earlyClosed) {
+            earlyClosed = true;
+            status.innerText = "⚠️ You closed the tab early. You had to keep it open for at least 10–15 seconds.";
+            // Unlock button will be re-enabled at end of timer
           }
         } catch (e) {}
 
-        timer--;
-        status.innerText = `⏳ ${timer} seconds remaining...`;
-
-        if (timer <= 0 && !adTab.closed) {
-          clearInterval(tabCheckInterval);
-          scrollBtn.style.display = "inline-block";
-          status.innerText = "✅ Unlocked! Click below to scroll and watch.";
-          scrollBtn.addEventListener("click", () => {
-            document.getElementById('bottomSection').scrollIntoView({ behavior: "smooth" });
-          });
-          watchNowBtn.disabled = false;
+        if (!earlyClosed && !unlocked) {
+          status.innerText = `⏳ ${timer} seconds remaining...`;
         }
+
+        if (timer <= 0) {
+          clearInterval(tabCheckInterval);
+          if (!earlyClosed) {
+            unlocked = true;
+            scrollBtn.style.display = "inline-block";
+            status.innerText = "✅ Unlocked! Click below to scroll and watch.";
+            scrollBtn.addEventListener("click", () => {
+              document.getElementById('bottomSection').scrollIntoView({ behavior: "smooth" });
+            });
+            watchNowBtn.disabled = false;
+          } else {
+            unlockBtn.disabled = false;
+            status.innerText += " Please try again.";
+          }
+        }
+
       }, 1000);
     });
 
