@@ -1,145 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Unlock Video UI</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Unlock UI</title>
   <style>
     body {
-      background: #111;
+      background-color: #111;
       color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 30px 15px;
+      padding: 20px;
     }
-    h2 { font-size: 24px; margin-bottom: 10px; }
-    img.preview {
-      max-width: 100%;
-      border-radius: 10px;
+
+    .heading {
+      font-size: 22px;
+      font-weight: bold;
       margin-bottom: 15px;
     }
+
+    .preview-image {
+      width: 100%;
+      max-width: 400px;
+      border: 3px solid #444;
+      border-radius: 10px;
+    }
+
     .btn {
-      background: #ff4747;
-      border: none;
-      color: #fff;
-      padding: 12px 20px;
+      padding: 12px 24px;
       font-size: 16px;
-      margin: 10px 0;
+      margin: 15px auto;
+      display: block;
+      background: #28a745;
+      color: #fff;
+      border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
     }
+
     .btn:disabled {
-      background: #777;
+      background: gray;
       cursor: not-allowed;
     }
-    .timer {
-      font-size: 20px;
+
+    #statusText {
       margin-top: 10px;
+      font-size: 15px;
+      color: #ff4747;
+    }
+
+    #timer {
+      font-size: 20px;
+      margin-top: 8px;
       animation: pulse 1s infinite;
     }
+
     @keyframes pulse {
       0% { opacity: 1; }
-      50% { opacity: 0.4; }
+      50% { opacity: 0.5; }
       100% { opacity: 1; }
     }
-    .warning {
-      font-size: 14px;
-      color: #ff4444;
-      margin-top: 8px;
-      animation: fadeIn 1s ease-out;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-    #watchNowBtn, #scrollToUnlockBtn {
-      margin-top: 40px;
+
+    .spacer {
+      height: 200px;
     }
   </style>
 </head>
 <body>
 
-  <h2>File No. 1</h2>
-  <img class="preview" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview">
+  <div class="heading">File Name - Video Preview</div>
+  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
 
-  <button class="btn" id="unlockBtn">Unlock Video</button>
+  <button id="unlockBtn" class="btn">Unlock Video</button>
 
-  <div id="timerArea" class="timer">Keep tab open for 10 seconds to unlock</div>
-  <div id="warningText" class="warning" style="display:none;"></div>
+  <div id="statusText">Keep tab open for 10 seconds to unlock the button</div>
+  <div id="timer">00/10 seconds</div>
 
-  <button class="btn" id="scrollToWatchBtn" disabled>Scroll to Watch Now</button>
+  <button id="scrollToWatchBtn" class="btn" disabled>Scroll to Watch Now</button>
 
-  <div style="height: 500px;"></div>
+  <div class="spacer"></div>
 
-  <button class="btn" id="scrollToUnlockBtn">Scroll to Unlock Video</button>
-  <button class="btn" id="watchNowBtn" disabled>Watch Now</button>
+  <button id="scrollToUnlockBtn" class="btn">Scroll to Unlock Video</button>
+
+  <button id="watchNowBtn" class="btn" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
 
   <script>
-    let unlockClicked = false;
-    let watchUnlocked = false;
-    let timer;
-    let counter = 10;
-    let tabOpenedTime;
-
     const unlockBtn = document.getElementById("unlockBtn");
+    const watchNowBtn = document.getElementById("watchNowBtn");
     const scrollToWatchBtn = document.getElementById("scrollToWatchBtn");
     const scrollToUnlockBtn = document.getElementById("scrollToUnlockBtn");
-    const watchNowBtn = document.getElementById("watchNowBtn");
-    const timerArea = document.getElementById("timerArea");
-    const warningText = document.getElementById("warningText");
+    const timerEl = document.getElementById("timer");
+    const statusText = document.getElementById("statusText");
 
-    unlockBtn.onclick = () => {
-      unlockClicked = true;
-      tabOpenedTime = Date.now();
-      window.open("https://sawutser.top/4/9305599", "_blank");
+    let newTabOpened = false;
+    let unlockTimer;
+    let countdown = 10;
+    let fallbackTimeout;
 
-      checkTabReturn();
-    };
+    unlockBtn.addEventListener("click", () => {
+      const newTab = window.open("https://sawutser.top/4/9305599", "_blank");
 
-    function checkTabReturn() {
-      const check = setInterval(() => {
-        if (document.visibilityState === "visible") {
-          clearInterval(check);
-          const openTime = Math.floor((Date.now() - tabOpenedTime) / 1000);
-          if (openTime >= 10) {
-            unlockWatchNow();
-          } else {
-            runPenaltyTimer();
-          }
+      newTabOpened = true;
+      statusText.innerText = "Keep tab open for 10 seconds...";
+      countdown = 10;
+      updateTimer();
+
+      unlockTimer = setInterval(() => {
+        countdown--;
+        updateTimer();
+
+        if (countdown === 0) {
+          clearInterval(unlockTimer);
+          watchNowBtn.disabled = false;
+          scrollToWatchBtn.disabled = false;
+          scrollToUnlockBtn.style.display = "none";
+          statusText.innerText = "Unlocked! Click below to Watch.";
         }
       }, 1000);
-    }
 
-    function unlockWatchNow() {
-      watchNowBtn.disabled = false;
-      scrollToWatchBtn.disabled = false;
-      scrollToUnlockBtn.style.display = "none";
-      timerArea.innerText = "Unlocked! Click below to watch.";
-    }
-
-    function runPenaltyTimer() {
-      counter = 60;
-      warningText.style.display = "block";
-      warningText.innerText = "You closed the tab early. Please wait 60 seconds to unlock.\nआपने टैब जल्दी बंद कर दिया। कृपया 60 सेकंड प्रतीक्षा करें।";
-      timer = setInterval(() => {
-        timerArea.innerText = `Please wait: ${counter}s`;
-        if (counter === 0) {
-          clearInterval(timer);
-          unlockWatchNow();
+      // Fallback if user closes tab early
+      setTimeout(() => {
+        if (countdown > 0) {
+          clearInterval(unlockTimer);
+          countdown = 60;
+          scrollToWatchBtn.disabled = true;
+          scrollToUnlockBtn.style.display = "block";
+          statusText.innerHTML = "You closed the tab early! कृपया 60 सेकंड का इंतज़ार करें।";
+          fallbackTimeout = setInterval(() => {
+            countdown--;
+            updateTimer();
+            if (countdown === 0) {
+              clearInterval(fallbackTimeout);
+              watchNowBtn.disabled = false;
+              scrollToWatchBtn.disabled = false;
+              scrollToUnlockBtn.style.display = "none";
+              statusText.innerText = "Unlocked! Click below to Watch.";
+            }
+          }, 1000);
         }
-        counter--;
-      }, 1000);
+      }, 3000); // Wait 3 seconds to detect early close
+    });
+
+    function updateTimer() {
+      const total = countdown <= 10 ? 10 : 60;
+      timerEl.innerText = `${(total - countdown).toString().padStart(2, '0')}/${total} seconds`;
     }
 
-    scrollToWatchBtn.onclick = () => {
-      document.getElementById("watchNowBtn").scrollIntoView({ behavior: 'smooth' });
-    };
+    scrollToWatchBtn.addEventListener("click", () => {
+      watchNowBtn.scrollIntoView({ behavior: "smooth" });
+    });
 
-    scrollToUnlockBtn.onclick = () => {
-      document.getElementById("unlockBtn").scrollIntoView({ behavior: 'smooth' });
-    };
+    scrollToUnlockBtn.addEventListener("click", () => {
+      unlockBtn.scrollIntoView({ behavior: "smooth" });
+    });
   </script>
-
 </body>
 </html>
