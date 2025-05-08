@@ -93,6 +93,12 @@
       margin-top: 20px;
       display: none; /* Initially hidden */
     }
+    #blankSearchMessage {
+      color: orange;
+      font-size: 18px;
+      margin-top: 20px;
+      display: none; /* Initially hidden */
+    }
   </style>
 </head>
 <body>
@@ -130,6 +136,8 @@
 
     <!-- No Results Message -->
     <div id="noResultsMessage">No results found for your search.</div>
+    <!-- Blank Search Message -->
+    <div id="blankSearchMessage">Please enter a search term.</div>
 
     <!-- Banner Ad - Below Telegram Button -->
     <div class="ad-box">
@@ -188,6 +196,7 @@
     const searchInput = document.getElementById("searchInput");
     const searchButton = document.getElementById("searchButton");
     const noResultsMessage = document.getElementById("noResultsMessage");
+    const blankSearchMessage = document.getElementById("blankSearchMessage");
 
     db.ref("meta").once("value", (snap) => {
       const meta = snap.val();
@@ -238,11 +247,17 @@
 
     searchButton.addEventListener("click", () => {
       const query = searchInput.value.trim(); // Get the search input
-      console.log("Search Query:", query); // Debugging output
-      const filtered = allPosts.filter(post => {
-        console.log("Checking Post:", post.text.trim()); // Debugging output
-        return post.text.trim() === query; // Check for exact match
-      });
+
+      // Reset messages
+      noResultsMessage.style.display = "none";
+      blankSearchMessage.style.display = "none";
+
+      if (query === "") {
+        blankSearchMessage.style.display = "block"; // Show blank search message
+        return; // Exit the function if the search input is blank
+      }
+
+      const filtered = allPosts.filter(post => post.text.trim() === query); // Check for exact match
 
       renderPosts(filtered);
 
