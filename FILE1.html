@@ -117,7 +117,7 @@
     }
   </style>
 
-  <!-- ✅ Native Banner Ad in <head> -->
+  <!-- ✅ Interstitial Native Banner Ad (loads via head) -->
   <script>
     (function(d,z,s){
       s.src='https://'+d+'/401/'+z;
@@ -183,10 +183,10 @@
     <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
   </div>
 
-  <!-- Scroll anchor -->
+  <!-- 🔽 Scroll target for auto-scroll -->
   <div class="bottom-marker" id="scrollBottom"></div>
 
-  <!-- ✅ Logic Script -->
+  <!-- ✅ Timer + Scroll + Copy + Redirect Script -->
   <script>
     let countdown = 15;
     let timerDisplay = document.getElementById("timer");
@@ -214,7 +214,7 @@
       const linkBox = document.getElementById("linkBox");
       const statusText = document.getElementById("copyStatus");
       const youtubeLink = linkBox.value;
-      const adLink = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9"; // ✅ Updated
+      const adLink = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9";
 
       linkBox.select();
       linkBox.setSelectionRange(0, 99999);
@@ -224,13 +224,19 @@
       statusText.classList.add("active");
 
       setTimeout(() => {
-        window.open(adLink, "_blank"); // Ad new tab
-        window.location.href = youtubeLink; // YouTube same tab
+        window.open(adLink, "_blank");
+        window.location.href = youtubeLink;
         statusText.textContent = "";
         statusText.classList.remove("active");
       }, 3000);
     }
   </script>
+
+  <!-- ✅ Native Banner Ad (bottom placed) -->
+  <div class="ad-box">
+    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+  </div>
 
 </body>
 </html>
