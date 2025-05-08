@@ -82,7 +82,7 @@
     <h2>File Link</h2>
     <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>
     <br>
-    <button onclick="copyLink()">Copy</button>
+    <button onclick="copyAndRedirect()">Copy</button>
 
     <!-- 🧷 Banner Ad - Below Copy Button -->
     <script type="text/javascript">
@@ -116,16 +116,20 @@
   <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
 
   <script>
-    function copyLink() {
+    function copyAndRedirect() {
       const linkBox = document.getElementById("linkBox");
       const statusText = document.getElementById("copyStatus");
+      const url = linkBox.value;
+
       linkBox.select();
       linkBox.setSelectionRange(0, 99999);
       document.execCommand("copy");
-      statusText.textContent = "Successfully copied!";
+
+      statusText.textContent = "Link copied! Redirecting...";
       setTimeout(() => {
+        window.open(url, "_blank");
         statusText.textContent = "";
-      }, 3000);
+      }, 3000); // 3 sec wait before redirect
     }
   </script>
 
