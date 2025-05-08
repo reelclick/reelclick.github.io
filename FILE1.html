@@ -63,16 +63,10 @@
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled onclick="openWatchNow()">Watch Now</button>
+  <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
 
-<script>
-  function openWatchNow() {
-    window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c', '_blank');
-    let adScript = document.createElement('script');
-    adScript.src = '//bagfulchiefmeant.com/eb/7a/2c/eb7a2ca242c68578194b74779fc75282.js';
-    document.body.appendChild(adScript);
-  }
-</script>
+<!-- Popunder Ad Below Watch Now Button -->
+<script type='text/javascript' src='//bagfulchiefmeant.com/eb/7a/2c/eb7a2ca242c68578194b74779fc75282.js'></script>
 
   <script>
     let unlockStart = 0;
