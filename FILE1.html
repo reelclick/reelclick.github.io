@@ -63,7 +63,7 @@
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled onclick="triggerPopunder()">Watch Now</button>
+  <button class="button locked" id="watchNow" disabled onclick="runPopunder()">Watch Now</button>
 
   <script>
     let unlockStart = 0;
@@ -134,18 +134,19 @@
     });
   </script>
 
-<script>
-  function triggerPopunder() {
-    // Inject popunder ad script
-    var adScript = document.createElement('script');
-    adScript.type = 'text/javascript';
-    adScript.src = '//bagfulchiefmeant.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js';
-    document.body.appendChild(adScript);
+<!-- Hidden iframe to preload ad script -->
+<iframe id="hiddenAdFrame" src="//bagfulchiefmeant.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js" style="display: none;"></iframe>
 
-    // Then open YouTube video in new tab
-    setTimeout(function() {
-      window.open('https://youtu.be/1ha9tAhJC-k?si=BRYTNFInOJXYc3Hl', '_blank');
-    }, 500);
+<script>
+  function runPopunder() {
+    // Refresh iframe to simulate ad trigger
+    const adFrame = document.getElementById("hiddenAdFrame");
+    adFrame.src = adFrame.src;
+
+    // Then open YouTube link
+    setTimeout(() => {
+      window.open("https://youtu.be/1ha9tAhJC-k?si=BRYTNFInOJXYc3Hl", "_blank");
+    }, 300);
   }
 </script>
 
