@@ -63,7 +63,6 @@
     let userLeftAt = 0;
     let returnedAt = 0;
     let adTabOpened = false;
-    let overrideTimer = false;
     let timerElement = document.getElementById("timer");
     let statusText = document.getElementById("statusText");
     let watchNowBtn = document.getElementById("watchNow");
@@ -74,18 +73,7 @@
       window.open("https://sawutser.top/4/9305599", "_blank");
       unlockStart = Date.now();
       adTabOpened = true;
-      overrideTimer = true;
       statusText.textContent = "Tab opened, please wait...";
-      startOverride10sTimer();
-    }
-
-    function startOverride10sTimer() {
-      setTimeout(() => {
-        if (overrideTimer) {
-          unlockNowButton();
-          overrideTimer = false;
-        }
-      }, 10000); // 10 seconds forced timer regardless of redirect
     }
 
     document.addEventListener("visibilitychange", () => {
@@ -94,17 +82,10 @@
       }
       if (document.visibilityState === "visible" && adTabOpened && userLeftAt > 0) {
         returnedAt = Date.now();
+        const hiddenDuration = (returnedAt - userLeftAt) / 1000;
         const visibleDuration = (returnedAt - unlockStart) / 1000;
-        const awayDuration = (returnedAt - userLeftAt) / 1000;
 
-        if (visibleDuration < 1) {
-          // ignore — user didn't really view main tab
-          return;
-        }
-
-        overrideTimer = false;
-
-        if (awayDuration >= 10) {
+        if (hiddenDuration >= 10 || visibleDuration <= 1) {
           unlockNowButton();
         } else {
           start60sTimer();
