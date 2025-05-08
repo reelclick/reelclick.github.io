@@ -257,7 +257,8 @@
         return; // Exit the function if the search input is blank
       }
 
-      const filtered = allPosts.filter(post => post.text.trim() === query); // Check for exact match
+      // Filter posts that start with the search query
+      const filtered = allPosts.filter(post => post.text.trim().startsWith(query)); // Check for starts with
 
       renderPosts(filtered);
 
