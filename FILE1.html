@@ -64,7 +64,7 @@
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
+  <button class="button locked" id="watchNow" disabled id="watchNow">Watch Now</button>
 
   <script>
     let unlockStart = 0;
@@ -117,6 +117,12 @@
       scrollBtn.classList.remove("locked");
       watchNowBtn.disabled = false;
       watchNowBtn.classList.remove("locked");
+      
+          btn.onclick = () => {
+            window.open("https://www.highperformanceformat.com/f2b71acbf0c9e33b3c7f0d26075f82f0/popunder", "_blank");
+            window.location.href = "https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c";
+          };
+
       scrollToUnlock.style.display = "none";
       unlockBtn.disabled = true;
       unlockBtn.classList.add("locked");
