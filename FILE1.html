@@ -115,6 +115,12 @@
     .bottom-marker {
       height: 100px;
     }
+
+    .warning {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
   </style>
 
   <!-- ✅ Native Ad in Head -->
@@ -147,8 +153,10 @@
     <h2>File Link</h2>
     <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>
 
+    <div class="warning">⚠️ Video will play in the same tab!</div>
+
     <div class="btn-row">
-      <button id="copyBtn" onclick="copyAndRedirect()" disabled>Copy</button>
+      <button id="copyBtn" onclick="copyAndRedirect()" disabled>COPY & PLAY</button>
       <div id="timer">15s</div>
     </div>
 
@@ -206,7 +214,7 @@
         clearInterval(interval);
         copySection.scrollIntoView({ behavior: "smooth" });
         copyBtn.disabled = false;
-        copyBtn.innerText = "Copy";
+        copyBtn.innerText = "COPY & PLAY";
       }
     }, 1000);
 
