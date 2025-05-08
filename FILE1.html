@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>File Preview (Clean Version)</title>
+  <title>File Preview</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
@@ -68,8 +68,25 @@
 
   <div class="file-no">📁 FILE NO. 23</div>
 
-  <!-- Preview Image -->
+  <!-- Banner Ad (Top) -->
+  <div class="ad-box">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'f2b71acbf0c9e33b3c7f0d26075f82f0',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/f2b71acbf0c9e33b3c7f0d26075f82f0/invoke.js"></script>
+  </div>
+
   <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
+
+  <!-- Native Ad Below Image -->
+  <script async="async" data-cfasync="false" src="//pl26579077.profitableratecpm.com/dc88c6da239cfd86a7808cb170e97f4a/invoke.js"></script>
+  <div id="container-dc88c6da239cfd86a7808cb170e97f4a"></div>
 
   <!-- Circular Timer -->
   <div class="timer-wrapper">
@@ -82,18 +99,32 @@
 
   <button id="watchBtn" disabled>Watch Now</button>
 
+  <!-- Ad Below Watch Now Button -->
+  <div class="bottom-ad">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '87e61958e9cc8274df3e93ac037c7009',
+        'format' : 'iframe',
+        'height' : 300,
+        'width' : 160,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/87e61958e9cc8274df3e93ac037c7009/invoke.js"></script>
+  </div>
+
   <!-- Background Audio -->
   <audio id="bgMusic" autoplay loop>
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
   </audio>
 
-  <!-- Timer Script with 5s Fallback -->
   <script>
-    function startTimer() {
+    window.addEventListener('load', function () {
       let seconds = 15;
       const btn = document.getElementById("watchBtn");
       const countdownText = document.getElementById("countdownText");
       const progressCircle = document.getElementById("progressCircle");
+
       const totalLength = 2 * Math.PI * 60;
 
       const countdown = setInterval(() => {
@@ -107,55 +138,20 @@
           btn.disabled = false;
           btn.classList.add("active");
           btn.style.cursor = "pointer";
+
           btn.onclick = () => {
+            window.open("https://www.highperformanceformat.com/f2b71acbf0c9e33b3c7f0d26075f82f0/popunder", "_blank");
             window.location.href = "https://your-video-link.com";
           };
+
           btn.scrollIntoView({ behavior: "smooth" });
         }
       }, 1000);
-    }
-
-    // DOM ready
-    document.addEventListener('DOMContentLoaded', function () {
-      startTimer();
     });
-
-    // Fallback after 5 sec
-    setTimeout(() => {
-      if (!document.getElementById("watchBtn").classList.contains("active")) {
-        startTimer();
-      }
-    }, 5000);
   </script>
 
-  <!-- Interstitial Ad -->
-  <script>
-    (function(d,z,s){
-      s.src='https://'+d+'/401/'+z;
-      try{
-        (document.body||document.documentElement).appendChild(s)
-      }catch(e){}
-    })('groleegni.net',9303011,document.createElement('script'))
-  </script>
-
-  <!-- Native Banner -->
-  <script>
-    (function(s,u,z,p){
-      s.src = u;
-      s.setAttribute('data-zone', z);
-      p.appendChild(s);
-    })(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9303076,document.body||document.documentElement);
-  </script>
-
-  <!-- One Click Popunder + Vintage Banner -->
-  <script>
-    (function(d,z,s){
-      s.src='https://'+d+'/401/'+z;
-      try{
-        (document.body||document.documentElement).appendChild(s)
-      }catch(e){}
-    })('gizokraijaw.net',9303082,document.createElement('script'))
-  </script>
+  <!-- Popunder Ad Script -->
+  <script type='text/javascript' src='//pl26579176.profitableratecpm.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js'></script>
 
 </body>
 </html>
