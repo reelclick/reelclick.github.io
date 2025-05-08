@@ -87,6 +87,12 @@
       cursor: pointer;
       margin-left: 10px;
     }
+    #noResultsMessage {
+      color: red;
+      font-size: 18px;
+      margin-top: 20px;
+      display: none; /* Initially hidden */
+    }
   </style>
 </head>
 <body>
@@ -121,6 +127,9 @@
       <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Icon" />
       Join Telegram
     </a>
+
+    <!-- No Results Message -->
+    <div id="noResultsMessage">No results found for your search.</div>
 
     <!-- Banner Ad - Below Telegram Button -->
     <div class="ad-box">
@@ -178,6 +187,7 @@
     const postsContainer = document.getElementById("posts");
     const searchInput = document.getElementById("searchInput");
     const searchButton = document.getElementById("searchButton");
+    const noResultsMessage = document.getElementById("noResultsMessage");
 
     db.ref("meta").once("value", (snap) => {
       const meta = snap.val();
@@ -194,20 +204,25 @@
 
     function renderPosts(posts) {
       postsContainer.innerHTML = "";
-      posts.forEach(post => {
-        if (post.image) {
-          const img = document.createElement("img");
-          img.src = post.image;
-          img.className = "image-preview";
-          postsContainer.appendChild(img);
-        }
-        const a = document.createElement("a");
-        a.href = post.link;
-        a.className = "btn";
-        a.target = "_blank";
-        a.innerText = post.text;
-        postsContainer.appendChild(a);
-      });
+      if (posts.length === 0) {
+        noResultsMessage.style.display = "block"; // Show no results message
+      } else {
+        noResultsMessage.style.display = "none"; // Hide no results message
+        posts.forEach(post => {
+          if (post.image) {
+            const img = document.createElement("img");
+            img.src = post.image;
+            img.className = "image-preview";
+            postsContainer.appendChild(img);
+          }
+          const a = document.createElement("a");
+          a.href = post.link;
+          a.className = "btn";
+          a.target = "_blank";
+          a.innerText = post.text;
+          postsContainer.appendChild(a);
+        });
+      }
     }
 
     db.ref("posts").on("value", (snapshot) => {
@@ -222,9 +237,9 @@
     });
 
     searchButton.addEventListener("click", () => {
-      const query = searchInput.value.toLowerCase();
+      const query = searchInput.value.trim(); // Get the search input
       const filtered = allPosts.filter(post =>
-        post.text.toLowerCase().includes(query) || post.link.toLowerCase().includes(query)
+        post.text.trim() === query // Check for exact match
       );
 
       renderPosts(filtered);
