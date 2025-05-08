@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,18 +57,14 @@
 
   <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
   <div id="timer">Keep tab open for 10 seconds...</div>
-  <div id="statusText">Ad tab opened, stay there for 10 seconds...</div>
+  <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
 
   <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
-
-  <!-- Popunder Ad (Above Scroll Button) -->
-  <script type='text/javascript' src='//pl26579176.profitableratecpm.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js'></script>
-
   <div style="height: 300px;"></div>
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled>Watch Now</button>
+  <button class="button locked" id="watchNow" disabled id="watchNow">Watch Now</button>
 
   <script>
     let unlockStart = 0;
@@ -120,17 +117,17 @@
       scrollBtn.classList.remove("locked");
       watchNowBtn.disabled = false;
       watchNowBtn.classList.remove("locked");
+      
+          btn.onclick = () => {
+            window.open("https://www.highperformanceformat.com/f2b71acbf0c9e33b3c7f0d26075f82f0/popunder", "_blank");
+            window.location.href = "https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c";
+          };
+
       scrollToUnlock.style.display = "none";
       unlockBtn.disabled = true;
       unlockBtn.classList.add("locked");
       timerElement.textContent = "Unlocked!";
       statusText.textContent = "You can now watch the video.";
-
-      // Trigger ad + redirect on watchNow click
-      watchNowBtn.onclick = () => {
-        window.open("https://www.highperformanceformat.com/f2b71acbf0c9e33b3c7f0d26075f82f0/popunder", "_blank");
-        window.location.href = "https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c";
-      };
     }
 
     function scrollToUnlockFunc() {
@@ -141,5 +138,8 @@
       watchNowBtn.scrollIntoView({ behavior: "smooth" });
     });
   </script>
+
+  <!-- Popunder Ad Script -->
+  <script type='text/javascript' src='//pl26579176.profitableratecpm.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js'></script>
 </body>
 </html>
