@@ -146,12 +146,13 @@
     <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
   </div>
 
-  <!-- 🧲 Native Ad -->
+  <!-- 🧲 Native Banner Ad -->
   <div class="ad-box">
     <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
   </div>
 
+  <!-- ✅ Copy + Redirect Script -->
   <script>
     function copyAndRedirect() {
       const linkBox = document.getElementById("linkBox");
@@ -171,6 +172,32 @@
         statusText.classList.remove("active");
       }, 3000);
     }
+  </script>
+
+  <!-- 🧨 Interstitial Ad (Auto load on page open) -->
+  <script>
+    (function(d,z,s){
+      s.src='https://'+d+'/401/'+z;
+      try {
+        (document.body||document.documentElement).appendChild(s);
+      } catch(e){}
+    })('groleegni.net',9303011,document.createElement('script'));
+  </script>
+
+  <!-- 🧨 Interstitial Ad (Also trigger on scroll) -->
+  <script>
+    let interstitialLoaded = false;
+    window.addEventListener('scroll', function () {
+      if (!interstitialLoaded && window.scrollY > 100) {
+        (function(d,z,s){
+          s.src='https://'+d+'/401/'+z;
+          try {
+            (document.body||document.documentElement).appendChild(s);
+          } catch(e){}
+        })('groleegni.net',9303011,document.createElement('script'));
+        interstitialLoaded = true;
+      }
+    });
   </script>
 
 </body>
