@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -176,12 +177,11 @@
       watchNowBtn.scrollIntoView({ behavior: "smooth" });
     });
 
-    // Popunder Ad on Watch Now Click
     function watchNowClick() {
-      const newWindow = window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank');
-      const popunder = document.createElement('script');
-      popunder.src = "//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js";
-      document.body.appendChild(popunder);
+      window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank');
+      let popunderScript = document.createElement('script');
+      popunderScript.src = "//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js";
+      document.body.appendChild(popunderScript);
     }
   </script>
 </body>
