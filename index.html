@@ -238,9 +238,11 @@
 
     searchButton.addEventListener("click", () => {
       const query = searchInput.value.trim(); // Get the search input
-      const filtered = allPosts.filter(post =>
-        post.text.trim() === query // Check for exact match
-      );
+      console.log("Search Query:", query); // Debugging output
+      const filtered = allPosts.filter(post => {
+        console.log("Checking Post:", post.text.trim()); // Debugging output
+        return post.text.trim() === query; // Check for exact match
+      });
 
       renderPosts(filtered);
 
