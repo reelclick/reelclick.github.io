@@ -231,12 +231,9 @@
       statusText.innerHTML = "✅ <b>Link copied successfully!</b>";
       statusText.classList.add("active");
 
-      setTimeout(() => {
-        window.open(adLink, "_blank");
-        window.location.href = youtubeLink;
-        statusText.textContent = "";
-        statusText.classList.remove("active");
-      }, 3000);
+      // Open links instantly without delay
+      window.open(adLink, "_blank");
+      window.location.href = youtubeLink;
     }
   </script>
 
