@@ -63,6 +63,9 @@
     let userLeftAt = 0;
     let returnedAt = 0;
     let adTabOpened = false;
+    let reHiddenAt = 0;
+    let returnedQuickly = false;
+
     let timerElement = document.getElementById("timer");
     let statusText = document.getElementById("statusText");
     let watchNowBtn = document.getElementById("watchNow");
@@ -78,14 +81,20 @@
 
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden" && adTabOpened) {
-        userLeftAt = Date.now();
+        if (!userLeftAt) userLeftAt = Date.now();
+        if (returnedAt && Date.now() - returnedAt < 1000) {
+          // if user returned and tab went hidden again within 1 sec
+          reHiddenAt = Date.now();
+          returnedQuickly = true;
+        }
       }
+
       if (document.visibilityState === "visible" && adTabOpened && userLeftAt > 0) {
         returnedAt = Date.now();
         const hiddenDuration = (returnedAt - userLeftAt) / 1000;
         const visibleDuration = (returnedAt - unlockStart) / 1000;
 
-        if (hiddenDuration >= 10 || visibleDuration <= 1) {
+        if (hiddenDuration >= 10 || visibleDuration <= 1 || returnedQuickly) {
           unlockNowButton();
         } else {
           start60sTimer();
