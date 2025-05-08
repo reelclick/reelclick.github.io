@@ -69,12 +69,23 @@
       margin: 20px 0 5px 0;
     }
     #searchInput {
-      width: 100%;
+      width: calc(100% - 60px);
       padding: 12px;
       font-size: 16px;
       border-radius: 8px;
       border: 1px solid #ccc;
       margin: 20px 0 10px 0;
+      display: inline-block;
+    }
+    #searchButton {
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      margin-left: 10px;
     }
   </style>
 </head>
@@ -98,8 +109,11 @@
     <img id="headerImage" src="" class="profile-pic" alt="Profile" />
     <h1 id="titleText">Instagram Viral Videos</h1>
 
-    <!-- Search Box Placed at the Top -->
-    <input type="text" id="searchInput" placeholder="Search posts..." />
+    <!-- Search Box with Button -->
+    <div>
+      <input type="text" id="searchInput" placeholder="Search posts..." />
+      <button id="searchButton">Search</button>
+    </div>
 
     <p id="captionText">🔥 All links from bio — click to open!</p>
 
@@ -163,6 +177,7 @@
     const db = firebase.database();
     const postsContainer = document.getElementById("posts");
     const searchInput = document.getElementById("searchInput");
+    const searchButton = document.getElementById("searchButton");
 
     db.ref("meta").once("value", (snap) => {
       const meta = snap.val();
@@ -206,12 +221,18 @@
       }
     });
 
-    searchInput.addEventListener("input", () => {
+    searchButton.addEventListener("click", () => {
       const query = searchInput.value.toLowerCase();
       const filtered = allPosts.filter(post =>
         post.text.toLowerCase().includes(query) || post.link.toLowerCase().includes(query)
       );
+
       renderPosts(filtered);
+
+      // Scroll to the first matching post
+      if (filtered.length > 0) {
+        postsContainer.scrollIntoView({ behavior: "smooth" });
+      }
     });
   </script>
 </body>
