@@ -245,7 +245,8 @@
       }
     });
 
-    searchButton.addEventListener("click", () => {
+    // Function to perform the search
+    function performSearch() {
       const query = searchInput.value.trim(); // Get the search input
 
       // Reset messages
@@ -257,14 +258,24 @@
         return; // Exit the function if the search input is blank
       }
 
-      // Filter posts that start with the search query
-      const filtered = allPosts.filter(post => post.text.trim().startsWith(query)); // Check for starts with
+      // Filter posts that include the search query
+      const filtered = allPosts.filter(post => post.text.trim().includes(query)); // Check for inclusion
 
       renderPosts(filtered);
 
       // Scroll to the first matching post
       if (filtered.length > 0) {
         postsContainer.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    // Search button click event
+    searchButton.addEventListener("click", performSearch);
+
+    // Enter key press event for search input
+    searchInput.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        performSearch(); // Call the search function
       }
     });
   </script>
