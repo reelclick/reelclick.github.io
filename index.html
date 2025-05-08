@@ -60,11 +60,8 @@
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>  <div style="margin: 10px 0;"></div>
   <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>  <script>
     let unlockStart = 0;
-    let userLeftAt = 0;
-    let returnedAt = 0;
-    let adTabOpened = false;
-    let reHiddenAt = 0;
-    let returnedQuickly = false;
+    let becameVisibleEarly = false;
+    let wasVisibleBefore10s = false;
 
     let timerElement = document.getElementById("timer");
     let statusText = document.getElementById("statusText");
@@ -75,33 +72,26 @@
     function openAdTab() {
       window.open("https://sawutser.top/4/9305599", "_blank");
       unlockStart = Date.now();
-      adTabOpened = true;
-      statusText.textContent = "Tab opened, please wait...";
-    }
+      statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
+      becameVisibleEarly = false;
+      wasVisibleBefore10s = false;
 
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden" && adTabOpened) {
-        if (!userLeftAt) userLeftAt = Date.now();
-        if (returnedAt && Date.now() - returnedAt < 1000) {
-          // if user returned and tab went hidden again within 1 sec
-          reHiddenAt = Date.now();
-          returnedQuickly = true;
+      const earlyCheck = setTimeout(() => {
+        if (document.visibilityState === 'visible') {
+          wasVisibleBefore10s = true;
         }
-      }
+      }, 9000);
 
-      if (document.visibilityState === "visible" && adTabOpened && userLeftAt > 0) {
-        returnedAt = Date.now();
-        const hiddenDuration = (returnedAt - userLeftAt) / 1000;
-        const visibleDuration = (returnedAt - unlockStart) / 1000;
-
-        if (hiddenDuration >= 10 || visibleDuration <= 1 || returnedQuickly) {
-          unlockNowButton();
-        } else {
+      setTimeout(() => {
+        if (wasVisibleBefore10s) {
+          // User returned too early, run 60s fallback
           start60sTimer();
+        } else {
+          // Assume user stayed in new tab for 10s
+          unlockNowButton();
         }
-        adTabOpened = false;
-      }
-    });
+      }, 10000);
+    }
 
     function start60sTimer() {
       let remaining = 60;
