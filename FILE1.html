@@ -1,158 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>File Preview</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Interstitial Ad (Full screen on page open - optional) -->
-  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
-
+  <meta charset="UTF-8" />
+  <title>File Preview (Clean Version)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      background: #111;
-      color: white;
+      background-color: #111;
+      color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
+      padding: 30px 15px;
+    }
+    .file-no {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      animation: fadeIn 2s ease-out;
     }
     .preview-image {
-      max-width: 400px;
       width: 100%;
+      max-width: 400px;
+      border: 3px solid #444;
       border-radius: 10px;
-      border: 3px solid #555;
+      margin: 20px auto 10px;
+      animation: popIn 1.5s ease-out;
     }
-    .button {
-      background: #00c853;
+    #watchBtn {
+      padding: 12px 30px;
+      font-size: 18px;
+      background: gray;
       color: white;
-      padding: 12px 24px;
-      margin: 10px auto;
       border: none;
       border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      display: block;
-    }
-    #timer {
-      font-size: 20px;
-      margin-top: 10px;
-      animation: pulse 1s infinite;
-    }
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-    #statusText {
-      color: red;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-    .locked {
-      background: #555 !important;
       cursor: not-allowed;
+      opacity: 0.6;
+      transition: background 0.3s ease, opacity 0.3s ease;
+      margin-top: 20px;
+    }
+    #watchBtn.active {
+      background: #00ff99;
+      cursor: pointer;
+      opacity: 1;
+    }
+    .timer-wrapper {
+      margin: 20px auto;
+      width: 120px;
+      height: 120px;
+    }
+    .circle {
+      stroke-dasharray: 377;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <h2>File No. 3</h2>
+  <div class="file-no">📁 FILE NO. 23</div>
 
-  <img class="preview-image" src="https://i.postimg.cc/BvQ3QThn/pexels-rdne-6224976.jpg" alt="Preview">
+  <!-- Preview Image -->
+  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
 
-  <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
+  <!-- Circular Timer -->
+  <div class="timer-wrapper">
+    <svg width="120" height="120">
+      <circle r="60" cx="60" cy="60" stroke="#444" stroke-width="10" fill="none"/>
+      <circle id="progressCircle" r="60" cx="60" cy="60" stroke="#00ff99" stroke-width="10" fill="none" class="circle"/>
+      <text id="countdownText" x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#fff" font-size="22">15</text>
+    </svg>
+  </div>
 
-  <div id="timer">Keep tab open for 10 seconds...</div>
-  <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
+  <button id="watchBtn" disabled>Watch Now</button>
 
-  <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
+  <!-- Background Audio -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+  </audio>
 
-  <div style="height: 300px;"></div>
-
-  <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
-
-  <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/1ha9tAhJC-k?si=BRYTNFInOJXYc3Hl','_blank')">Watch Now</button>
-
-  <!-- JS Logic -->
+  <!-- Timer Script with 5s Fallback -->
   <script>
-    let unlockStart = 0;
-    let becameVisibleEarly = false;
-    let wasVisibleBefore10s = false;
+    function startTimer() {
+      let seconds = 15;
+      const btn = document.getElementById("watchBtn");
+      const countdownText = document.getElementById("countdownText");
+      const progressCircle = document.getElementById("progressCircle");
+      const totalLength = 2 * Math.PI * 60;
 
-    let timerElement = document.getElementById("timer");
-    let statusText = document.getElementById("statusText");
-    let watchNowBtn = document.getElementById("watchNow");
-    let scrollBtn = document.getElementById("scrollToWatch");
-    let scrollToUnlock = document.getElementById("scrollToUnlock");
-    let unlockBtn = document.getElementById("unlockBtn");
+      const countdown = setInterval(() => {
+        countdownText.textContent = seconds;
+        progressCircle.style.strokeDashoffset = totalLength * ((15 - seconds + 1) / 15);
+        seconds--;
 
-    function openAdTab() {
-      unlockStart = Date.now();
-      statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
-      becameVisibleEarly = false;
-      wasVisibleBefore10s = false;
-
-      // Open fullscreen-style ad
-      let adWindow = window.open("", "_blank", `width=${screen.width},height=${screen.height}`);
-      if (adWindow) {
-        adWindow.document.write(`
-          <html>
-            <head><title>Advertisement</title></head>
-            <body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;">
-              <iframe src="https://sawutser.top/4/9305599" style="border:none;width:100vw;height:100vh;"></iframe>
-            </body>
-          </html>
-        `);
-        adWindow.document.close();
-      }
-
-      // Early visibility check
-      setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          wasVisibleBefore10s = true;
-        }
-      }, 9000);
-
-      setTimeout(() => {
-        if (wasVisibleBefore10s) {
-          start60sTimer();
-        } else {
-          unlockNowButton();
-        }
-      }, 10000);
-    }
-
-    function start60sTimer() {
-      let remaining = 60;
-      statusText.textContent = "Aapne tab jaldi band kiya. कृपया 60 सेकंड प्रतीक्षा करें...";
-      let timerInt = setInterval(() => {
-        timerElement.textContent = `Wait ${remaining--}s to unlock...`;
-        if (remaining < 0) {
-          clearInterval(timerInt);
-          unlockNowButton();
+        if (seconds < 0) {
+          clearInterval(countdown);
+          countdownText.textContent = "✔";
+          btn.disabled = false;
+          btn.classList.add("active");
+          btn.style.cursor = "pointer";
+          btn.onclick = () => {
+            window.location.href = "https://your-video-link.com";
+          };
+          btn.scrollIntoView({ behavior: "smooth" });
         }
       }, 1000);
     }
 
-    function unlockNowButton() {
-      scrollBtn.disabled = false;
-      scrollBtn.classList.remove("locked");
-      watchNowBtn.disabled = false;
-      watchNowBtn.classList.remove("locked");
-      scrollToUnlock.style.display = "none";
-      unlockBtn.disabled = true;
-      unlockBtn.classList.add("locked");
-      timerElement.textContent = "Unlocked!";
-      statusText.textContent = "You can now watch the video.";
-    }
-
-    function scrollToUnlockFunc() {
-      document.getElementById("unlockBtn").scrollIntoView({ behavior: "smooth" });
-    }
-
-    scrollBtn.addEventListener("click", () => {
-      watchNowBtn.scrollIntoView({ behavior: "smooth" });
+    // DOM ready
+    document.addEventListener('DOMContentLoaded', function () {
+      startTimer();
     });
+
+    // Fallback after 5 sec
+    setTimeout(() => {
+      if (!document.getElementById("watchBtn").classList.contains("active")) {
+        startTimer();
+      }
+    }, 5000);
   </script>
+
+  <!-- Interstitial Ad -->
+  <script>
+    (function(d,z,s){
+      s.src='https://'+d+'/401/'+z;
+      try{
+        (document.body||document.documentElement).appendChild(s)
+      }catch(e){}
+    })('groleegni.net',9303011,document.createElement('script'))
+  </script>
+
+  <!-- Native Banner -->
+  <script>
+    (function(s,u,z,p){
+      s.src = u;
+      s.setAttribute('data-zone', z);
+      p.appendChild(s);
+    })(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9303076,document.body||document.documentElement);
+  </script>
+
+  <!-- One Click Popunder + Vintage Banner -->
+  <script>
+    (function(d,z,s){
+      s.src='https://'+d+'/401/'+z;
+      try{
+        (document.body||document.documentElement).appendChild(s)
+      }catch(e){}
+    })('gizokraijaw.net',9303082,document.createElement('script'))
+  </script>
+
 </body>
 </html>
