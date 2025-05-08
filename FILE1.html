@@ -115,7 +115,7 @@
     <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>
     <button onclick="copyAndRedirect()">Copy</button>
 
-    <!-- ✅ Status Message -->
+    <!-- ✅ Copy Status Message -->
     <div id="copyStatus"></div>
 
     <!-- 🧷 Mid Ad -->
@@ -147,13 +147,13 @@
     <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
   </div>
 
-  <!-- 🧲 Native Banner Ad -->
+  <!-- 🧲 Native Ad -->
   <div class="ad-box">
     <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
   </div>
 
-  <!-- ✅ Copy + Redirect Script -->
+  <!-- ✅ Copy + Ad + Interstitial Logic -->
   <script>
     function copyAndRedirect() {
       const linkBox = document.getElementById("linkBox");
@@ -169,42 +169,22 @@
       statusText.classList.add("active");
 
       setTimeout(() => {
-        // Open ad in new tab
+        // 1. Open popunder ad in new tab
         window.open(adLink, "_blank");
 
-        // Redirect YouTube link in same tab
+        // 2. Inject interstitial ad dynamically (now works because of user interaction)
+        const interstitial = document.createElement('script');
+        interstitial.src = 'https://groleegni.net/401/9303011';
+        document.body.appendChild(interstitial);
+
+        // 3. Redirect YouTube in same tab
         window.location.href = youtubeLink;
 
+        // Clear message
         statusText.textContent = "";
         statusText.classList.remove("active");
       }, 3000);
     }
-  </script>
-
-  <!-- 🧨 Interstitial Ad (Auto load) -->
-  <script>
-    (function(d,z,s){
-      s.src='https://'+d+'/401/'+z;
-      try {
-        (document.body||document.documentElement).appendChild(s);
-      } catch(e){}
-    })('groleegni.net',9303011,document.createElement('script'));
-  </script>
-
-  <!-- 🧨 Interstitial Ad (Scroll-based) -->
-  <script>
-    let interstitialLoaded = false;
-    window.addEventListener('scroll', function () {
-      if (!interstitialLoaded && window.scrollY > 100) {
-        (function(d,z,s){
-          s.src='https://'+d+'/401/'+z;
-          try {
-            (document.body||document.documentElement).appendChild(s);
-          } catch(e){}
-        })('groleegni.net',9303011,document.createElement('script'));
-        interstitialLoaded = true;
-      }
-    });
   </script>
 
 </body>
