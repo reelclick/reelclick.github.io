@@ -1,1 +1,138 @@
-<script src="https://ligheechoagool.com/88/tag.min.js" data-zone="146193" async data-cfasync="false"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Preview</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .preview-image {
+      max-width: 400px;
+      width: 100%;
+      border-radius: 10px;
+      border: 3px solid #555;
+    }
+    .button {
+      background: #00c853;
+      color: white;
+      padding: 12px 24px;
+      margin: 10px auto;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      display: block;
+    }
+    #timer {
+      font-size: 20px;
+      margin-top: 10px;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    #statusText {
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .locked {
+      background: #555 !important;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h2>File No. 1</h2>
+  <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview">
+
+  <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
+  <div id="timer">Keep tab open for 10 seconds...</div>
+  <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
+
+  <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
+  <div style="height: 300px;"></div>
+  <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
+
+  <div style="margin: 10px 0;"></div>
+  <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
+
+  <script>
+    let unlockStart = 0;
+    let becameVisibleEarly = false;
+    let wasVisibleBefore10s = false;
+
+    let timerElement = document.getElementById("timer");
+    let statusText = document.getElementById("statusText");
+    let watchNowBtn = document.getElementById("watchNow");
+    let scrollBtn = document.getElementById("scrollToWatch");
+    let scrollToUnlock = document.getElementById("scrollToUnlock");
+    let unlockBtn = document.getElementById("unlockBtn");
+
+    function openAdTab() {
+      window.open("https://sawutser.top/4/9305599", "_blank");
+      unlockStart = Date.now();
+      statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
+      becameVisibleEarly = false;
+      wasVisibleBefore10s = false;
+
+      const earlyCheck = setTimeout(() => {
+        if (document.visibilityState === 'visible') {
+          wasVisibleBefore10s = true;
+        }
+      }, 9000);
+
+      setTimeout(() => {
+        if (wasVisibleBefore10s) {
+          start60sTimer();
+        } else {
+          unlockNowButton();
+        }
+      }, 10000);
+    }
+
+    function start60sTimer() {
+      let remaining = 60;
+      statusText.textContent = "Aapne tab jaldi band kiya. कृपया 60 सेकंड प्रतीक्षा करें...";
+      let timerInt = setInterval(() => {
+        timerElement.textContent = `Wait ${remaining--}s to unlock...`;
+        if (remaining < 0) {
+          clearInterval(timerInt);
+          unlockNowButton();
+        }
+      }, 1000);
+    }
+
+    function unlockNowButton() {
+      scrollBtn.disabled = false;
+      scrollBtn.classList.remove("locked");
+      watchNowBtn.disabled = false;
+      watchNowBtn.classList.remove("locked");
+      scrollToUnlock.style.display = "none";
+      unlockBtn.disabled = true;
+      unlockBtn.classList.add("locked");
+      timerElement.textContent = "Unlocked!";
+      statusText.textContent = "You can now watch the video.";
+    }
+
+    function scrollToUnlockFunc() {
+      document.getElementById("unlockBtn").scrollIntoView({ behavior: "smooth" });
+    }
+
+    scrollBtn.addEventListener("click", () => {
+      watchNowBtn.scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+
+  <!-- Rich Tag Ad Script -->
+  <script src="https://ligheechoagool.com/88/tag.min.js" data-zone="146193" async data-cfasync="false"></script>
+</body>
+</html>
