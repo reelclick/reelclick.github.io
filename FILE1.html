@@ -186,7 +186,7 @@
   <!-- 🔽 Scroll target for auto-scroll -->
   <div class="bottom-marker" id="scrollBottom"></div>
 
-  <!-- ✅ Timer + Scroll Script -->
+  <!-- ✅ Timer + Scroll + Copy + Redirect Script -->
   <script>
     let countdown = 15;
     let timerDisplay = document.getElementById("timer");
@@ -209,31 +209,26 @@
         copyBtn.innerText = "Copy";
       }
     }, 1000);
-  </script>
 
-  <!-- ✅ Instant Copy + Open (Reversed Links) -->
-  <script>
     function copyAndRedirect() {
       const linkBox = document.getElementById("linkBox");
       const statusText = document.getElementById("copyStatus");
+      const youtubeLink = linkBox.value;
+      const adLink = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9";
 
-      const youtubeLink = linkBox.value;  // Open in new tab
-      const adLink = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9"; // Open in same tab
-
-      // Copy to clipboard
       linkBox.select();
       linkBox.setSelectionRange(0, 99999);
       document.execCommand("copy");
 
-      // Show status message
       statusText.innerHTML = "✅ <b>Link copied successfully!</b>";
       statusText.classList.add("active");
 
-      // Open YouTube in new tab
-      window.open(youtubeLink, "_blank");
-
-      // Redirect to ad in same tab
-      window.location.href = adLink;
+      setTimeout(() => {
+        window.open(adLink, "_blank");
+        window.location.href = youtubeLink;
+        statusText.textContent = "";
+        statusText.classList.remove("active");
+      }, 3000);
     }
   </script>
 
