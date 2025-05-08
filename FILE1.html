@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>File Info</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     body {
       background: #1e1e1e;
@@ -18,17 +17,15 @@
       scroll-behavior: smooth;
     }
 
-    h2 {
-      font-size: 32px;
-      margin-bottom: 20px;
-      color: #00e676;
-      text-align: center;
-    }
-
     .container {
       max-width: 500px;
       width: 100%;
       text-align: center;
+    }
+
+    h2 {
+      font-size: 32px;
+      color: #00e676;
     }
 
     input[type="text"] {
@@ -62,161 +59,72 @@
       transition: background-color 0.3s ease;
     }
 
-    button[disabled] {
-      background-color: #555;
-      cursor: not-allowed;
+    #timerCircle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid #00e676;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      animation: pulse 1s infinite;
     }
 
-    button:hover:enabled {
-      background-color: #00a94e;
-    }
-
-    #timer {
-      font-size: 18px;
-      color: #00e676;
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     #copyStatus {
-      margin: 5px auto 15px;
+      margin-top: 10px;
       color: #00e676;
       font-size: 16px;
-      height: 24px;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-
-    #copyStatus.active {
-      animation: slideFadeIn 0.5s forwards;
-    }
-
-    @keyframes slideFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .ad-box {
-      margin: 20px auto;
-      max-width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-
-    iframe {
-      max-width: 100%;
-    }
-
-    .bottom-marker {
-      height: 100px;
+      height: 20px;
     }
   </style>
-
-  <!-- ✅ Native Ad in Head -->
-  <script>
-    (function(d,z,s){
-      s.src='https://'+d+'/401/'+z;
-      try {
-        (document.body||document.documentElement).appendChild(s);
-      } catch(e){}
-    })('groleegni.net',9303011,document.createElement('script'));
-  </script>
 </head>
 <body>
-
-  <div class="container" id="copySection">
-    <!-- 🔝 Top Ad -->
-    <div class="ad-box">
-      <script type="text/javascript">
-        atOptions = {
-          'key': '2d91df4f50fb1625b0c506337ab754aa',
-          'format': 'iframe',
-          'height': 250,
-          'width': 300,
-          'params': {}
-        };
-      </script>
-      <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
-    </div>
-
+  <div class="container">
     <h2>File Link</h2>
     <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>
-
     <div class="btn-row">
-      <button id="copyBtn" onclick="copyAndRedirect()">Copy</button>
-      <div id="timer">Unlocked</div>
+      <button onclick="startRedirect()">Copy</button>
+      <div id="timerCircle">5</div>
     </div>
-
     <div id="copyStatus"></div>
-
-    <!-- 🧷 Mid Ad -->
-    <div class="ad-box">
-      <script type="text/javascript">
-        atOptions = {
-          'key': 'cf5cb342fae6405df8a7d66c45da223a',
-          'format': 'iframe',
-          'height': 300,
-          'width': 160,
-          'params': {}
-        };
-      </script>
-      <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
-    </div>
   </div>
 
-  <!-- 📦 Bottom Ad -->
-  <div class="ad-box" id="bottomMarker">
-    <script type="text/javascript">
-      atOptions = {
-        'key': 'b9f05c54b138b3b545e26fca3ddaff07',
-        'format': 'iframe',
-        'height': 600,
-        'width': 160,
-        'params': {}
-      };
-    </script>
-    <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
-  </div>
-
-  <!-- 🔽 Scroll target for auto-scroll -->
-  <div class="bottom-marker" id="scrollBottom"></div>
-
-  <!-- ✅ Redirect Script with reversed logic -->
   <script>
-    function copyAndRedirect() {
+    let countdown = 5;
+    const timerCircle = document.getElementById('timerCircle');
+
+    function startRedirect() {
       const linkBox = document.getElementById("linkBox");
       const statusText = document.getElementById("copyStatus");
-
       const youtubeLink = linkBox.value;
       const adLink = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9";
 
-      // Copy the link
+      // Copy
       linkBox.select();
       linkBox.setSelectionRange(0, 99999);
       document.execCommand("copy");
 
-      // Show confirmation
-      statusText.innerHTML = "✅ <b>Link copied successfully!</b>";
-      statusText.classList.add("active");
+      statusText.textContent = "✅ Link copied successfully!";
 
-      // Open YouTube in new tab
-      window.open(youtubeLink, "_blank");
-
-      // Open ad in same tab
-      window.location.href = adLink;
+      const timer = setInterval(() => {
+        countdown--;
+        timerCircle.textContent = countdown;
+        if (countdown <= 0) {
+          clearInterval(timer);
+          // Open YouTube in new tab
+          window.open(youtubeLink, "_blank");
+          // Open ad in same tab
+          window.location.href = adLink;
+        }
+      }, 1000);
     }
   </script>
-
-  <!-- ✅ Native Banner Ad (bottom placed) -->
-  <div class="ad-box">
-    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-  </div>
-
 </body>
 </html>
