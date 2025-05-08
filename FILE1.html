@@ -1,154 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>File Preview</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      background: #111;
-      color: white;
+      background-color: #111;
+      color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
+      padding: 20px 15px;
+    }
+    .file-no {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 15px 0;
     }
     .preview-image {
-      max-width: 400px;
       width: 100%;
+      max-width: 400px;
       border-radius: 10px;
-      border: 3px solid #555;
+      margin: 15px 0;
     }
     .button {
-      background: #00c853;
-      color: white;
-      padding: 12px 24px;
-      margin: 10px auto;
+      background: #e91e63;
       border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      color: white;
+      padding: 12px 30px;
       font-size: 16px;
-      display: block;
-    }
-    #timer {
-      font-size: 20px;
-      margin-top: 10px;
-      animation: pulse 1s infinite;
-    }
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-    #statusText {
-      color: red;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-    .locked {
-      background: #555 !important;
-      cursor: not-allowed;
+      border-radius: 8px;
+      margin: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h2>File No. 3</h2>
-  <img class="preview-image" src="https://i.postimg.cc/BvQ3QThn/pexels-rdne-6224976.jpg" alt="Preview">
 
-  <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
-  <div id="timer">Keep tab open for 10 seconds...</div>
-  <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
+  <!-- Native Interstitial Banner (Top) -->
+  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
 
-  <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
-  <div style="height: 300px;"></div>
-  <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
+  <div class="file-no">File No. 1</div>
 
-  <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled onclick="runPopunder()">Watch Now</button>
-
-  <script>
-    let unlockStart = 0;
-    let becameVisibleEarly = false;
-    let wasVisibleBefore10s = false;
-
-    let timerElement = document.getElementById("timer");
-    let statusText = document.getElementById("statusText");
-    let watchNowBtn = document.getElementById("watchNow");
-    let scrollBtn = document.getElementById("scrollToWatch");
-    let scrollToUnlock = document.getElementById("scrollToUnlock");
-    let unlockBtn = document.getElementById("unlockBtn");
-
-    function openAdTab() {
-      window.open("https://sawutser.top/4/9305599", "_blank");
-      unlockStart = Date.now();
-      statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
-      becameVisibleEarly = false;
-      wasVisibleBefore10s = false;
-
-      const earlyCheck = setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          wasVisibleBefore10s = true;
-        }
-      }, 9000);
-
-      setTimeout(() => {
-        if (wasVisibleBefore10s) {
-          // User returned too early, run 60s fallback
-          start60sTimer();
-        } else {
-          // Assume user stayed in new tab for 10s
-          unlockNowButton();
-        }
-      }, 10000);
-    }
-
-    function start60sTimer() {
-      let remaining = 60;
-      statusText.textContent = "Aapne tab jaldi band kiya. कृपया 60 सेकंड प्रतीक्षा करें...";
-      let timerInt = setInterval(() => {
-        timerElement.textContent = `Wait ${remaining--}s to unlock...`;
-        if (remaining < 0) {
-          clearInterval(timerInt);
-          unlockNowButton();
-        }
-      }, 1000);
-    }
-
-    function unlockNowButton() {
-      scrollBtn.disabled = false;
-      scrollBtn.classList.remove("locked");
-      watchNowBtn.disabled = false;
-      watchNowBtn.classList.remove("locked");
-      scrollToUnlock.style.display = "none";
-      unlockBtn.disabled = true;
-      unlockBtn.classList.add("locked");
-      timerElement.textContent = "Unlocked!";
-      statusText.textContent = "You can now watch the video.";
-    }
-
-    function scrollToUnlockFunc() {
-      document.getElementById("unlockBtn").scrollIntoView({ behavior: "smooth" });
-    }
-
-    scrollBtn.addEventListener("click", () => {
-      watchNowBtn.scrollIntoView({ behavior: "smooth" });
-    });
+  <!-- Banner Ad (Below File No.) -->
+  <script type="text/javascript">
+    atOptions = {
+      'key' : '2d91df4f50fb1625b0c506337ab754aa',
+      'format' : 'iframe',
+      'height' : 250,
+      'width' : 300,
+      'params' : {}
+    };
   </script>
+  <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
 
-<!-- Hidden iframe to preload ad script -->
-<iframe id="hiddenAdFrame" src="//bagfulchiefmeant.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js" style="display: none;"></iframe>
+  <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" />
 
-<script>
-  function runPopunder() {
-    // Refresh iframe to simulate ad trigger
-    const adFrame = document.getElementById("hiddenAdFrame");
-    adFrame.src = adFrame.src;
+  <!-- Banner Ad (Below Preview Image) -->
+  <script type="text/javascript">
+    atOptions = {
+      'key' : 'cf5cb342fae6405df8a7d66c45da223a',
+      'format' : 'iframe',
+      'height' : 300,
+      'width' : 160,
+      'params' : {}
+    };
+  </script>
+  <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
 
-    // Then open YouTube link
-    setTimeout(() => {
-      window.open("https://youtu.be/1ha9tAhJC-k?si=BRYTNFInOJXYc3Hl", "_blank");
-    }, 300);
-  }
-</script>
+  <div>
+    <button class="button" onclick="alert('Unlock logic here')">Unlock Video</button>
+  </div>
+
+  <!-- Scroll to Watch Now Button -->
+  <div>
+    <button class="button" onclick="document.getElementById('watchNow').scrollIntoView({ behavior: 'smooth' });">Scroll to Watch Now</button>
+  </div>
+
+  <!-- Popunder (Placed after scroll button) -->
+  <script type='text/javascript' src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js'></script>
+
+  <!-- Native Banner (Below Scroll to Watch Now) -->
+  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+
+  <!-- Watch Now Button -->
+  <div id="watchNow">
+    <button class="button" onclick="window.open('https://yourvideo.url','_blank')">Watch Now</button>
+  </div>
+
+  <!-- Banner (Below Watch Now Button) -->
+  <script type="text/javascript">
+    atOptions = {
+      'key' : 'b9f05c54b138b3b545e26fca3ddaff07',
+      'format' : 'iframe',
+      'height' : 600,
+      'width' : 160,
+      'params' : {}
+    };
+  </script>
+  <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
 
 </body>
 </html>
