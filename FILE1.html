@@ -178,7 +178,7 @@
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
   </div>
 
-  <!-- Hidden spacer for scroll -->
+  <!-- Spacer for scroll -->
   <div class="bottom-marker" id="scrollBottom"></div>
 
   <!-- ✅ Script -->
@@ -220,13 +220,7 @@
 
       setTimeout(() => {
         window.open(adLink, "_blank"); // Ad in new tab
-
-        const interstitial = document.createElement('script'); // Interstitial
-        interstitial.src = 'https://groleegni.net/401/9303011';
-        document.body.appendChild(interstitial);
-
         window.location.href = youtubeLink; // YouTube in same tab
-
         statusText.textContent = "";
         statusText.classList.remove("active");
       }, 3000);
