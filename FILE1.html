@@ -61,7 +61,12 @@
       transition: background-color 0.3s ease;
     }
 
-    button:hover {
+    button[disabled] {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+
+    button:hover:enabled {
       background-color: #00a94e;
     }
 
@@ -132,7 +137,7 @@
     <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>
 
     <div class="btn-row">
-      <button onclick="copyAndRedirect()">Copy</button>
+      <button id="copyBtn" onclick="copyAndRedirect()" disabled>Copy</button>
       <div id="timer">15s</div>
     </div>
 
@@ -173,7 +178,7 @@
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
   </div>
 
-  <!-- Hidden spacer to scroll to -->
+  <!-- Hidden spacer for scroll -->
   <div class="bottom-marker" id="scrollBottom"></div>
 
   <!-- ✅ Script -->
@@ -182,6 +187,7 @@
     let timerDisplay = document.getElementById("timer");
     let copySection = document.getElementById("copySection");
     let scrollTarget = document.getElementById("scrollBottom");
+    let copyBtn = document.getElementById("copyBtn");
 
     const interval = setInterval(() => {
       countdown--;
@@ -194,6 +200,8 @@
       if (countdown === 0) {
         clearInterval(interval);
         copySection.scrollIntoView({ behavior: "smooth" });
+        copyBtn.disabled = false;
+        copyBtn.innerText = "Copy";
       }
     }, 1000);
 
@@ -211,16 +219,13 @@
       statusText.classList.add("active");
 
       setTimeout(() => {
-        // Ad in new tab
-        window.open(adLink, "_blank");
+        window.open(adLink, "_blank"); // Ad in new tab
 
-        // Interstitial ad
-        const interstitial = document.createElement('script');
+        const interstitial = document.createElement('script'); // Interstitial
         interstitial.src = 'https://groleegni.net/401/9303011';
         document.body.appendChild(interstitial);
 
-        // YouTube in same tab
-        window.location.href = youtubeLink;
+        window.location.href = youtubeLink; // YouTube in same tab
 
         statusText.textContent = "";
         statusText.classList.remove("active");
