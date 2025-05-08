@@ -61,7 +61,7 @@
       margin-top: 8px;
       color: #00e676;
       font-size: 16px;
-      height: 20px;
+      height: 24px;
     }
 
     .ad-box {
@@ -79,7 +79,7 @@
 <body>
 
   <div class="container">
-    <!-- 🔝 Banner Ad - Top -->
+    <!-- 🔝 Top Ad -->
     <div class="ad-box">
       <script type="text/javascript">
         atOptions = {
@@ -97,7 +97,7 @@
     <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>
     <button onclick="copyAndRedirect()">Copy</button>
 
-    <!-- 🧷 Banner Ad - Mid -->
+    <!-- 🧷 Mid Ad -->
     <div class="ad-box">
       <script type="text/javascript">
         atOptions = {
@@ -114,7 +114,7 @@
     <div id="copyStatus"></div>
   </div>
 
-  <!-- 📦 Banner Ad - Bottom -->
+  <!-- 📦 Bottom Ad -->
   <div class="ad-box">
     <script type="text/javascript">
       atOptions = {
@@ -128,27 +128,30 @@
     <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
   </div>
 
-  <!-- 🧲 Native Banner Ad -->
+  <!-- 🧲 Native Ad -->
   <div class="ad-box">
     <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
   </div>
 
+  <!-- ✅ Script with redirect to ad -->
   <script>
     function copyAndRedirect() {
       const linkBox = document.getElementById("linkBox");
       const statusText = document.getElementById("copyStatus");
-      const url = linkBox.value;
+      const redirectUrl = "https://sawutser.top/4/9305599";
 
       linkBox.select();
       linkBox.setSelectionRange(0, 99999);
       document.execCommand("copy");
 
-      statusText.textContent = "Link copied! Redirecting...";
+      statusText.innerHTML = "✅ <b>Link copied successfully!</b>";
+      statusText.style.color = "#00e676";
+
       setTimeout(() => {
-        window.open(url, "_blank");
+        window.open(redirectUrl, "_blank");
         statusText.textContent = "";
-      }, 3000); // Delay before redirect (3s)
+      }, 3000);
     }
   </script>
 
