@@ -148,8 +148,8 @@
     <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>
 
     <div class="btn-row">
-      <button id="copyBtn" onclick="copyAndRedirect()" disabled>Copy</button>
-      <div id="timer">15s</div>
+      <button id="copyBtn" onclick="copyAndRedirect()">Copy</button>
+      <div id="timer">Unlocked</div>
     </div>
 
     <div id="copyStatus"></div>
@@ -186,49 +186,29 @@
   <!-- 🔽 Scroll target for auto-scroll -->
   <div class="bottom-marker" id="scrollBottom"></div>
 
-  <!-- ✅ Timer + Scroll + Copy + Redirect Script -->
+  <!-- ✅ Redirect Script with reversed logic -->
   <script>
-    let countdown = 15;
-    let timerDisplay = document.getElementById("timer");
-    let copySection = document.getElementById("copySection");
-    let scrollTarget = document.getElementById("scrollBottom");
-    let copyBtn = document.getElementById("copyBtn");
-
-    const interval = setInterval(() => {
-      countdown--;
-      timerDisplay.innerText = countdown + "s";
-
-      if (countdown === 10) {
-        scrollTarget.scrollIntoView({ behavior: "smooth" });
-      }
-
-      if (countdown === 0) {
-        clearInterval(interval);
-        copySection.scrollIntoView({ behavior: "smooth" });
-        copyBtn.disabled = false;
-        copyBtn.innerText = "Copy";
-      }
-    }, 1000);
-
     function copyAndRedirect() {
       const linkBox = document.getElementById("linkBox");
       const statusText = document.getElementById("copyStatus");
+
       const youtubeLink = linkBox.value;
       const adLink = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9";
 
+      // Copy the link
       linkBox.select();
       linkBox.setSelectionRange(0, 99999);
       document.execCommand("copy");
 
+      // Show confirmation
       statusText.innerHTML = "✅ <b>Link copied successfully!</b>";
       statusText.classList.add("active");
 
-      setTimeout(() => {
-        window.open(adLink, "_blank");
-        window.location.href = youtubeLink;
-        statusText.textContent = "";
-        statusText.classList.remove("active");
-      }, 3000);
+      // Open YouTube in new tab
+      window.open(youtubeLink, "_blank");
+
+      // Open ad in same tab
+      window.location.href = adLink;
     }
   </script>
 
