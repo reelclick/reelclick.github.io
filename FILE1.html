@@ -14,6 +14,7 @@
       align-items: center;
       margin: 0;
       padding: 30px 15px 120px;
+      scroll-behavior: smooth;
     }
 
     h2 {
@@ -41,6 +42,14 @@
       margin-bottom: 15px;
     }
 
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
     button {
       background-color: #00c853;
       color: white;
@@ -50,11 +59,15 @@
       font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      margin-bottom: 10px;
     }
 
     button:hover {
       background-color: #00a94e;
+    }
+
+    #timer {
+      font-size: 18px;
+      color: #00e676;
     }
 
     #copyStatus {
@@ -92,20 +105,24 @@
     iframe {
       max-width: 100%;
     }
+
+    .bottom-marker {
+      height: 100px;
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <div class="container" id="copySection">
     <!-- 🔝 Top Ad -->
     <div class="ad-box">
       <script type="text/javascript">
         atOptions = {
-          'key' : '2d91df4f50fb1625b0c506337ab754aa',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
+          'key': '2d91df4f50fb1625b0c506337ab754aa',
+          'format': 'iframe',
+          'height': 250,
+          'width': 300,
+          'params': {}
         };
       </script>
       <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
@@ -113,20 +130,23 @@
 
     <h2>File Link</h2>
     <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>
-    <button onclick="copyAndRedirect()">Copy</button>
 
-    <!-- ✅ Copy Status Message -->
+    <div class="btn-row">
+      <button onclick="copyAndRedirect()">Copy</button>
+      <div id="timer">15s</div>
+    </div>
+
     <div id="copyStatus"></div>
 
     <!-- 🧷 Mid Ad -->
     <div class="ad-box">
       <script type="text/javascript">
         atOptions = {
-          'key' : 'cf5cb342fae6405df8a7d66c45da223a',
-          'format' : 'iframe',
-          'height' : 300,
-          'width' : 160,
-          'params' : {}
+          'key': 'cf5cb342fae6405df8a7d66c45da223a',
+          'format': 'iframe',
+          'height': 300,
+          'width': 160,
+          'params': {}
         };
       </script>
       <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
@@ -134,14 +154,14 @@
   </div>
 
   <!-- 📦 Bottom Ad -->
-  <div class="ad-box">
+  <div class="ad-box" id="bottomMarker">
     <script type="text/javascript">
       atOptions = {
-        'key' : 'b9f05c54b138b3b545e26fca3ddaff07',
-        'format' : 'iframe',
-        'height' : 600,
-        'width' : 160,
-        'params' : {}
+        'key': 'b9f05c54b138b3b545e26fca3ddaff07',
+        'format': 'iframe',
+        'height': 600,
+        'width': 160,
+        'params': {}
       };
     </script>
     <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
@@ -153,8 +173,30 @@
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
   </div>
 
-  <!-- ✅ Copy + Ad + Interstitial Logic -->
+  <!-- Hidden spacer to scroll to -->
+  <div class="bottom-marker" id="scrollBottom"></div>
+
+  <!-- ✅ Script -->
   <script>
+    let countdown = 15;
+    let timerDisplay = document.getElementById("timer");
+    let copySection = document.getElementById("copySection");
+    let scrollTarget = document.getElementById("scrollBottom");
+
+    const interval = setInterval(() => {
+      countdown--;
+      timerDisplay.innerText = countdown + "s";
+
+      if (countdown === 10) {
+        scrollTarget.scrollIntoView({ behavior: "smooth" });
+      }
+
+      if (countdown === 0) {
+        clearInterval(interval);
+        copySection.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 1000);
+
     function copyAndRedirect() {
       const linkBox = document.getElementById("linkBox");
       const statusText = document.getElementById("copyStatus");
@@ -169,18 +211,17 @@
       statusText.classList.add("active");
 
       setTimeout(() => {
-        // 1. Open popunder ad in new tab
+        // Ad in new tab
         window.open(adLink, "_blank");
 
-        // 2. Inject interstitial ad dynamically (now works because of user interaction)
+        // Interstitial ad
         const interstitial = document.createElement('script');
         interstitial.src = 'https://groleegni.net/401/9303011';
         document.body.appendChild(interstitial);
 
-        // 3. Redirect YouTube in same tab
+        // YouTube in same tab
         window.location.href = youtubeLink;
 
-        // Clear message
         statusText.textContent = "";
         statusText.classList.remove("active");
       }, 3000);
