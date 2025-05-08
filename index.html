@@ -1,158 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>File Unlock UI</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Unlock Page</title>
   <style>
     body {
-      background-color: #111;
+      background: #111;
       color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
+      padding: 30px 15px;
     }
-
-    .heading {
-      font-size: 22px;
+    .file-name {
+      font-size: 24px;
       font-weight: bold;
       margin-bottom: 15px;
     }
-
     .preview-image {
-      width: 100%;
-      max-width: 400px;
+      max-width: 100%;
+      max-height: 300px;
       border: 3px solid #444;
       border-radius: 10px;
+      margin-bottom: 20px;
     }
-
     .btn {
-      padding: 12px 24px;
+      margin: 10px;
+      padding: 12px 25px;
       font-size: 16px;
-      margin: 15px auto;
-      display: block;
-      background: #28a745;
-      color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
     }
-
-    .btn:disabled {
+    .locked {
       background: gray;
-      cursor: not-allowed;
+      pointer-events: none;
     }
-
-    #statusText {
-      margin-top: 10px;
-      font-size: 15px;
-      color: #ff4747;
+    .unlocked {
+      background: green;
+      color: white;
     }
-
+    .warning {
+      margin-top: 15px;
+      color: red;
+      font-weight: bold;
+      font-size: 16px;
+    }
     #timer {
-      font-size: 20px;
-      margin-top: 8px;
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-
-    .spacer {
-      height: 200px;
+      font-size: 18px;
+      margin-top: 10px;
+      color: yellow;
     }
   </style>
 </head>
 <body>
+  <div class="file-name">File Name</div>
+  <img src="https://i.imgur.com/Cv0Rj5z.png" class="preview-image" alt="Preview"><button id="unlockBtn" class="btn unlocked">Unlock Video</button>
 
-  <div class="heading">File Name - Video Preview</div>
-  <img src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview" class="preview-image" />
+  <div id="timer"></div>
+  <div class="warning" id="warningText">Keep the tab open for 10 seconds to unlock video</div><button id="scrollToWatchNowBtn" class="btn locked">Scroll to Watch Now</button>
 
-  <button id="unlockBtn" class="btn">Unlock Video</button>
-
-  <div id="statusText">Keep tab open for 10 seconds to unlock the button</div>
-  <div id="timer">00/10 seconds</div>
-
-  <button id="scrollToWatchBtn" class="btn" disabled>Scroll to Watch Now</button>
-
-  <div class="spacer"></div>
-
+  <div style="height: 150px;"></div>
   <button id="scrollToUnlockBtn" class="btn">Scroll to Unlock Video</button>
+  <div style="height: 200px;"></div>
+  <button id="watchNowBtn" class="btn locked">Watch Now</button>  <script>
+    let timerEl = document.getElementById('timer');
+    let unlockBtn = document.getElementById('unlockBtn');
+    let scrollToWatchNowBtn = document.getElementById('scrollToWatchNowBtn');
+    let scrollToUnlockBtn = document.getElementById('scrollToUnlockBtn');
+    let watchNowBtn = document.getElementById('watchNowBtn');
+    let warningText = document.getElementById('warningText');
 
-  <button id="watchNowBtn" class="btn" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
+    let unlockStartTime = null;
+    let force60 = false;
+    let tabBlurred = false;
 
-  <script>
-    const unlockBtn = document.getElementById("unlockBtn");
-    const watchNowBtn = document.getElementById("watchNowBtn");
-    const scrollToWatchBtn = document.getElementById("scrollToWatchBtn");
-    const scrollToUnlockBtn = document.getElementById("scrollToUnlockBtn");
-    const timerEl = document.getElementById("timer");
-    const statusText = document.getElementById("statusText");
+    unlockBtn.addEventListener('click', () => {
+      unlockStartTime = Date.now();
+      window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c', '_blank');
+      startInitialTimer();
+    });
 
-    let newTabOpened = false;
-    let unlockTimer;
-    let countdown = 10;
-    let fallbackTimeout;
+    scrollToWatchNowBtn.addEventListener('click', () => {
+      document.getElementById('watchNowBtn').scrollIntoView({ behavior: 'smooth' });
+    });
 
-    unlockBtn.addEventListener("click", () => {
-      const newTab = window.open("https://sawutser.top/4/9305599", "_blank");
+    scrollToUnlockBtn.addEventListener('click', () => {
+      document.getElementById('unlockBtn').scrollIntoView({ behavior: 'smooth' });
+    });
 
-      newTabOpened = true;
-      statusText.innerText = "Keep tab open for 10 seconds...";
-      countdown = 10;
-      updateTimer();
+    function startInitialTimer() {
+      let timer = 10;
+      timerEl.innerText = `Timer: 0/${timer} seconds`;
+      let interval = setInterval(() => {
+        let elapsed = Math.floor((Date.now() - unlockStartTime) / 1000);
 
-      unlockTimer = setInterval(() => {
-        countdown--;
-        updateTimer();
-
-        if (countdown === 0) {
-          clearInterval(unlockTimer);
-          watchNowBtn.disabled = false;
-          scrollToWatchBtn.disabled = false;
-          scrollToUnlockBtn.style.display = "none";
-          statusText.innerText = "Unlocked! Click below to Watch.";
+        if (elapsed >= 10 && !force60) {
+          clearInterval(interval);
+          unlockScrollAndWatch();
+        } else if (force60 && elapsed >= 60) {
+          clearInterval(interval);
+          unlockScrollAndWatch();
+        } else {
+          timerEl.innerText = `Timer: ${elapsed}/${force60 ? 60 : 10} seconds`;
         }
       }, 1000);
-
-      // Fallback if user closes tab early
-      setTimeout(() => {
-        if (countdown > 0) {
-          clearInterval(unlockTimer);
-          countdown = 60;
-          scrollToWatchBtn.disabled = true;
-          scrollToUnlockBtn.style.display = "block";
-          statusText.innerHTML = "You closed the tab early! कृपया 60 सेकंड का इंतज़ार करें।";
-          fallbackTimeout = setInterval(() => {
-            countdown--;
-            updateTimer();
-            if (countdown === 0) {
-              clearInterval(fallbackTimeout);
-              watchNowBtn.disabled = false;
-              scrollToWatchBtn.disabled = false;
-              scrollToUnlockBtn.style.display = "none";
-              statusText.innerText = "Unlocked! Click below to Watch.";
-            }
-          }, 1000);
-        }
-      }, 3000); // Wait 3 seconds to detect early close
-    });
-
-    function updateTimer() {
-      const total = countdown <= 10 ? 10 : 60;
-      timerEl.innerText = `${(total - countdown).toString().padStart(2, '0')}/${total} seconds`;
     }
 
-    scrollToWatchBtn.addEventListener("click", () => {
-      watchNowBtn.scrollIntoView({ behavior: "smooth" });
-    });
+    function unlockScrollAndWatch() {
+      scrollToWatchNowBtn.classList.remove('locked');
+      scrollToWatchNowBtn.classList.add('unlocked');
+      watchNowBtn.classList.remove('locked');
+      watchNowBtn.classList.add('unlocked');
+      scrollToUnlockBtn.classList.add('locked');
+      warningText.innerText = 'Video unlocked!';
+    }
 
-    scrollToUnlockBtn.addEventListener("click", () => {
-      unlockBtn.scrollIntoView({ behavior: "smooth" });
+    window.onblur = () => {
+      tabBlurred = true;
+    }
+
+    window.onfocus = () => {
+      if (tabBlurred && unlockStartTime && (Date.now() - unlockStartTime) < 10000) {
+        force60 = true;
+        unlockStartTime = Date.now();
+        warningText.innerText = 'You closed/minimized the tab early. Wait 60 seconds to unlock';
+        startInitialTimer();
+      }
+    }
+
+    watchNowBtn.addEventListener('click', () => {
+      window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c', '_blank');
     });
-  </script>
-</body>
+  </script></body>
 </html>
