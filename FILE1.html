@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Watch Now Trigger</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Working Popunder Trigger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       background: #111;
-      color: #fff;
+      color: white;
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 40px;
@@ -28,20 +28,27 @@
   <h2>File No. 3</h2>
   <img src="https://i.postimg.cc/BvQ3QThn/pexels-rdne-6224976.jpg" width="300" style="border-radius: 10px; border: 3px solid #444;"><br><br>
 
-  <button class="button" onclick="triggerPopunder()">Watch Now</button>
-
-  <iframe id="adFrame" style="display:none;"></iframe>
+  <button class="button" onclick="runBoth()">Watch Now</button>
 
   <script>
-    function triggerPopunder() {
-      // Load popunder ad inside a hidden iframe
-      const adFrame = document.getElementById("adFrame");
-      adFrame.src = "https://bagfulchiefmeant.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js";
+    function runBoth() {
+      // Create and auto-click hidden <a> for popunder ad
+      let a1 = document.createElement('a');
+      a1.href = "https://bagfulchiefmeant.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js";
+      a1.target = "_blank";
+      a1.rel = "noopener";
+      document.body.appendChild(a1);
+      a1.click();
 
-      // Open the YouTube video in new tab
+      // Then create and auto-click another <a> for YouTube
       setTimeout(() => {
-        window.open("https://youtu.be/1ha9tAhJC-k?si=BRYTNFInOJXYc3Hl", "_blank");
-      }, 300);
+        let a2 = document.createElement('a');
+        a2.href = "https://youtu.be/1ha9tAhJC-k?si=BRYTNFInOJXYc3Hl";
+        a2.target = "_blank";
+        a2.rel = "noopener";
+        document.body.appendChild(a2);
+        a2.click();
+      }, 500);
     }
   </script>
 
