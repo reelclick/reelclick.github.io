@@ -59,8 +59,10 @@
   <div style="height: 300px;"></div>
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>  <div style="margin: 10px 0;"></div>
   <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>  <script>
-    let unlockStart;
-    let returned = false;
+    let unlockStart = 0;
+    let userLeftAt = 0;
+    let returnedAt = 0;
+    let adTabOpened = false;
     let timerElement = document.getElementById("timer");
     let statusText = document.getElementById("statusText");
     let watchNowBtn = document.getElementById("watchNow");
@@ -68,23 +70,31 @@
     let scrollToUnlock = document.getElementById("scrollToUnlock");
 
     function openAdTab() {
-      unlockStart = Date.now();
       window.open("https://sawutser.top/4/9305599", "_blank");
-      statusText.textContent = "Tab opened, stay for 10 seconds...";
+      unlockStart = Date.now();
+      adTabOpened = true;
+      statusText.textContent = "Tab opened, please wait...";
+    }
 
-      setTimeout(() => {
-        let timeSpent = (Date.now() - unlockStart) / 1000;
-        if (timeSpent >= 10) {
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden" && adTabOpened) {
+        userLeftAt = Date.now();
+      }
+      if (document.visibilityState === "visible" && adTabOpened && userLeftAt > 0) {
+        returnedAt = Date.now();
+        const secondsAway = (returnedAt - userLeftAt) / 1000;
+        if (secondsAway >= 10) {
           unlockNowButton();
         } else {
           start60sTimer();
         }
-      }, 2000); // start checking 2s after opening
-    }
+        adTabOpened = false;
+      }
+    });
 
     function start60sTimer() {
       let remaining = 60;
-      statusText.textContent = "You closed the tab early. कृपया 60 सेकंड प्रतीक्षा करें...";
+      statusText.textContent = "Aapne tab jaldi band kiya. कृपया 60 सेकंड प्रतीक्षा करें...";
       let timerInt = setInterval(() => {
         timerElement.textContent = `Wait ${remaining--}s to unlock...`;
         if (remaining < 0) {
