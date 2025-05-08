@@ -68,6 +68,7 @@
     let watchNowBtn = document.getElementById("watchNow");
     let scrollBtn = document.getElementById("scrollToWatch");
     let scrollToUnlock = document.getElementById("scrollToUnlock");
+    let unlockBtn = document.getElementById("unlockBtn");
 
     function openAdTab() {
       window.open("https://sawutser.top/4/9305599", "_blank");
@@ -111,6 +112,8 @@
       watchNowBtn.disabled = false;
       watchNowBtn.classList.remove("locked");
       scrollToUnlock.style.display = "none";
+      unlockBtn.disabled = true;
+      unlockBtn.classList.add("locked");
       timerElement.textContent = "Unlocked!";
       statusText.textContent = "You can now watch the video.";
     }
