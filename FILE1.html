@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>File Preview</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       background: #111;
@@ -92,8 +92,10 @@
 
       setTimeout(() => {
         if (wasVisibleBefore10s) {
+          // User returned too early, run 60s fallback
           start60sTimer();
         } else {
+          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
@@ -131,14 +133,14 @@
       watchNowBtn.scrollIntoView({ behavior: "smooth" });
     });
 
+    // ✅ POPUNDER TRIGGER CODE ONLY ON WATCH NOW CLICK
     function triggerPopunderAndRedirect() {
-      // Inject popunder ad script
       var adScript = document.createElement('script');
       adScript.type = 'text/javascript';
       adScript.src = '//bagfulchiefmeant.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js';
       document.body.appendChild(adScript);
 
-      // Delay then redirect
+      // Optional delay to ensure ad loads before redirect
       setTimeout(function () {
         window.open('https://youtu.be/1ha9tAhJC-k?si=BRYTNFInOJXYc3Hl', '_blank');
       }, 300);
