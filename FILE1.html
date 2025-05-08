@@ -1,3 +1,4 @@
+<!-- ✅ START -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,49 +6,16 @@
   <title>File Preview</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      background: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    .preview-image {
-      max-width: 400px;
-      width: 100%;
-      border-radius: 10px;
-      border: 3px solid #555;
-    }
+    body { background: #111; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    .preview-image { max-width: 400px; width: 100%; border-radius: 10px; border: 3px solid #555; }
     .button {
-      background: #00c853;
-      color: white;
-      padding: 12px 24px;
-      margin: 10px auto;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      display: block;
+      background: #00c853; color: white; padding: 12px 24px; margin: 10px auto;
+      border: none; border-radius: 8px; cursor: pointer; font-size: 16px; display: block;
     }
-    #timer {
-      font-size: 20px;
-      margin-top: 10px;
-      animation: pulse 1s infinite;
-    }
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-    #statusText {
-      color: red;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-    .locked {
-      background: #555 !important;
-      cursor: not-allowed;
-    }
+    #timer { font-size: 20px; margin-top: 10px; animation: pulse 1s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    #statusText { color: red; font-weight: bold; margin-top: 10px; }
+    .locked { background: #555 !important; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -63,7 +31,7 @@
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled onclick="triggerPopunderAndRedirect()">Watch Now</button>
+  <button class="button locked" id="watchNow" disabled onclick="triggerWatchNow()">Watch Now</button>
 
   <script>
     let unlockStart = 0;
@@ -78,13 +46,13 @@
     let unlockBtn = document.getElementById("unlockBtn");
 
     function openAdTab() {
-      window.open("https://sawutser.top/4/9305599", "_blank");
+      window.open("https://sawutser.top/4/9305599", "_blank"); // direct ad
       unlockStart = Date.now();
       statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
       becameVisibleEarly = false;
       wasVisibleBefore10s = false;
 
-      const earlyCheck = setTimeout(() => {
+      setTimeout(() => {
         if (document.visibilityState === 'visible') {
           wasVisibleBefore10s = true;
         }
@@ -92,10 +60,8 @@
 
       setTimeout(() => {
         if (wasVisibleBefore10s) {
-          // User returned too early, run 60s fallback
           start60sTimer();
         } else {
-          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
@@ -129,22 +95,17 @@
       document.getElementById("unlockBtn").scrollIntoView({ behavior: "smooth" });
     }
 
+    function triggerWatchNow() {
+      window.open("https://youtu.be/1ha9tAhJC-k?si=BRYTNFInOJXYc3Hl", "_blank");
+      let adScript = document.createElement('script');
+      adScript.src = "//bagfulchiefmeant.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js"; // 👈 your popunder
+      document.body.appendChild(adScript);
+    }
+
     scrollBtn.addEventListener("click", () => {
       watchNowBtn.scrollIntoView({ behavior: "smooth" });
     });
-
-    // ✅ POPUNDER TRIGGER CODE ONLY ON WATCH NOW CLICK
-    function triggerPopunderAndRedirect() {
-      var adScript = document.createElement('script');
-      adScript.type = 'text/javascript';
-      adScript.src = '//bagfulchiefmeant.com/c7/fe/e7/c7fee7d119c69f79f2f4a525930cb035.js';
-      document.body.appendChild(adScript);
-
-      // Optional delay to ensure ad loads before redirect
-      setTimeout(function () {
-        window.open('https://youtu.be/1ha9tAhJC-k?si=BRYTNFInOJXYc3Hl', '_blank');
-      }, 300);
-    }
   </script>
 </body>
 </html>
+<!-- ✅ END -->
