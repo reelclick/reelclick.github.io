@@ -1,252 +1,242 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-  <meta charset="UTF-8">  
-  <title>File Info</title>  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  
-  <style>  
-    body {  
-      background: #1e1e1e;  
-      color: #fff;  
-      font-family: 'Segoe UI', sans-serif;  
-      display: flex;  
-      flex-direction: column;  
-      align-items: center;  
-      margin: 0;  
-      padding: 30px 15px 120px;  
-      scroll-behavior: smooth;  
-    }  
-  
-    h2 {  
-      font-size: 32px;  
-      margin-bottom: 20px;  
-      color: #00e676;  
-      text-align: center;  
-    }  
-  
-    .container {  
-      max-width: 500px;  
-      width: 100%;  
-      text-align: center;  
-    }  
-  
-    input[type="text"] {  
-      width: 100%;  
-      padding: 12px;  
-      font-size: 16px;  
-      border: none;  
-      border-radius: 8px;  
-      background: #333;  
-      color: #fff;  
-      text-align: center;  
-      margin-bottom: 15px;  
-    }  
-  
-    .btn-row {  
-      display: flex;  
-      justify-content: center;  
-      align-items: center;  
-      gap: 12px;  
-      margin-bottom: 10px;  
-    }  
-  
-    button {  
-      background-color: #00c853;  
-      color: white;  
-      padding: 10px 20px;  
-      border: none;  
-      border-radius: 6px;  
-      font-size: 16px;  
-      cursor: pointer;  
-      transition: background-color 0.3s ease;  
-    }  
-  
-    button[disabled] {  
-      background-color: #555;  
-      cursor: not-allowed;  
-    }  
-  
-    button:hover:enabled {  
-      background-color: #00a94e;  
-    }  
-  
-    #timer {  
-      font-size: 18px;  
-      color: #00e676;  
-    }  
-  
-    #copyStatus {  
-      margin: 5px auto 15px;  
-      color: #00e676;  
-      font-size: 16px;  
-      height: 24px;  
-      opacity: 0;  
-      transform: translateY(10px);  
-      transition: opacity 0.4s ease, transform 0.4s ease;  
-    }  
-  
-    #copyStatus.active {  
-      animation: slideFadeIn 0.5s forwards;  
-    }  
-  
-    @keyframes slideFadeIn {  
-      from {  
-        opacity: 0;  
-        transform: translateY(10px);  
-      }  
-      to {  
-        opacity: 1;  
-        transform: translateY(0);  
-      }  
-    }  
-  
-    .ad-box {  
-      margin: 20px auto;  
-      max-width: 100%;  
-      display: flex;  
-      justify-content: center;  
-    }  
-  
-    iframe {  
-      max-width: 100%;  
-    }  
-  
-    .bottom-marker {  
-      height: 100px;  
-    }  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Info</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .warning {  
-      color: red;  
-      font-size: 14px;  
-      margin-top: 10px;  
-    }  
-  </style>  
-  
-  <!-- ✅ Popunder Ad Script -->  
-  <script type='text/javascript' src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js'></script>  
-  
-  <!-- ✅ Interstitial Ad Script -->  
-  <script>  
-    (function(d,z,s){  
-      s.src='https://'+d+'/401/'+z;  
-      try {  
-        (document.body||document.documentElement).appendChild(s);  
-      } catch(e){}  
-    })('groleegni.net',9305749,document.createElement('script'));  
-  </script>  
-</head>  
-<body>  
-  
-  <div class="container" id="copySection">  
-    <!-- 🔝 Top Ad -->  
-    <div class="ad-box">  
-      <script type="text/javascript">  
-        atOptions = {  
-          'key': '2d91df4f50fb1625b0c506337ab754aa',  
-          'format': 'iframe',  
-          'height': 250,  
-          'width': 300,  
-          'params': {}  
-        };  
-      </script>  
-      <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>  
-    </div>  
-  
-    <h2>File Link</h2>  
-    <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>  
-  
-    <div class="btn-row">  
-      <button id="copyBtn" onclick="copyAndRedirect()" disabled>Copy & Play</button>  
-      <div id="timer">15s</div>  
-    </div>  
-  
-    <div id="copyStatus"></div>  
-    <div class="warning">Warning: Video will play in the same tab</div>  
-  
-    <!-- 🧷 Mid Ad -->  
-    <div class="ad-box">  
-      <script type="text/javascript">  
-        atOptions = {  
-          'key': 'cf5cb342fae6405df8a7d66c45da223a',  
-          'format': 'iframe',  
-          'height': 300,  
-          'width': 160,  
-          'params': {}  
-        };  
-      </script>  
-      <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>  
-    </div>  
-  </div>  
-  
-  <!-- 📦 Bottom Ad -->  
-  <div class="ad-box" id="bottomMarker">  
-    <script type="text/javascript">  
-      atOptions = {  
-        'key': 'b9f05c54b138b3b545e26fca3ddaff07',  
-        'format': 'iframe',  
-        'height': 600,  
-        'width': 160,  
-        'params': {}  
-      };  
-    </script>  
-    <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>  
-  </div>  
-  
-  <!-- 🔽 Scroll target for auto-scroll -->  
-  <div class="bottom-marker" id="scrollBottom"></div>  
-  
-  <!-- ✅ Timer + Scroll + Copy + Redirect Script -->  
-  <script>  
-    let countdown = 15;  
-    let timerDisplay = document.getElementById("timer");  
-    let copySection = document.getElementById("copySection");  
-    let scrollTarget = document.getElementById("scrollBottom");  
-    let copyBtn = document.getElementById("copyBtn");  
-  
-    const interval = setInterval(() => {  
-      countdown--;  
-      timerDisplay.innerText = countdown + "s";  
-  
-      if (countdown === 10) {  
-        scrollTarget.scrollIntoView({ behavior: "smooth" });  
-      }  
-  
-      if (countdown === 0) {  
-        clearInterval(interval);  
-        copySection.scrollIntoView({ behavior: "smooth" });  
-        copyBtn.disabled = false;  
-        copyBtn.innerText = "Copy & Play";  
-      }  
-    }, 1000);  
-  
-    function copyAndRedirect() {  
-      const linkBox = document.getElementById("linkBox");  
-      const statusText = document.getElementById("copyStatus");  
-      const youtubeLink = linkBox.value;  
-      const adLink = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9";  
-  
-      linkBox.select();  
-      linkBox.setSelectionRange(0, 99999);  
-      document.execCommand("copy");  
-  
-      statusText.innerHTML = "✅ <b>Link copied successfully!</b>";  
-      statusText.classList.add("active");  
-  
-      setTimeout(() => {  
-        window.open(adLink, "_blank");  
-        window.location.href = youtubeLink;  
-        statusText.textContent = "";  
-        statusText.classList.remove("active");  
-      }, 3000);  
-    }  
-  </script>  
-  
-  <!-- ✅ Native Banner Ad (bottom placed) -->  
-  <div class="ad-box">  
-    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>  
-    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>  
-  </div>  
-  
-</body>  
+  <style>
+    body {
+      background: #1e1e1e;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 30px 15px 120px;
+      scroll-behavior: smooth;
+    }
+
+    h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #00e676;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #333;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #00c853;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[disabled] {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+
+    button:hover:enabled {
+      background-color: #00a94e;
+    }
+
+    #timer {
+      font-size: 18px;
+      color: #00e676;
+    }
+
+    #copyStatus {
+      margin: 5px auto 15px;
+      color: #00e676;
+      font-size: 16px;
+      height: 24px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    #copyStatus.active {
+      animation: slideFadeIn 0.5s forwards;
+    }
+
+    @keyframes slideFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ad-box {
+      margin: 20px auto;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    iframe {
+      max-width: 100%;
+    }
+
+    .bottom-marker {
+      height: 100px;
+    }
+  </style>
+
+  <!-- ✅ Native Ad in Head -->
+  <script>
+    (function(d,z,s){
+      s.src='https://'+d+'/401/'+z;
+      try {
+        (document.body||document.documentElement).appendChild(s);
+      } catch(e){}
+    })('groleegni.net',9303011,document.createElement('script'));
+  </script>
+</head>
+<body>
+
+  <div class="container" id="copySection">
+    <!-- 🔝 Top Ad -->
+    <div class="ad-box">
+      <script type="text/javascript">
+        atOptions = {
+          'key': '2d91df4f50fb1625b0c506337ab754aa',
+          'format': 'iframe',
+          'height': 250,
+          'width': 300,
+          'params': {}
+        };
+      </script>
+      <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
+    </div>
+
+    <h2>File Link</h2>
+    <input type="text" id="linkBox" value="https://youtu.be/X40NrruDDqs?si=lw7GjwdzzVh2ywEI" readonly>
+
+    <div class="btn-row">
+      <button id="copyBtn" onclick="copyAndRedirect()" disabled>Copy</button>
+      <div id="timer">15s</div>
+    </div>
+
+    <div id="copyStatus"></div>
+
+    <!-- 🧷 Mid Ad -->
+    <div class="ad-box">
+      <script type="text/javascript">
+        atOptions = {
+          'key': 'cf5cb342fae6405df8a7d66c45da223a',
+          'format': 'iframe',
+          'height': 300,
+          'width': 160,
+          'params': {}
+        };
+      </script>
+      <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
+    </div>
+  </div>
+
+  <!-- 📦 Bottom Ad -->
+  <div class="ad-box" id="bottomMarker">
+    <script type="text/javascript">
+      atOptions = {
+        'key': 'b9f05c54b138b3b545e26fca3ddaff07',
+        'format': 'iframe',
+        'height': 600,
+        'width': 160,
+        'params': {}
+      };
+    </script>
+    <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
+  </div>
+
+  <!-- 🔽 Scroll target for auto-scroll -->
+  <div class="bottom-marker" id="scrollBottom"></div>
+
+  <!-- ✅ Timer + Scroll + Copy + Redirect Script -->
+  <script>
+    let countdown = 15;
+    let timerDisplay = document.getElementById("timer");
+    let copySection = document.getElementById("copySection");
+    let scrollTarget = document.getElementById("scrollBottom");
+    let copyBtn = document.getElementById("copyBtn");
+
+    const interval = setInterval(() => {
+      countdown--;
+      timerDisplay.innerText = countdown + "s";
+
+      if (countdown === 10) {
+        scrollTarget.scrollIntoView({ behavior: "smooth" });
+      }
+
+      if (countdown === 0) {
+        clearInterval(interval);
+        copySection.scrollIntoView({ behavior: "smooth" });
+        copyBtn.disabled = false;
+        copyBtn.innerText = "Copy";
+      }
+    }, 1000);
+
+    function copyAndRedirect() {
+      const linkBox = document.getElementById("linkBox");
+      const statusText = document.getElementById("copyStatus");
+      const youtubeLink = linkBox.value;
+      const adLink = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9";
+
+      linkBox.select();
+      linkBox.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+
+      statusText.innerHTML = "✅ <b>Link copied successfully!</b>";
+      statusText.classList.add("active");
+
+      setTimeout(() => {
+        window.open(adLink, "_blank");
+        window.location.href = youtubeLink;
+        statusText.textContent = "";
+        statusText.classList.remove("active");
+      }, 3000);
+    }
+  </script>
+
+  <!-- ✅ Native Banner Ad (bottom placed) -->
+  <div class="ad-box">
+    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+  </div>
+
+</body>
 </html>
