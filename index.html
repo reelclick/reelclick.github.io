@@ -82,8 +82,11 @@
       }
       if (document.visibilityState === "visible" && adTabOpened && userLeftAt > 0) {
         returnedAt = Date.now();
-        const secondsAway = (returnedAt - userLeftAt) / 1000;
-        if (secondsAway >= 10) {
+        const awayDuration = (returnedAt - userLeftAt) / 1000;
+        const visibleDuration = (userLeftAt - unlockStart) / 1000;
+
+        // Smart logic: unlock if user was away 10s+, or visible for <= 1s before going away
+        if (awayDuration >= 10 || visibleDuration <= 1) {
           unlockNowButton();
         } else {
           start60sTimer();
