@@ -59,39 +59,32 @@
   <div style="height: 300px;"></div>
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>  <div style="margin: 10px 0;"></div>
   <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>  <script>
-    let tabOpened = false;
-    let unlocked = false;
-    let earlyReturn = false;
+    let unlockStart;
+    let returned = false;
     let timerElement = document.getElementById("timer");
     let statusText = document.getElementById("statusText");
     let watchNowBtn = document.getElementById("watchNow");
     let scrollBtn = document.getElementById("scrollToWatch");
     let scrollToUnlock = document.getElementById("scrollToUnlock");
-    let unlockStart;
 
     function openAdTab() {
-      let newTab = window.open("https://sawutser.top/4/9305599", "_blank");
       unlockStart = Date.now();
-      tabOpened = true;
+      window.open("https://sawutser.top/4/9305599", "_blank");
+      statusText.textContent = "Tab opened, stay for 10 seconds...";
 
-      let tabCheck = setInterval(() => {
-        if (newTab.closed) {
-          clearInterval(tabCheck);
-          let timeSpent = (Date.now() - unlockStart) / 1000;
-          if (timeSpent >= 10) {
-            unlockNowButton();
-          } else {
-            earlyReturn = true;
-            timerElement.textContent = "You closed the tab early! Wait 60s to unlock.";
-            statusText.textContent = "Aapne tab jaldi band kiya. 60 second wait karein...";
-            start60sTimer();
-          }
+      setTimeout(() => {
+        let timeSpent = (Date.now() - unlockStart) / 1000;
+        if (timeSpent >= 10) {
+          unlockNowButton();
+        } else {
+          start60sTimer();
         }
-      }, 500);
+      }, 2000); // start checking 2s after opening
     }
 
     function start60sTimer() {
       let remaining = 60;
+      statusText.textContent = "You closed the tab early. कृपया 60 सेकंड प्रतीक्षा करें...";
       let timerInt = setInterval(() => {
         timerElement.textContent = `Wait ${remaining--}s to unlock...`;
         if (remaining < 0) {
