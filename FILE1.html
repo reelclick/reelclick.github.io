@@ -62,6 +62,24 @@
       color: #00e676;
       font-size: 16px;
       height: 24px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    #copyStatus.active {
+      animation: slideFadeIn 0.5s forwards;
+    }
+
+    @keyframes slideFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .ad-box {
@@ -134,7 +152,6 @@
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
   </div>
 
-  <!-- ✅ Script with redirect to ad -->
   <script>
     function copyAndRedirect() {
       const linkBox = document.getElementById("linkBox");
@@ -146,11 +163,12 @@
       document.execCommand("copy");
 
       statusText.innerHTML = "✅ <b>Link copied successfully!</b>";
-      statusText.style.color = "#00e676";
+      statusText.classList.add("active");
 
       setTimeout(() => {
         window.open(redirectUrl, "_blank");
         statusText.textContent = "";
+        statusText.classList.remove("active");
       }, 3000);
     }
   </script>
