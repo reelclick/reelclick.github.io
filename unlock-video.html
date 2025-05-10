@@ -52,6 +52,11 @@
       background: #555 !important;
       cursor: not-allowed;
     }
+    /* Remove extra margin */
+    .ad-container {
+      margin: 0; /* Remove margin */
+      padding: 0; /* Remove padding if any */
+    }
   </style>
 </head>
 <body>
@@ -88,8 +93,10 @@
   <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
 
   <!-- Native Banner Ads Placement -->
-  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+  <div class="ad-container">
+    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+  </div>
 
   <script>
     let unlockStart = 0;
