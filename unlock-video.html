@@ -49,26 +49,33 @@
       cursor: not-allowed;
     }
   </style>
+  
+  <!-- Interstitial Ad -->
+  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
 </head>
 <body>
   <h2>File No. 1</h2>
   <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview">
-
-  <!-- Video Ad -->
-  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-  <ins class="eas6a97888e37" data-zoneid="5607450"></ins>
-  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
 
   <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
   <div id="timer">Keep tab open for 10 seconds...</div>
   <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
 
   <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
+  
+  <!-- Banner Ad Below Scroll to Watch Now Button -->
+  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+
   <div style="height: 300px;"></div>
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
+  
+  <!-- Native Banner Ad Below Watch Now Button -->
+  <button class="button locked" id="watchNow" disabled onclick="watchNow()">Watch Now</button>
+  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
 
   <script>
     let unlockStart = 0;
@@ -83,7 +90,7 @@
     let unlockBtn = document.getElementById("unlockBtn");
 
     function openAdTab() {
-      window.open("https://sawutser.top/4/9305599", "_blank");
+      window.open("https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9", "_self");
       unlockStart = Date.now();
       statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
       becameVisibleEarly = false;
@@ -97,8 +104,10 @@
 
       setTimeout(() => {
         if (wasVisibleBefore10s) {
+          // User returned too early, run 60s fallback
           start60sTimer();
         } else {
+          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
@@ -126,6 +135,10 @@
       unlockBtn.classList.add("locked");
       timerElement.textContent = "Unlocked!";
       statusText.textContent = "You can now watch the video.";
+    }
+
+    function watchNow() {
+      window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c', '_blank');
     }
 
     function scrollToUnlockFunc() {
