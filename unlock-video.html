@@ -4,10 +4,6 @@
   <meta charset="UTF-8">
   <title>File Preview</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Interstitial ad script after head tag -->
-  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
-
   <style>
     body {
       background: #111;
@@ -52,26 +48,16 @@
       background: #555 !important;
       cursor: not-allowed;
     }
-    /* Video ad container styling */
-    .video-ad-container {
-      margin: 20px auto;
-      max-width: 400px;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 3px solid #555;
-    }
   </style>
 </head>
 <body>
   <h2>File No. 1</h2>
   <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview">
 
-  <!-- Video ad below preview image -->
-  <div class="video-ad-container">
-    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-    <ins class="eas6a97888e37" data-zoneid="5607450"></ins>
-    <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-  </div>
+  <!-- Video Ad -->
+  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+  <ins class="eas6a97888e37" data-zoneid="5607450"></ins>
+  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
 
   <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
   <div id="timer">Keep tab open for 10 seconds...</div>
@@ -82,7 +68,7 @@
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled>Watch Now</button>
+  <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
 
   <script>
     let unlockStart = 0;
@@ -111,10 +97,8 @@
 
       setTimeout(() => {
         if (wasVisibleBefore10s) {
-          // User returned too early, run 60s fallback
           start60sTimer();
         } else {
-          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
@@ -150,25 +134,6 @@
 
     scrollBtn.addEventListener("click", () => {
       watchNowBtn.scrollIntoView({ behavior: "smooth" });
-    });
-
-    // Updated Watch Now button click handler to open ad link in same tab and YouTube in new tab,
-    // with fallback if popup blocked
-    watchNowBtn.addEventListener("click", () => {
-      const adLink = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9";
-      const ytLink = "https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c";
-
-      // Try to open YouTube video in new tab
-      const newWindow = window.open(ytLink, "_blank");
-
-      if (newWindow) {
-        // Popup not blocked
-        // Open ad link in same tab
-        window.location.href = adLink;
-      } else {
-        // Popup blocked - open YouTube video in same tab, no ad link opened
-        window.location.href = ytLink;
-      }
     });
   </script>
 </body>
