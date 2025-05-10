@@ -48,17 +48,20 @@
       background: #555 !important;
       cursor: not-allowed;
     }
+    .ad-container {
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
   <h2>File No. 1</h2>
-  
-  <!-- Ad Section -->
-  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-  <ins class="eas6a97888e37" data-zoneid="5607450"></ins>
-  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-  
   <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview">
+
+  <div class="ad-container">
+    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+    <ins class="eas6a97888e37" data-zoneid="5607450"></ins>
+    <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+  </div>
 
   <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
   <div id="timer">Keep tab open for 10 seconds...</div>
@@ -98,10 +101,8 @@
 
       setTimeout(() => {
         if (wasVisibleBefore10s) {
-          // User returned too early, run 60s fallback
           start60sTimer();
         } else {
-          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
@@ -141,4 +142,3 @@
   </script>
 </body>
 </html>
-
