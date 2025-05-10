@@ -49,8 +49,6 @@
       cursor: not-allowed;
     }
   </style>
-  
-  <!-- Interstitial Ad -->
   <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
 </head>
 <body>
@@ -66,17 +64,17 @@
   <div id="timer">Keep tab open for 10 seconds...</div>
   <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
 
-  <!-- Banner Ad (Scroll to Watch Now Button) -->
+  <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
+  <div style="height: 300px;"></div>
+
+  <!-- Banner Ad -->
   <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
   <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
 
-  <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
-  <div style="height: 300px;"></div>
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
-
   <div style="margin: 10px 0;"></div>
-  
-  <!-- Native Banner Ad (Watch Now Button) -->
+
+  <!-- Native Banner Ad -->
   <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
   <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
 
@@ -109,8 +107,10 @@
 
       setTimeout(() => {
         if (wasVisibleBefore10s) {
+          // User returned too early, run 60s fallback
           start60sTimer();
         } else {
+          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
@@ -118,7 +118,7 @@
 
     function start60sTimer() {
       let remaining = 60;
-      statusText.textContent = "आपने टैब जल्दी बंद किया। कृपया 60 सेकंड प्रतीक्षा करें...";
+      statusText.textContent = "Aapne tab jaldi band kiya. कृपया 60 सेकंड प्रतीक्षा करें...";
       let timerInt = setInterval(() => {
         timerElement.textContent = `Wait ${remaining--}s to unlock...`;
         if (remaining < 0) {
