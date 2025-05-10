@@ -53,11 +53,11 @@
       cursor: not-allowed;
     }
     .ad-container {
-      margin: 0; /* Remove margin */
-      padding: 0; /* Remove padding if any */
+      margin: 0;
+      padding: 0;
     }
     .spacer {
-      height: 0; /* Remove unnecessary space */
+      height: 0;
     }
   </style>
 </head>
@@ -66,12 +66,8 @@
   <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview">
 
   <!-- Video Ad Section -->
-  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
-  <ins class="eas6a97888e37" data-zoneid="5607450"></ins> 
-  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-  <!-- Video Slider Ad -->
-  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
-  <ins class="eas6a97888e31" data-zoneid="5607610"></ins> 
+  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+  <ins class="eas6a97888e37" data-zoneid="5607450"></ins>
   <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
 
   <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
@@ -96,12 +92,12 @@
     <div id="button-ad-container"></div>
   </div>
 
-  <div class="spacer"></div> <!-- Removed unnecessary height -->
+  <div class="spacer"></div>
 
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
+  <button class="button locked" id="watchNow" disabled>Watch Now</button>
 
   <!-- Placing the specified ad script at the end -->
   <div class="ad-container">
@@ -176,6 +172,21 @@
     scrollBtn.addEventListener("click", () => {
       watchNowBtn.scrollIntoView({ behavior: "smooth" });
     });
+
+    // Handle Watch Now logic with ad link
+    function handleWatchNow() {
+      const videoUrl = 'https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c';
+      const adUrl = 'https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9';
+      const newTab = window.open(videoUrl, '_blank');
+      if (newTab) {
+        window.location.href = adUrl;
+      } else {
+        window.location.href = videoUrl;
+      }
+    }
+
+    // Update watchNow button onclick
+    watchNowBtn.onclick = handleWatchNow;
   </script>
 </body>
 </html>
