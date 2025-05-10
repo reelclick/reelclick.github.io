@@ -2,73 +2,121 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>All Ads Integration</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Compact Ads Page - Video Ad Fix</title>
-  <!-- Interstitial Ad -->
+
+  <!-- Interstitial ad (just after head) -->
   <script>
     (function(d,z,s){
-      s.src='https://'+d+'/401/'+z;
-      try{(document.body||document.documentElement).appendChild(s);}catch(e){}
-    })('groleegni.net',9305749,document.createElement('script'));
+      s.src = 'https://'+d+'/401/'+z;
+      try { (document.body||document.documentElement).appendChild(s) }
+      catch(e){}
+    })('groleegni.net', 9305749, document.createElement('script'));
   </script>
-  <!-- Load Video Ad Provider -->
-  <script async src="https://a.magsrv.com/ad-provider.js"></script>
+
   <style>
-    body { margin:0; padding:0; font-family:sans-serif; }
-    .container { display:flex; flex-direction:column; align-items:center; max-width:800px; margin:0 auto; padding:20px 0; }
-    .video-ad { width:100%; text-align:center; margin-bottom:20px; }
-    .banners { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; width:100%; margin-bottom:20px; }
-    .banner { flex:1 1 calc(50% - 10px); text-align:center; }
-    .native, .social { width:100%; text-align:center; margin-bottom:20px; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #f9f9f9;
+    }
+    .container {
+      max-width: 360px; /* मोबाईल फ्रेंडली साइज */
+      margin: auto;
+      padding: 10px;
+    }
+    .video-ad,
+    .banner-full {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .split {
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    .split > div {
+      flex: 1;
+      text-align: center;
+    }
+    .native, .social {
+      text-align: center;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <!-- Video Ad -->
+
+    <!-- Video Ad (सबसे ऊपर) -->
     <div class="video-ad">
+      <script async src="https://a.magsrv.com/ad-provider.js" type="application/javascript"></script>
       <ins class="eas6a97888e37" data-zoneid="5607552"></ins>
       <script>
         (AdProvider = window.AdProvider || []).push({"serve":{}});
       </script>
     </div>
-    <!-- Banner Ads -->
-    <div class="banners">
-      <div class="banner">
+
+    <!-- Full-width Banner -->
+    <div class="banner-full">
+      <script type="text/javascript">
+        atOptions = {
+          'key'    : '2d91df4f50fb1625b0c506337ab754aa',
+          'format' : 'iframe',
+          'height' : 250,
+          'width'  : 300,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
+    </div>
+
+    <!-- दो कॉलम में बैनर -->
+    <div class="split">
+      <div>
         <script type="text/javascript">
-          atOptions={key:'6c6f82b32e055860cca41c11d4f47747',format:'iframe',height:90,width:728,params:{}};
+          atOptions = {
+            'key'    : 'cf5cb342fae6405df8a7d66c45da223a',
+            'format' : 'iframe',
+            'height' : 300,
+            'width'  : 160,
+            'params' : {}
+          };
         </script>
-        <script src="//bagfulchiefmeant.com/6c6f82b32e055860cca41c11d4f47747/invoke.js"></script>
+        <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
       </div>
-      <div class="banner">
+      <div>
         <script type="text/javascript">
-          atOptions={key:'2d91df4f50fb1625b0c506337ab754aa',format:'iframe',height:250,width:300,params:{}};
+          atOptions = {
+            'key'    : 'b9f05c54b138b3b545e26fca3ddaff07',
+            'format' : 'iframe',
+            'height' : 600,
+            'width'  : 160,
+            'params' : {}
+          };
         </script>
-        <script src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
-      </div>
-      <div class="banner">
-        <script type="text/javascript">
-          atOptions={key:'cf5cb342fae6405df8a7d66c45da223a',format:'iframe',height:300,width:160,params:{}};
-        </script>
-        <script src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
-      </div>
-      <div class="banner">
-        <script type="text/javascript">
-          atOptions={key:'b9f05c54b138b3b545e26fca3ddaff07',format:'iframe',height:600,width:160,params:{}};
-        </script>
-        <script src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
+        <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
       </div>
     </div>
+
     <!-- Native Banner -->
     <div class="native">
       <script async data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
       <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
     </div>
+
     <!-- Social Ad -->
     <div class="social">
-      <script src="//bagfulchiefmeant.com/ec/c7/21/ecc721f6f4ed2b420c643c4731a1a320.js"></script>
+      <script src="//bagfulchiefmeant.com/ec/c7/21/ecc721f6f4ed2b420c643c4731a1a320.js" type="text/javascript"></script>
     </div>
-    <!-- Popunder Ad -->
-    <script src="//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js"></script>
+
   </div>
+
+  <!-- Popunder Ad (लोड होते ही बैकग्राउंड में) -->
+  <script src="//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js" type="text/javascript"></script>
+
 </body>
 </html>
