@@ -55,10 +55,8 @@
     .ad-container {
       margin: 0; /* Remove margin */
       padding: 0; /* Remove padding if any */
-    }
-    /* Remove height for better layout */
-    .spacer {
-      height: 0; /* Remove unnecessary space */
+      display: flex;
+      justify-content: center;
     }
   </style>
 </head>
@@ -92,8 +90,6 @@
   <div class="ad-container">
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
   </div>
-
-  <div class="spacer"></div> <!-- Removed unnecessary height -->
 
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
