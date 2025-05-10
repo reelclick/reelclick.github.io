@@ -1,14 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>File Preview</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Interatial Ad -->
-  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
-
-  <style>
+<meta charset="utf-8"/>
+<title>File Preview</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<style>
     body {
       background: #111;
       color: white;
@@ -53,31 +50,19 @@
       cursor: not-allowed;
     }
   </style>
-</head>
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script></head>
 <body>
-  <h2>File No. 1</h2>
-  <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview">
-
-  <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
-  <div id="timer">Keep tab open for 10 seconds...</div>
-  <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
-
-  <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
-  <div style="height: 300px;"></div>
-  <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
-
-  <!-- Banner Ad (below unlock video button, above final watch now button) -->
-  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-
-  <div style="margin: 10px 0;"></div>
-  <button class="button locked" id="watchNow" disabled onclick="watchNowRedirect()">Watch Now</button>
-
-  <!-- Native Banner Ad (below final Watch Now button) -->
-  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-
-  <script>
+<h2>File No. 1</h2>
+<img alt="Preview" class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png"/>
+<button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
+<div id="timer">Keep tab open for 10 seconds...</div>
+<div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
+<button class="button locked" disabled="" id="scrollToWatch">Scroll to Watch Now</button><div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div><script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+<div style="height: 300px;"></div>
+<button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
+<div style="margin: 10px 0;"></div>
+<button class="button locked" disabled="" id="watchNow" onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button><div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div><script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+<script>
     let unlockStart = 0;
     let becameVisibleEarly = false;
     let wasVisibleBefore10s = false;
@@ -90,12 +75,8 @@
     let unlockBtn = document.getElementById("unlockBtn");
 
     function openAdTab() {
-      // Try to open ad in same tab
-      window.location.href = "https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9";
-
-      // Open YouTube in new tab
-      let newTab = window.open("https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c", "_blank");
-
+      window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c', '_blank');
+      window.location.href = 'https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9';
       unlockStart = Date.now();
       statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
       becameVisibleEarly = false;
@@ -109,8 +90,10 @@
 
       setTimeout(() => {
         if (wasVisibleBefore10s) {
+          // User returned too early, run 60s fallback
           start60sTimer();
         } else {
+          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
@@ -142,10 +125,6 @@
 
     function scrollToUnlockFunc() {
       document.getElementById("unlockBtn").scrollIntoView({ behavior: "smooth" });
-    }
-
-    function watchNowRedirect() {
-      window.open("https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c", "_blank");
     }
 
     scrollBtn.addEventListener("click", () => {
