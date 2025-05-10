@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <title>File Preview</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Interstitial Ad Script -->
+  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
+
   <style>
     body {
       background: #111;
@@ -49,9 +53,6 @@
       cursor: not-allowed;
     }
   </style>
-  
-  <!-- Interstitial Ad -->
-  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
 </head>
 <body>
   <h2>File No. 1</h2>
@@ -68,20 +69,10 @@
 
   <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
   <div style="height: 300px;"></div>
-
-  <!-- Banner Ad -->
-  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
-
-  <!-- Native Banner Ad -->
-  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-
-  <button class="button locked" id="watchNow" disabled onclick="window.open('https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9','_self'); window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
+  <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
 
   <script>
     let unlockStart = 0;
@@ -110,8 +101,10 @@
 
       setTimeout(() => {
         if (wasVisibleBefore10s) {
+          // User returned too early, run 60s fallback
           start60sTimer();
         } else {
+          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
