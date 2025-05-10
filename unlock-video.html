@@ -49,12 +49,15 @@
       cursor: not-allowed;
     }
   </style>
+  
+  <!-- Interstitial Ad -->
+  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
 </head>
 <body>
   <h2>File No. 1</h2>
   <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview">
 
-  <!-- Ad 1: Below the preview image -->
+  <!-- Video Ad -->
   <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
   <ins class="eas6a97888e37" data-zoneid="5607450"></ins>
   <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
@@ -63,18 +66,21 @@
   <div id="timer">Keep tab open for 10 seconds...</div>
   <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
 
+  <!-- Banner Ad (Scroll to Watch Now Button) -->
+  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
+
   <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
   <div style="height: 300px;"></div>
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
 
   <div style="margin: 10px 0;"></div>
+  
+  <!-- Native Banner Ad (Watch Now Button) -->
+  <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
+  <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
 
-  <!-- Ad 2: Below the Watch Now button -->
-  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-  <ins class="eas6a97888e37" data-zoneid="5607452"></ins>
-  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-
-  <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
+  <button class="button locked" id="watchNow" disabled onclick="window.open('https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9','_self'); window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
 
   <script>
     let unlockStart = 0;
@@ -103,10 +109,8 @@
 
       setTimeout(() => {
         if (wasVisibleBefore10s) {
-          // User returned too early, run 60s fallback
           start60sTimer();
         } else {
-          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
@@ -114,7 +118,7 @@
 
     function start60sTimer() {
       let remaining = 60;
-      statusText.textContent = "Aapne tab jaldi band kiya. कृपया 60 सेकंड प्रतीक्षा करें...";
+      statusText.textContent = "आपने टैब जल्दी बंद किया। कृपया 60 सेकंड प्रतीक्षा करें...";
       let timerInt = setInterval(() => {
         timerElement.textContent = `Wait ${remaining--}s to unlock...`;
         if (remaining < 0) {
