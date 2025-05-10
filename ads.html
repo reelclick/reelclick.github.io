@@ -4,10 +4,30 @@
   <meta charset="UTF-8">
   <title>Ads Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <!-- Popunder Ad (head me) -->
   <script type="text/javascript" src="//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js"></script>
-  
+
+  <!-- Ad-block Detector -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var bait = document.createElement('div');
+      bait.className = 'adsbox';
+      bait.style.height = '1px';
+      bait.style.position = 'absolute';
+      bait.style.top = '-100px';
+      document.body.appendChild(bait);
+      setTimeout(function() {
+        // if the bait is hidden or removed, ad-blocker is active
+        if (bait.offsetParent === null || bait.offsetHeight === 0) {
+          // attempt to close the page
+          window.open('','_self').close();
+        }
+        document.body.removeChild(bait);
+      }, 50);
+    });
+  </script>
+
   <style>
     body {
       margin: 0;
