@@ -53,11 +53,11 @@
       cursor: not-allowed;
     }
     .ad-container {
-      margin: 0; /* Remove margin */
-      padding: 0; /* Remove padding if any */
+      margin: 0;
+      padding: 0;
     }
     .spacer {
-      height: 0; /* Remove unnecessary space */
+      height: 0;
     }
   </style>
 </head>
@@ -70,13 +70,18 @@
   <ins class="eas6a97888e37" data-zoneid="5607450"></ins> 
   <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
 
+  <!-- Video Slider Ad -->
+  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+  <ins class="eas6a97888e31" data-zoneid="5607610"></ins> 
+  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+
   <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
   <div id="timer">Keep tab open for 10 seconds...</div>
   <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
 
   <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
 
-  <!-- New Ad Placement -->
+  <!-- Banner Ad -->
   <script type="text/javascript">
     atOptions = {
       'key' : '2d91df4f50fb1625b0c506337ab754aa',
@@ -92,14 +97,13 @@
     <div id="button-ad-container"></div>
   </div>
 
-  <div class="spacer"></div> <!-- Removed unnecessary height -->
+  <div class="spacer"></div>
 
   <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
-
   <div style="margin: 10px 0;"></div>
   <button class="button locked" id="watchNow" disabled onclick="window.open('https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c','_blank')">Watch Now</button>
 
-  <!-- Placing the specified ad script at the end -->
+  <!-- Native Banner at End -->
   <div class="ad-container">
     <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
@@ -107,9 +111,7 @@
 
   <script>
     let unlockStart = 0;
-    let becameVisibleEarly = false;
     let wasVisibleBefore10s = false;
-
     let timerElement = document.getElementById("timer");
     let statusText = document.getElementById("statusText");
     let watchNowBtn = document.getElementById("watchNow");
@@ -119,23 +121,11 @@
 
     function openAdTab() {
       window.open("https://reelclick.in/ads", "_blank");
-      unlockStart = Date.now();
       statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
-      becameVisibleEarly = false;
-      wasVisibleBefore10s = false;
-
-      const earlyCheck = setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          wasVisibleBefore10s = true;
-        }
-      }, 9000);
-
       setTimeout(() => {
-        if (wasVisibleBefore10s) {
-          // User returned too early, run 60s fallback
+        if (document.visibilityState === 'visible') {
           start60sTimer();
         } else {
-          // Assume user stayed in new tab for 10s
           unlockNowButton();
         }
       }, 10000);
@@ -158,7 +148,6 @@
       scrollBtn.classList.remove("locked");
       watchNowBtn.disabled = false;
       watchNowBtn.classList.remove("locked");
-      scrollToUnlock.style.display = "none";
       unlockBtn.disabled = true;
       unlockBtn.classList.add("locked");
       timerElement.textContent = "Unlocked!";
