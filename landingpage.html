@@ -113,7 +113,6 @@
     <img id="headerImage" src="" class="profile-pic" alt="Profile" />
     <h1 id="titleText"></h1>
 
-    <!-- Search Box with Button -->
     <div>
       <input type="text" id="searchInput" placeholder="Search posts..." />
       <button id="searchButton">Search</button>
@@ -126,7 +125,6 @@
       Join Telegram
     </a>
 
-    <!-- Messages -->
     <div id="noResultsMessage">No results found for your search.</div>
     <div id="blankSearchMessage">Please enter a search term.</div>
     <div id="loadingMessage">Loading profile information...</div>
@@ -157,7 +155,6 @@
     const loadingMessage = document.getElementById("loadingMessage");
 
     loadingMessage.style.display = "block";
-
     let allPosts = [];
 
     function renderPosts(posts) {
