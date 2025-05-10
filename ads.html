@@ -1,93 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Ads Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Popunder Ad (head me) -->
-  <script type="text/javascript" src="//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js"></script>
-
-  <!-- Ad-block Detector -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var bait = document.createElement('div');
-      bait.className = 'adsbox';
-      bait.style.height = '1px';
-      bait.style.position = 'absolute';
-      bait.style.top = '-100px';
-      document.body.appendChild(bait);
-      setTimeout(function() {
-        // if the bait is hidden or removed, ad-blocker is active
-        if (bait.offsetParent === null || bait.offsetHeight === 0) {
-          // attempt to close the page
-          window.open('','_self').close();
-        }
-        document.body.removeChild(bait);
-      }, 50);
-    });
-  </script>
-
+  <meta charset="UTF-8" />
+  <title>Ad Integrated Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
-      padding: 10px;
+      padding: 0;
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      display: flex;
-      justify-content: center;
-    }
-    .ads-container {
-      max-width: 480px;
-      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 10px;
       align-items: center;
+      background: #f4f4f4;
+    }
+    .container {
+      width: 360px;
+      margin: 20px;
+      background: #fff;
+      padding: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
     .video-ads {
       display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-    .banner-flex {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .banner-stacked {
-      display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 10px;
+      margin-bottom: 10px;
     }
-    .native-ads {
+    .side-ads {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+    .side-ads .ad {
+      flex: 1;
+      display: flex;
       justify-content: center;
+    }
+    .bottom-native {
+      margin-bottom: 10px;
+    }
+    /* AdBlock detection bait */
+    .adsbox {
+      width: 1px;
+      height: 1px;
+      position: absolute;
+      top: -1000px;
     }
   </style>
+
+  <!-- Popunder Ad (place before closing head) -->
+  <script type='text/javascript' src='//bagfulchiefmeant.com/92/21/56/9221566e7697ee04df373c10153046bc.js'></script>
+
+  <!-- AdBlock detection -->
+  <div class="adsbox"></div>
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var bait = document.querySelector('.adsbox');
+        if (!bait || bait.offsetHeight === 0 || bait.offsetWidth === 0) {
+          window.open('','_self');
+          window.close();
+        }
+      }, 1000);
+    });
+  </script>
 </head>
 <body>
-  <div class="ads-container">
-    
-    <!-- Top: Video Ads -->
+  <div class="container">
+    <!-- Video Ads at Top -->
     <div class="video-ads">
       <!-- Video Ad 1 -->
-      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
       <ins class="eas6a97888e37" data-zoneid="5607552"></ins>
       <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
       <!-- Video Ad 2 -->
-      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
+      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
       <ins class="eas6a97888e37" data-zoneid="5607586"></ins>
       <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
     </div>
-    
-    <!-- Middle: Banners -->
-    <div class="banner-flex">
-      <!-- Banner 300×250 -->
-      <div>
+
+    <!-- Side Banners -->
+    <div class="side-ads">
+      <div class="ad">
+        <!-- Banner Ad 300x250 -->
         <script type="text/javascript">
           atOptions = {
             'key' : '2d91df4f50fb1625b0c506337ab754aa',
@@ -99,48 +97,40 @@
         </script>
         <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
       </div>
-      <!-- Right: Two stacked banners -->
-      <div class="banner-stacked">
-        <!-- Banner 160×300 -->
-        <script type="text/javascript">
-          atOptions = {
-            'key' : 'cf5cb342fae6405df8a7d66c45da223a',
-            'format' : 'iframe',
-            'height' : 300,
-            'width' : 160,
-            'params' : {}
-          };
-        </script>
-        <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
-        <!-- Banner 160×600 -->
-        <script type="text/javascript">
-          atOptions = {
-            'key' : 'b9f05c54b138b3b545e26fca3ddaff07',
-            'format' : 'iframe',
-            'height' : 600,
-            'width' : 160,
-            'params' : {}
-          };
-        </script>
-        <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
+      <div class="ad">
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:center;">
+          <!-- Banner Ad 160x300 -->
+          <script type="text/javascript">
+            atOptions = {
+              'key' : 'cf5cb342fae6405df8a7d66c45da223a',
+              'format' : 'iframe',
+              'height' : 300,
+              'width' : 160,
+              'params' : {}
+            };
+          </script>
+          <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
+          <!-- Banner Ad 160x600 -->
+          <script type="text/javascript">
+            atOptions = {
+              'key' : 'b9f05c54b138b3b545e26fca3ddaff07',
+              'format' : 'iframe',
+              'height' : 600,
+              'width' : 160,
+              'params' : {}
+            };
+          </script>
+          <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
+        </div>
       </div>
     </div>
-    
-    <!-- Bottom: Native Banners -->
-    <div class="native-ads">
-      <!-- Native Banner 1 -->
+
+    <!-- Native Banner -->
+    <div class="bottom-native">
       <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
       <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-      <!-- Native Banner 2 -->
-      <script>
-        (function(d,z,s){
-          s.src='https://'+d+'/401/'+z;
-          try{(document.body||document.documentElement).appendChild(s)}
-          catch(e){}
-        })('groleegni.net',9305749,document.createElement('script'));
-      </script>
+      <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9305749,document.createElement('script'))</script>
     </div>
-    
   </div>
 </body>
 </html>
