@@ -22,64 +22,62 @@
     });
   </script>
   <style>
-    body { margin:0; padding:0; font-family: sans-serif; }
-    .video-ads, .banners { display:flex; flex-wrap:wrap; justify-content:center; }
-    .video-ads > * { margin:5px; }
-    .banners > .banner { margin:5px; }
-    .native-banner { text-align:center; margin:10px; }
+    body { margin:0; padding:0; font-family: sans-serif; background:#111; color:#fff; }
+    .video-ads {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 15px;
+      background: #000;
+    }
+    .video-ads .ad-slot {
+      flex: 1;
+      max-width: 480px;
+    }
+    .banners {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px;
+    }
+    .banners .banner { flex: 1; max-width: 320px; }
+    .native-banner { text-align: center; padding: 15px; }
   </style>
 </head>
 <body>
   <!-- Video Ads at the top -->
   <div class="video-ads">
-    <!-- Video Ad 1 -->
-    <script async src="https://a.magsrv.com/ad-provider.js"></script>
-    <ins class="eas6a97888e37" data-zoneid="5607552"></ins>
-    <script> (AdProvider = window.AdProvider||[]).push({serve:{}}); </script>
-    <!-- Video Ad 2 -->
-    <script async src="https://a.magsrv.com/ad-provider.js"></script>
-    <ins class="eas6a97888e37" data-zoneid="5607586"></ins>
-    <script> (AdProvider = window.AdProvider||[]).push({serve:{}}); </script>
+    <div class="ad-slot">
+      <script async src="https://a.magsrv.com/ad-provider.js"></script>
+      <ins class="eas6a97888e37" data-zoneid="5607552"></ins>
+      <script> (AdProvider = window.AdProvider || []).push({serve:{}}); </script>
+    </div>
+    <div class="ad-slot">
+      <script async src="https://a.magsrv.com/ad-provider.js"></script>
+      <ins class="eas6a97888e37" data-zoneid="5607586"></ins>
+      <script> (AdProvider = window.AdProvider || []).push({serve:{}}); </script>
+    </div>
   </div>
 
-  <!-- Banner Ads in a single row -->
+  <!-- Banner Ads -->
   <div class="banners">
-    <!-- Banner 1 -->
     <div class="banner">
       <script>
-        atOptions = {
-          'key'    : '2d91df4f50fb1625b0c506337ab754aa',
-          'format' : 'iframe',
-          'height' : 250,
-          'width'  : 300,
-          'params' : {}
-        };
+        atOptions = { key:'2d91df4f50fb1625b0c506337ab754aa', format:'iframe', height:250, width:300, params:{} };
       </script>
       <script src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
     </div>
-    <!-- Banner 2 -->
     <div class="banner">
       <script>
-        atOptions = {
-          'key'    : 'cf5cb342fae6405df8a7d66c45da223a',
-          'format' : 'iframe',
-          'height' : 300,
-          'width'  : 160,
-          'params' : {}
-        };
+        atOptions = { key:'cf5cb342fae6405df8a7d66c45da223a', format:'iframe', height:300, width:160, params:{} };
       </script>
       <script src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
     </div>
-    <!-- Banner 3 -->
     <div class="banner">
       <script>
-        atOptions = {
-          'key'    : 'b9f05c54b138b3b545e26fca3ddaff07',
-          'format' : 'iframe',
-          'height' : 600,
-          'width'  : 160,
-          'params' : {}
-        };
+        atOptions = { key:'b9f05c54b138b3b545e26fca3ddaff07', format:'iframe', height:600, width:160, params:{} };
       </script>
       <script src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
     </div>
@@ -89,14 +87,7 @@
   <div class="native-banner">
     <script async data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
     <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-    <script>
-      (function(d,z,s){
-        s.src = 'https://'+d+'/401/'+z;
-        try {
-          (document.body||document.documentElement).appendChild(s);
-        } catch(e){}
-      })('groleegni.net',9305749,document.createElement('script'));
-    </script>
+    <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9305749,document.createElement('script'));</script>
   </div>
 </body>
 </html>
