@@ -77,14 +77,17 @@
             window.location.href = "setup.html";
           } else {
             user.sendEmailVerification().then(() => {
-              errorMsg.textContent = "Please verify your email. A verification link has been sent to your email.";
+              errorMsg.textContent = "Please verify your email. A verification link has been sent.";
+              firebase.auth().signOut();
+            }).catch(err => {
+              errorMsg.textContent = "Failed to send verification email.";
               firebase.auth().signOut();
             });
           }
         })
         .catch(error => {
           if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
-            errorMsg.textContent = "Wrong email or password.";
+            errorMsg.textContent = "Wrong authentication information.";
           } else {
             errorMsg.textContent = error.message;
           }
