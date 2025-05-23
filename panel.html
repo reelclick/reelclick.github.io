@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Dashboard - ReelClick</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard - ReelClick</title>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -24,46 +24,9 @@
       font-size: 28px;
       margin: 0;
     }
-    .profile-box {
-      text-align: right;
-      margin-bottom: 10px;
-      padding-right: 10px;
-    }
-    .profile-btn {
-      background: #222;
-      border: 1px solid #ff4d4d;
+    h2 {
       color: #ff4d4d;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .profile-dropdown {
-      background: #111;
-      border: 1px solid #444;
-      padding: 10px;
-      margin-top: 5px;
-      display: none;
-      position: absolute;
-      right: 20px;
-      width: 220px;
-      border-radius: 6px;
-      z-index: 999;
-    }
-    .profile-dropdown p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: #ccc;
-    }
-    .profile-dropdown button {
-      background: #ff4d4d;
-      color: white;
-      border: none;
-      padding: 8px;
-      border-radius: 5px;
-      width: 100%;
-      margin-top: 10px;
-      cursor: pointer;
+      text-align: center;
     }
     .content {
       max-width: 700px;
@@ -72,14 +35,12 @@
       background: #111;
       border-radius: 10px;
     }
-    .link-output {
-      margin-bottom: 20px;
-      background: #222;
-      padding: 12px;
-      text-align: center;
-      border-radius: 6px;
-      color: #4dfc91;
-      font-size: 14px;
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px 0 10px;
+      border-bottom: 1px solid #444;
+      padding-bottom: 6px;
     }
     label { display: block; margin-top: 10px; }
     input, textarea {
@@ -102,6 +63,15 @@
       font-size: 16px;
       cursor: pointer;
     }
+    .link-output {
+      margin-bottom: 20px;
+      background: #222;
+      padding: 12px;
+      text-align: center;
+      border-radius: 6px;
+      color: #4dfc91;
+      font-size: 14px;
+    }
     .toggle-btn {
       background: none;
       color: #4dfc91;
@@ -119,35 +89,66 @@
       border-radius: 6px;
     }
     .post-card img { width: 100%; border-radius: 6px; margin-bottom: 10px; }
-    .section-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin: 20px 0 10px;
-      border-bottom: 1px solid #444;
-      padding-bottom: 6px;
+    .post-card input { margin-bottom: 6px; }
+    .post-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Profile dropdown */
+    .profile-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .profile-btn {
+      background: #444;
+      color: #fff;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .profile-dropdown {
+      background: #222;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 8px;
+      display: none;
+    }
+    .profile-dropdown p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #ccc;
+    }
+    .profile-dropdown button {
+      width: auto;
+      padding: 6px 12px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
   <header><h1>ReelClick</h1></header>
+  <h2>Welcome to Your Dashboard</h2>
 
-  <div class="profile-box">
-    <button class="profile-btn" onclick="toggleProfile()">Profile</button>
-    <div id="profileDropdown" class="profile-dropdown">
-      <p id="userEmail">Email: loading...</p>
-      <button onclick="logout()">Logout</button>
-    </div>
-  </div>
-
-  <h2 style="text-align:center;">Welcome to Your Dashboard</h2>
-  <p style="text-align:center; font-size: 15px; color: #ccc;">
+  <p style="text-align:center; margin-top: 10px; font-size: 15px; color: #ccc;">
     How to post and for information visit our YouTube channel
   </p>
-  <div style="text-align:center; margin-bottom: 20px;">
+  <div style="text-align:center; margin-bottom: 10px;">
     <a href="https://www.youtube.com/@reelclick.support" target="_blank"
-       style="display:inline-block; padding:10px 20px; background:#ff4d4d; color:#fff; border-radius:6px; text-decoration:none;">
+       style="display:inline-block; margin-top:10px; padding:10px 20px; background:#ff4d4d; color:#fff; border-radius:6px; text-decoration:none;">
        Visit YouTube Channel
     </a>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="profile-container">
+    <button class="profile-btn" onclick="toggleProfile()">Profile</button>
+    <div class="profile-dropdown" id="profileDropdown">
+      <p id="userEmail">Logged in as: -</p>
+      <button onclick="logout()">Logout</button>
+    </div>
   </div>
 
   <div class="content">
@@ -194,6 +195,8 @@
     };
     firebase.initializeApp(firebaseConfig);
 
+    let postRef;
+
     function toggleInfo() {
       document.getElementById('updateForm').classList.toggle('hidden');
     }
@@ -205,17 +208,17 @@
 
     function logout() {
       firebase.auth().signOut().then(() => {
-        window.location.href = "login.html";
+        location.href = 'index.html';
       });
     }
 
     firebase.auth().onAuthStateChanged(user => {
       if (!user) return location.href = 'index.html';
-      document.getElementById('userEmail').innerText = `Email: ${user.email || 'Anonymous'}`;
 
+      document.getElementById('userEmail').innerText = `Logged in as: ${user.email}`;
       const uid = user.uid;
       const metaRef = firebase.database().ref('users/' + uid + '/meta');
-      const postRef = firebase.database().ref('users/' + uid + '/posts');
+      postRef = firebase.database().ref('users/' + uid + '/posts');
 
       document.getElementById('pageLink').href = `https://reelclick.in/page.html?uid=${uid}`;
       document.getElementById('pageLink').innerText = `https://reelclick.in/page.html?uid=${uid}`;
@@ -248,15 +251,15 @@
         };
         postRef.child(id).set(data, () => {
           e.target.reset();
-          loadPosts(postRef);
+          loadPosts();
         });
       });
 
-      document.getElementById('searchPost').addEventListener('input', () => loadPosts(postRef));
-      loadPosts(postRef);
+      document.getElementById('searchPost').addEventListener('input', loadPosts);
+      loadPosts();
     });
 
-    function loadPosts(postRef) {
+    function loadPosts() {
       const search = document.getElementById('searchPost').value.toLowerCase();
       postRef.once('value').then(snapshot => {
         const postList = document.getElementById('postList');
@@ -279,9 +282,8 @@
                 <input type="text" value="${post.link}" id="link-${id}" />
               </div>
               <div class="post-actions">
-                <button onclick="toggleEdit('${id}')"
-                        id="toggle-${id}">Edit</button>
-                <button onclick="deletePost('${id}', postRef)">Delete</button>
+                <button onclick="toggleEdit('${id}')" id="toggle-${id}">Edit</button>
+                <button onclick="deletePost('${id}')">Delete</button>
               </div>
             `;
             postList.appendChild(card);
@@ -304,19 +306,18 @@
           image: document.getElementById(`img-${id}`).value,
           link: document.getElementById(`link-${id}`).value
         };
-        const postRef = firebase.database().ref(`users/${firebase.auth().currentUser.uid}/posts/${id}`);
-        postRef.set(updated, () => {
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/posts/${id}`).set(updated, () => {
           alert('Post updated');
-          loadPosts(firebase.database().ref(`users/${firebase.auth().currentUser.uid}/posts`));
+          loadPosts();
         });
       }
     }
 
-    function deletePost(id, postRef) {
+    function deletePost(id) {
       if (confirm('Are you sure you want to delete this post?')) {
         postRef.child(id).remove(() => {
           alert('Post deleted');
-          loadPosts(postRef);
+          loadPosts();
         });
       }
     }
