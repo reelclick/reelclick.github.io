@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - ReelClick</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h2 { color: #ff4d4d; }
+    input, button {
+      padding: 10px;
+      margin: 8px 0;
+      width: 250px;
+      border-radius: 5px;
+      border: none;
+    }
+    input {
+      background: #222;
+      color: #fff;
+    }
+    button {
+      background: #ff4d4d;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Create Your Account</h2>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="signup()">Sign Up</button>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCCCdzcSihRv90jtFMEzy1-GyRAM4sX51w",
+      authDomain: "landingpage-bd863.firebaseapp.com",
+      databaseURL: "https://landingpage-bd863-default-rtdb.firebaseio.com",
+      projectId: "landingpage-bd863",
+      storageBucket: "landingpage-bd863.firebasestorage.app",
+      messagingSenderId: "43119176922",
+      appId: "1:43119176922:web:3b196d90ae380f99c709e3",
+      measurementId: "G-QSV0B3G2C1"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function signup() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      if (!email || !password) return alert('Please enter email and password');
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          alert('Signup successful! Please login.');
+          window.location.href = 'login.html';
+        })
+        .catch(error => {
+          alert(error.message);
+        });
+    }
+  </script>
+</body>
+</html>
