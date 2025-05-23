@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>My Landing Page</title>
@@ -15,7 +16,7 @@
     .posts { display: flex; flex-direction: column; gap: 10px; margin-top: 30px; }
     .post-item { background: #222; padding: 15px; border-radius: 8px; color: #fff; text-align: left; cursor: pointer; }
     .post-item img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
-    .post-item .filename { font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 6px; }
+    .post-item .filename { font-size: 16px; font-weight: bold; color: #fff; }
   </style>
 </head>
 <body>
@@ -31,7 +32,9 @@
     </div>
     <input type="text" id="searchInput" placeholder="Search posts..." style="width:100%;max-width:500px;padding:10px;margin-top:20px;border-radius:8px;border:none;background:#222;color:#fff;">
     <div class="posts" id="postList"></div>
-  </div>  <script>
+  </div>
+
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCCCdzcSihRv90jtFMEzy1-GyRAM4sX51w",
       authDomain: "landingpage-bd863.firebaseapp.com",
@@ -70,11 +73,15 @@
         const item = document.createElement('div');
         item.className = 'post-item';
         item.onclick = () => window.location.href = post.link;
-        item.innerHTML = `
-          <img src="${post.image}" alt="Preview">
-          <div class="filename">${post.title || 'Untitled File'}</div>
-        `;
-        allPosts.push({ title: post.title.toLowerCase(), element: item });
+
+        let contentHTML = '';
+        if (post.image && post.image.startsWith('http')) {
+          contentHTML += `<img src="${post.image}" alt="Preview">`;
+        }
+        contentHTML += `<div class="filename">${post.title || 'Untitled File'}</div>`;
+        item.innerHTML = contentHTML;
+
+        allPosts.push({ title: post.title?.toLowerCase() || '', element: item });
       });
 
       function renderList(query = '') {
@@ -88,5 +95,6 @@
 
       renderList();
     });
-  </script></body>
+  </script>
+</body>
 </html>
