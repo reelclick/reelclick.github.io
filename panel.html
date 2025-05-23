@@ -32,7 +32,7 @@
       border-bottom: 1px solid #444;
       padding-bottom: 6px;
     }
-    label { display: block; margin-top: 20px; }
+    label { display: block; margin-top: 10px; }
     input, textarea {
       width: 100%;
       padding: 10px;
@@ -43,10 +43,10 @@
       color: #fff;
     }
     button {
-      margin-top: 20px;
+      margin-top: 10px;
       background: #ff4d4d;
       border: none;
-      padding: 12px;
+      padding: 10px;
       width: 100%;
       color: white;
       border-radius: 6px;
@@ -72,7 +72,6 @@
       text-decoration: underline;
     }
     .hidden { display: none; }
-    .posts-area { margin-top: 30px; }
     .post-card {
       background: #222;
       margin-top: 10px;
@@ -80,6 +79,7 @@
       border-radius: 6px;
     }
     .post-card img { width: 100%; border-radius: 6px; margin-bottom: 10px; }
+    .post-card input { margin-bottom: 6px; }
   </style>
 </head>
 <body>
@@ -92,30 +92,27 @@
 <form id="updateForm" class="hidden">
   <label>Page Title</label>
   <input type="text" id="title" />
-
   <label>Caption</label>
   <textarea id="caption"></textarea>
-
   <label>Image URL</label>
   <input type="text" id="image" />
-
   <label>Telegram/Website Link</label>
   <input type="text" id="telegram" />
-
   <button type="submit">Save Changes</button>
 </form>
 
 <div class="section-title">Add New Post</div>
 <form id="addPostForm">
+  <input type="text" id="postTitle" placeholder="File Title" required />
   <input type="text" id="postImage" placeholder="Image URL" required />
   <input type="text" id="postLink" placeholder="Redirect Link" required />
   <button type="submit">Add Post</button>
 </form>
 
 <div class="section-title">Search My Posts</div>
-<input type="text" id="searchPost" placeholder="Search by link..." />
+<input type="text" id="searchPost" placeholder="Search by title/link..." />
 
-<div class="posts-area" id="postList"></div>
+<div id="postList"></div>
 
   </div>  <script>
     const firebaseConfig = {
@@ -129,76 +126,90 @@
     };
     firebase.initializeApp(firebaseConfig);
 
-    const pageLink = document.getElementById('pageLink');
-    const updateForm = document.getElementById('updateForm');
-    const postList = document.getElementById('postList');
-    const searchInput = document.getElementById('searchPost');
+    let uid = null;
+    let postRef = null;
 
     function toggleInfo() {
-      updateForm.classList.toggle('hidden');
+      document.getElementById('updateForm').classList.toggle('hidden');
     }
 
     firebase.auth().onAuthStateChanged(user => {
-      if (!user) return window.location.href = 'login.html';
-      const uid = user.uid;
-      const ref = firebase.database().ref('users/' + uid + '/meta');
-      const postRef = firebase.database().ref('users/' + uid + '/posts');
+      if (!user) return location.href = 'login.html';
+      uid = user.uid;
+      const metaRef = firebase.database().ref('users/' + uid + '/meta');
+      postRef = firebase.database().ref('users/' + uid + '/posts');
 
-      pageLink.href = `https://reelclick.in/page.html?uid=${uid}`;
-      pageLink.innerText = `https://reelclick.in/page.html?uid=${uid}`;
+      document.getElementById('pageLink').href = `https://reelclick.in/page.html?uid=${uid}`;
+      document.getElementById('pageLink').innerText = `https://reelclick.in/page.html?uid=${uid}`;
 
-      ref.once('value').then(snapshot => {
+      metaRef.once('value').then(snapshot => {
         const data = snapshot.val();
-        document.getElementById('title').value = data?.title || "";
-        document.getElementById('caption').value = data?.caption || "";
-        document.getElementById('image').value = data?.image || "";
-        document.getElementById('telegram').value = data?.telegram || "";
+        document.getElementById('title').value = data?.title || '';
+        document.getElementById('caption').value = data?.caption || '';
+        document.getElementById('image').value = data?.image || '';
+        document.getElementById('telegram').value = data?.telegram || '';
       });
 
       document.getElementById('updateForm').addEventListener('submit', e => {
         e.preventDefault();
-        const updatedData = {
+        metaRef.set({
           title: document.getElementById('title').value,
           caption: document.getElementById('caption').value,
           image: document.getElementById('image').value,
           telegram: document.getElementById('telegram').value
-        };
-        ref.set(updatedData, () => alert("Page updated!"));
+        }, () => alert('Page updated!'));
       });
 
       document.getElementById('addPostForm').addEventListener('submit', e => {
         e.preventDefault();
-        const image = document.getElementById('postImage').value;
-        const link = document.getElementById('postLink').value;
         const id = Date.now();
-        postRef.child(id).set({ image, link }, () => {
-          loadPosts();
+        const data = {
+          title: document.getElementById('postTitle').value,
+          image: document.getElementById('postImage').value,
+          link: document.getElementById('postLink').value
+        };
+        postRef.child(id).set(data, () => {
           e.target.reset();
+          loadPosts();
         });
       });
 
-      searchInput.addEventListener('input', loadPosts);
-
-      function loadPosts() {
-        const keyword = searchInput.value.toLowerCase();
-        postRef.once('value').then(snapshot => {
-          postList.innerHTML = '';
-          snapshot.forEach(child => {
-            const post = child.val();
-            if (!keyword || post.link.toLowerCase().includes(keyword)) {
-              const card = document.createElement('div');
-              card.className = 'post-card';
-              card.innerHTML = `
-                <img src="${post.image}" alt="Preview">
-                <a href="${post.link}" target="_blank">${post.link}</a>
-              `;
-              postList.appendChild(card);
-            }
-          });
-        });
-      }
+      document.getElementById('searchPost').addEventListener('input', loadPosts);
 
       loadPosts();
     });
+
+    function loadPosts() {
+      const search = document.getElementById('searchPost').value.toLowerCase();
+      postRef.once('value').then(snapshot => {
+        const postList = document.getElementById('postList');
+        postList.innerHTML = '';
+        snapshot.forEach(child => {
+          const id = child.key;
+          const post = child.val();
+          if (post.title?.toLowerCase().includes(search) || post.link?.toLowerCase().includes(search)) {
+            const card = document.createElement('div');
+            card.className = 'post-card';
+            card.innerHTML = `
+              <img src="${post.image}" alt="Preview">
+              <input type="text" value="${post.title}" placeholder="File Title" id="title-${id}">
+              <input type="text" value="${post.image}" placeholder="Image URL" id="img-${id}">
+              <input type="text" value="${post.link}" placeholder="Redirect Link" id="link-${id}">
+              <button onclick="savePost('${id}')">Save</button>
+            `;
+            postList.appendChild(card);
+          }
+        });
+      });
+    }
+
+    function savePost(id) {
+      const updated = {
+        title: document.getElementById(`title-${id}`).value,
+        image: document.getElementById(`img-${id}`).value,
+        link: document.getElementById(`link-${id}`).value
+      };
+      postRef.child(id).set(updated, () => alert('Post updated'));
+    }
   </script></body>
 </html>
