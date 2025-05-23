@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard - ReelClick</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      color: #ff4d4d;
+      text-align: center;
+    }
+    .content {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: #111;
+      border-radius: 10px;
+    }
+    label { display: block; margin-top: 20px; }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 6px;
+      border: none;
+      background: #222;
+      color: #fff;
+    }
+    button {
+      margin-top: 20px;
+      background: #ff4d4d;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      color: white;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .link-output {
+      margin-top: 30px;
+      background: #222;
+      padding: 12px;
+      text-align: center;
+      border-radius: 6px;
+      color: #4dfc91;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Welcome to Your Dashboard</h2>
+  <div class="content">
+    <form id="updateForm">
+      <label>Page Title</label>
+      <input type="text" id="title" /><label>Caption</label>
+  <textarea id="caption"></textarea>
+
+  <label>Image URL</label>
+  <input type="text" id="image" />
+
+  <label>Telegram/Website Link</label>
+  <input type="text" id="telegram" />
+
+  <button type="submit">Save Changes</button>
+</form>
+
+<div class="link-output">
+  Your Page: <br>
+  <a id="pageLink" href="#" target="_blank">Loading...</a>
+</div>
+
+  </div>  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCCCdzcSihRv90jtFMEzy1-GyRAM4sX51w",
+      authDomain: "landingpage-bd863.firebaseapp.com",
+      databaseURL: "https://landingpage-bd863-default-rtdb.firebaseio.com",
+      projectId: "landingpage-bd863",
+      storageBucket: "landingpage-bd863.firebasestorage.app",
+      messagingSenderId: "43119176922",
+      appId: "1:43119176922:web:3b196d90ae380f99c709e3"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) return window.location.href = 'login.html';
+      const uid = user.uid;
+      const ref = firebase.database().ref('users/' + uid + '/meta');
+
+      ref.once('value').then(snapshot => {
+        const data = snapshot.val();
+        document.getElementById('title').value = data?.title || "";
+        document.getElementById('caption').value = data?.caption || "";
+        document.getElementById('image').value = data?.image || "";
+        document.getElementById('telegram').value = data?.telegram || "";
+        document.getElementById('pageLink').href = `https://reelclick.in/page.html?uid=${uid}`;
+        document.getElementById('pageLink').innerText = `https://reelclick.in/page.html?uid=${uid}`;
+      });
+
+      document.getElementById('updateForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const updatedData = {
+          title: document.getElementById('title').value,
+          caption: document.getElementById('caption').value,
+          image: document.getElementById('image').value,
+          telegram: document.getElementById('telegram').value
+        };
+        ref.set(updatedData, () => alert("Page updated!"));
+      });
+    });
+  </script></body>
+</html>
