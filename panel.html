@@ -3,7 +3,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Dashboard - ReelClick</title>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js">function enableEdit(id, btn) {
+  const title = document.getElementById(`title-${id}`);
+  const img = document.getElementById(`img-${id}`);
+  const link = document.getElementById(`link-${id}`);
+  title.removeAttribute('readonly');
+  img.removeAttribute('readonly');
+  link.removeAttribute('readonly');
+  title.style.border = '1px solid #f00';
+  img.style.border = '1px solid #f00';
+  link.style.border = '1px solid #f00';
+  btn.textContent = '💾 Save';
+  btn.onclick = function() {
+    savePost(id);
+    btn.textContent = '✏️ Edit';
+    title.setAttribute('readonly', true);
+    img.setAttribute('readonly', true);
+    link.setAttribute('readonly', true);
+    title.style.border = '1px solid #444';
+    img.style.border = '1px solid #444';
+    link.style.border = '1px solid #444';
+    btn.onclick = () => enableEdit(id, btn);
+  };
+}</script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <style>
@@ -204,12 +226,12 @@
             card.className = 'post-card';
             card.innerHTML = `
               <img src="${post.image}" alt="Preview">
-              <input type="text" value="${post.title}" placeholder="File Title" id="title-${id}">
-              <input type="text" value="${post.image}" placeholder="Image URL" id="img-${id}">
-              <input type="text" value="${post.link}" placeholder="Redirect Link" id="link-${id}">
+              <input type="text" value="${post.title}" placeholder="File Title" id="title-${id}" style="background:#111; color:#fff; border:1px solid #444; margin-bottom:6px;">
+              <input type="text" value="${post.image}" placeholder="Image URL" id="img-${id}" style="background:#111; color:#fff; border:1px solid #444; margin-bottom:6px;">
+              <input type="text" value="${post.link}" placeholder="Redirect Link" id="link-${id}" style="background:#111; color:#fff; border:1px solid #444; margin-bottom:6px;">
               <div class="post-actions">
-                <button onclick="savePost('${id}')">Save</button>
-                <button onclick="deletePost('${id}')">Delete</button>
+                <button onclick="enableEdit('${id}', this)">✏️ Edit</button>
+                <button onclick="deletePost('${id}')">🗑️ Delete</button>
               </div>
             `;
             postList.appendChild(card);
