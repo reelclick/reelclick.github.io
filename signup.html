@@ -35,6 +35,19 @@
       color: #fff;
       cursor: pointer;
     }
+    .login-section {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+    }
+    .login-section button {
+      background: transparent;
+      border: 1px solid #ff4d4d;
+      color: #ff4d4d;
+      margin-top: 6px;
+      width: auto;
+      padding: 6px 14px;
+    }
   </style>
 </head>
 <body>
@@ -42,6 +55,11 @@
   <input type="email" id="email" placeholder="Email">
   <input type="password" id="password" placeholder="Password">
   <button onclick="signup()">Sign Up</button>
+
+  <div class="login-section">
+    <p>Existing user?</p>
+    <button onclick="window.location.href='login.html'">Login</button>
+  </div>
 
   <script>
     const firebaseConfig = {
