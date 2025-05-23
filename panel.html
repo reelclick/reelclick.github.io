@@ -3,47 +3,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Dashboard - ReelClick</title>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js">function enableEdit(id, btn) {
-  const title = document.getElementById(`title-${id}`);
-  const img = document.getElementById(`img-${id}`);
-  const link = document.getElementById(`link-${id}`);
-  title.removeAttribute('readonly');
-  img.removeAttribute('readonly');
-  link.removeAttribute('readonly');
-  title.style.border = '1px solid #f00';
-  img.style.border = '1px solid #f00';
-  link.style.border = '1px solid #f00';
-  btn.textContent = '💾 Save';
-  btn.onclick = function() {
-    savePost(id);
-    btn.textContent = '✏️ Edit';
-    title.setAttribute('readonly', true);
-    img.setAttribute('readonly', true);
-    link.setAttribute('readonly', true);
-    title.style.border = '1px solid #444';
-    img.style.border = '1px solid #444';
-    link.style.border = '1px solid #444';
-    btn.onclick = () => enableEdit(id, btn);
-  };
-}function enableEdit(id, btn) { const title = document.getElementById(title-${id}); const img = document.getElementById(img-${id}); const link = document.getElementById(link-${id});
-
-title.removeAttribute('readonly'); img.removeAttribute('readonly'); link.removeAttribute('readonly');
-
-title.focus(); title.style.border = '1px solid #f00'; img.style.border = '1px solid #f00'; link.style.border = '1px solid #f00';
-
-btn.textContent = '💾 Save'; btn.onclick = function () { const updated = { title: title.value, image: img.value, link: link.value }; firebase.database().ref('users/' + uid + '/posts/' + id).set(updated, () => { alert('Post updated'); title.setAttribute('readonly', true); img.setAttribute('readonly', true); link.setAttribute('readonly', true);
-
-title.style.border = '1px solid #444';
-  img.style.border = '1px solid #444';
-  link.style.border = '1px solid #444';
-
-  btn.textContent = '✏️ Edit';
-  btn.onclick = () => enableEdit(id, btn);
-});
-
-}; } </script>
-
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>  <style>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <style>
     body {
       background: #000;
       color: #fff;
@@ -55,8 +18,10 @@ title.style.border = '1px solid #444';
       text-align: center;
       margin-bottom: 20px;
     }
-    header img {
-      width: 150px;
+    header h1 {
+      color: #ff4d4d;
+      font-size: 28px;
+      margin: 0;
     }
     h2 {
       color: #ff4d4d;
@@ -128,9 +93,10 @@ title.style.border = '1px solid #444';
       display: flex;
       gap: 10px;
     }
-  </style></head>
+  </style>
+</head>
 <body>
-  <header><h1 style="text-align:center; color:#ff4d4d; font-size:28px; margin-bottom:20px;">ReelClick</h1></header>
+  <header><h1>ReelClick</h1></header>
   <h2>Welcome to Your Dashboard</h2>
   <div class="content">
     <div class="link-output">
@@ -240,12 +206,18 @@ title.style.border = '1px solid #444';
             card.className = 'post-card';
             card.innerHTML = `
               <img src="${post.image}" alt="Preview">
-              <input type=\"text\" value=\"${post.title}\" placeholder=\"File Title\" id=\"title-${id}\" style=\"$1\" readonly>
-              <input type=\"text\" value=\"${post.image}\" placeholder=\"Image URL\" id=\"img-${id}\" style=\"$1\" readonly>
-              <input type=\"text\" value=\"${post.link}\" placeholder=\"Redirect Link\" id=\"link-${id}\" style=\"$1\" readonly>
+              <div id="view-${id}">
+                <p><strong>${post.title}</strong></p>
+                <p style="color:#aaa; font-size:13px;">${post.link}</p>
+              </div>
+              <div id="edit-${id}" class="hidden">
+                <input type="text" value="${post.title}" id="title-${id}" />
+                <input type="text" value="${post.image}" id="img-${id}" />
+                <input type="text" value="${post.link}" id="link-${id}" />
+              </div>
               <div class="post-actions">
-                <button onclick="enableEdit('${id}', this)">✏️ Edit</button>
-                <button onclick="deletePost('${id}')">🗑️ Delete</button>
+                <button onclick="toggleEdit('${id}')" id="toggle-${id}">Edit</button>
+                <button onclick="deletePost('${id}')">Delete</button>
               </div>
             `;
             postList.appendChild(card);
@@ -254,13 +226,25 @@ title.style.border = '1px solid #444';
       });
     }
 
-    function savePost(id) {
-      const updated = {
-        title: document.getElementById(`title-${id}`).value,
-        image: document.getElementById(`img-${id}`).value,
-        link: document.getElementById(`link-${id}`).value
-      };
-      postRef.child(id).set(updated, () => alert('Post updated'));
+    function toggleEdit(id) {
+      const view = document.getElementById(`view-${id}`);
+      const edit = document.getElementById(`edit-${id}`);
+      const toggleBtn = document.getElementById(`toggle-${id}`);
+      if (edit.classList.contains('hidden')) {
+        view.classList.add('hidden');
+        edit.classList.remove('hidden');
+        toggleBtn.innerText = 'Save';
+      } else {
+        const updated = {
+          title: document.getElementById(`title-${id}`).value,
+          image: document.getElementById(`img-${id}`).value,
+          link: document.getElementById(`link-${id}`).value
+        };
+        postRef.child(id).set(updated, () => {
+          alert('Post updated');
+          loadPosts();
+        });
+      }
     }
 
     function deletePost(id) {
