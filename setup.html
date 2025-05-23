@@ -48,6 +48,7 @@
       text-align: center;
       color: #4dfc91;
       font-size: 14px;
+      word-break: break-all;
     }
   </style>
 </head>
@@ -93,11 +94,12 @@
       const image = document.getElementById("image").value;
       const telegram = document.getElementById("telegram").value;
 
+      const pageURL = `https://reelclick.in/page.html?uid=${uid}`;
+      document.getElementById("linkDisplay").innerHTML =
+        `✅ Your page: <a href='${pageURL}' target='_blank'>${pageURL}</a>`;
+
       db.ref("users/" + uid + "/meta").set({
         title, caption, image, telegram
-      }, () => {
-        document.getElementById("linkDisplay").innerHTML =
-          `✅ Your page: <a href='page.html?uid=${uid}' target='_blank'>reelclick.in/page.html?uid=${uid}</a>`;
       });
     }
   </script></body>
