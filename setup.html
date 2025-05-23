@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReelClick Setup</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <style>
+    body {
+      background: #0d0d0d;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 { text-align: center; color: #ff4d4d; }
+    form {
+      max-width: 500px;
+      margin: 30px auto;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    label { display: block; margin-top: 15px; color: #ccc; }
+    input, textarea {
+      width: 100%; padding: 10px; border-radius: 4px;
+      border: none; margin-top: 5px; background: #333;
+      color: #fff; font-size: 16px;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #linkDisplay {
+      margin-top: 20px;
+      background: #222;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      color: #4dfc91;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Setup Your Viral Page</h2>
+  <form onsubmit="submitForm(event)">
+    <label>Page Title</label>
+    <input type="text" id="title" required /><label>Caption</label>
+<textarea id="caption" required></textarea>
+
+<label>Image URL</label>
+<input type="text" id="image" required />
+
+<label>Telegram/Website Link</label>
+<input type="text" id="telegram" required />
+
+<button type="submit">Generate My Page</button>
+<div id="linkDisplay"></div>
+
+  </form>  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCCCdzcSihRv90jtFMEzy1-GyRAM4sX51w",
+      authDomain: "landingpage-bd863.firebaseapp.com",
+      databaseURL: "https://landingpage-bd863-default-rtdb.firebaseio.com",
+      projectId: "landingpage-bd863",
+      storageBucket: "landingpage-bd863.firebasestorage.app",
+      messagingSenderId: "43119176922",
+      appId: "1:43119176922:web:3b196d90ae380f99c709e3",
+      measurementId: "G-QSV0B3G2C1"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    firebase.auth().signInAnonymously().catch(console.error);
+
+    function submitForm(e) {
+      e.preventDefault();
+      const uid = firebase.auth().currentUser.uid;
+      const title = document.getElementById("title").value;
+      const caption = document.getElementById("caption").value;
+      const image = document.getElementById("image").value;
+      const telegram = document.getElementById("telegram").value;
+
+      db.ref("users/" + uid + "/meta").set({
+        title, caption, image, telegram
+      }, () => {
+        document.getElementById("linkDisplay").innerHTML =
+          `✅ Your page: <a href='page.html?uid=${uid}' target='_blank'>reelclick.in/page.html?uid=${uid}</a>`;
+      });
+    }
+  </script></body>
+</html>
