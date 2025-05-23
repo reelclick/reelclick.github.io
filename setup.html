@@ -48,24 +48,29 @@
       color: #4dfc91;
       font-size: 14px;
     }
+    #dashboardLink {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #4dfc91;
+    }
   </style>
 </head>
 <body>
   <h2>Setup Your Viral Page</h2>
-  <form id="setupForm">
+  <form id="setupForm" style="display:none;">
     <label>Page Title</label>
-    <input type="text" id="title" required /><label>Caption</label>
-<textarea id="caption" required></textarea>
-
-<label>Image URL</label>
-<input type="text" id="image" required />
-
-<label>Telegram/Website Link</label>
-<input type="text" id="telegram" required />
-
-<button type="submit">Generate My Page</button>
-<div id="linkDisplay"></div>
-
+    <input type="text" id="title" required />
+    <label>Caption</label>
+    <textarea id="caption" required></textarea>
+    <label>Image URL</label>
+    <input type="text" id="image" required />
+    <label>Telegram/Website Link</label>
+    <input type="text" id="telegram" required />
+    <button type="submit">Generate My Page</button>
+    <div id="linkDisplay"></div>
+    <a id="dashboardLink" href="panel.html" target="_blank">Go to Dashboard to Manage Your Page</a>
   </form>  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCCCdzcSihRv90jtFMEzy1-GyRAM4sX51w",
@@ -83,7 +88,20 @@
     firebase.auth().onAuthStateChanged(user => {
       if (!user) {
         firebase.auth().signInAnonymously().catch(console.error);
+        return;
       }
+      const uid = user.uid;
+      const metaRef = db.ref("users/" + uid + "/meta");
+
+      metaRef.once("value").then(snapshot => {
+        if (snapshot.exists()) {
+          // Page already exists, redirect to dashboard
+          window.location.href = "panel.html";
+        } else {
+          // Show setup form
+          document.getElementById("setupForm").style.display = "block";
+        }
+      });
     });
 
     document.getElementById("setupForm").addEventListener("submit", function (e) {
@@ -97,11 +115,10 @@
       const image = document.getElementById("image").value.trim();
       const telegram = document.getElementById("telegram").value.trim();
 
-      db.ref("users/" + uid + "/meta").set({
-        title, caption, image, telegram
-      }, () => {
+      db.ref("users/" + uid + "/meta").set({ title, caption, image, telegram }, () => {
         const link = `https://reelclick.in/page.html?uid=${uid}`;
         document.getElementById("linkDisplay").innerHTML = `✅ Your page: <a href='${link}' target='_blank'>${link}</a>`;
+        document.getElementById("dashboardLink").style.display = "block";
       });
     });
   </script></body>
