@@ -129,6 +129,8 @@
     };
     firebase.initializeApp(firebaseConfig);
 
+    document.getElementById('loader').style.display = 'flex';
+
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const uid = user.uid;
@@ -140,6 +142,7 @@
           }
         });
       } else {
+        // Not logged in, show home
         document.getElementById('loader').style.display = 'none';
         document.getElementById('mainContent').style.display = 'flex';
       }
