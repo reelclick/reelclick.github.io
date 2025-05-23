@@ -13,9 +13,9 @@
     .caption { font-size: 16px; margin-bottom: 20px; }
     .telegram-link a { background: #ff4d4d; color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; }
     .posts { display: flex; flex-direction: column; gap: 10px; margin-top: 30px; }
-    .post-item { background: #222; padding: 15px; border-radius: 8px; color: #fff; }
+    .post-item { background: #222; padding: 15px; border-radius: 8px; color: #fff; text-align: left; cursor: pointer; }
     .post-item img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
-    .post-item a { color: #4dfc91; text-decoration: none; font-weight: bold; }
+    .post-item .filename { font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 6px; }
   </style>
 </head>
 <body>
@@ -47,7 +47,7 @@
       document.getElementById('pageTitle').innerText = data.title || 'My Viral Page';
       document.getElementById('pageCaption').innerText = data.caption || '';
       if (data.telegram) {
-        document.getElementById('telegramBtn').innerHTML = `<a href="${data.telegram}" target="_blank">Join Telegram</a>`;
+        document.getElementById('telegramBtn').innerHTML = `<a href="${data.telegram}" target="_blank" rel="noopener noreferrer">Join Telegram</a>`;
       }
     });
 
@@ -57,9 +57,10 @@
         const post = child.val();
         const item = document.createElement('div');
         item.className = 'post-item';
+        item.onclick = () => window.open(post.link, '_blank');
         item.innerHTML = `
           <img src="${post.image}" alt="Preview">
-          <a href="${post.link}" target="_blank">Watch Now</a>
+          <div class="filename">${post.title || 'Untitled File'}</div>
         `;
         list.appendChild(item);
       });
