@@ -21,6 +21,7 @@
 <body>
   <header>My Viral Page</header>
   <div class="container">
+    <img id="previewBanner" src="" alt="Page Banner" style="width:100%; border-radius:8px; margin-bottom:20px; display:none;">
     <div class="title" id="pageTitle">Loading...</div>
     <div class="caption" id="pageCaption"></div>
     <div class="telegram-link" id="telegramBtn"></div>
@@ -46,6 +47,11 @@
       const data = snapshot.val();
       document.getElementById('pageTitle').innerText = data.title || 'My Viral Page';
       document.getElementById('pageCaption').innerText = data.caption || '';
+      if (data.image) {
+        const img = document.getElementById('previewBanner');
+        img.src = data.image;
+        img.style.display = 'block';
+      }
       if (data.telegram) {
         document.getElementById('telegramBtn').innerHTML = `<a href="${data.telegram}" target="_blank" rel="noopener noreferrer">Join Telegram</a>`;
       }
