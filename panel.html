@@ -25,10 +25,25 @@
     link.style.border = '1px solid #444';
     btn.onclick = () => enableEdit(id, btn);
   };
-}</script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <style>
+}function enableEdit(id, btn) { const title = document.getElementById(title-${id}); const img = document.getElementById(img-${id}); const link = document.getElementById(link-${id});
+
+title.removeAttribute('readonly'); img.removeAttribute('readonly'); link.removeAttribute('readonly');
+
+title.focus(); title.style.border = '1px solid #f00'; img.style.border = '1px solid #f00'; link.style.border = '1px solid #f00';
+
+btn.textContent = '💾 Save'; btn.onclick = function () { const updated = { title: title.value, image: img.value, link: link.value }; firebase.database().ref('users/' + uid + '/posts/' + id).set(updated, () => { alert('Post updated'); title.setAttribute('readonly', true); img.setAttribute('readonly', true); link.setAttribute('readonly', true);
+
+title.style.border = '1px solid #444';
+  img.style.border = '1px solid #444';
+  link.style.border = '1px solid #444';
+
+  btn.textContent = '✏️ Edit';
+  btn.onclick = () => enableEdit(id, btn);
+});
+
+}; } </script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>  <style>
     body {
       background: #000;
       color: #fff;
@@ -113,8 +128,7 @@
       display: flex;
       gap: 10px;
     }
-  </style>
-</head>
+  </style></head>
 <body>
   <header><h1 style="text-align:center; color:#ff4d4d; font-size:28px; margin-bottom:20px;">ReelClick</h1></header>
   <h2>Welcome to Your Dashboard</h2>
