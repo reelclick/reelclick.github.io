@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up - ReelClick</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <style>
@@ -78,10 +78,15 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       if (!email || !password) return alert('Please enter email and password');
+
       firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          alert('Signup successful! Please login.');
-          window.location.href = 'login.html';
+        .then((userCredential) => {
+          const user = userCredential.user;
+          user.sendEmailVerification().then(() => {
+            alert("Verification link sent to your email. Please verify before logging in.");
+            firebase.auth().signOut();
+            window.location.href = "login.html";
+          });
         })
         .catch(error => {
           alert(error.message);
