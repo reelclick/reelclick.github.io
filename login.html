@@ -42,6 +42,13 @@
       margin-top: 6px;
       text-align: center;
     }
+    #resendBtn {
+      margin-top: 10px;
+      background: #222;
+      border: 1px solid #ff4d4d;
+      color: #ff4d4d;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -50,6 +57,7 @@
   <input type="password" id="password" placeholder="Password">
   <button onclick="login()">Login</button>
   <div id="errorMsg"></div>
+  <button id="resendBtn" onclick="resendVerification()">Resend Verification Email</button>
   <div class="link" onclick="forgotPassword()">Forgot Password?</div>
   <div class="signup-link" onclick="window.location.href='signup.html'">New user? Sign up</div>
 
@@ -64,11 +72,16 @@
     };
     firebase.initializeApp(firebaseConfig);
 
+    let unverifiedUser = null;
+
     function login() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const errorMsg = document.getElementById("errorMsg");
+      const resendBtn = document.getElementById("resendBtn");
+
       errorMsg.textContent = "";
+      resendBtn.style.display = "none";
 
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
@@ -76,11 +89,10 @@
           if (user.emailVerified) {
             window.location.href = "setup.html";
           } else {
+            unverifiedUser = user;
             user.sendEmailVerification().then(() => {
               errorMsg.textContent = "Please verify your email. A verification link has been sent.";
-              firebase.auth().signOut();
-            }).catch(err => {
-              errorMsg.textContent = "Failed to send verification email.";
+              resendBtn.style.display = "block";
               firebase.auth().signOut();
             });
           }
@@ -91,6 +103,17 @@
           } else {
             errorMsg.textContent = error.message;
           }
+        });
+    }
+
+    function resendVerification() {
+      if (!unverifiedUser) return;
+      unverifiedUser.sendEmailVerification()
+        .then(() => {
+          alert("Verification email resent.");
+        })
+        .catch((error) => {
+          alert("Error sending email: " + error.message);
         });
     }
 
