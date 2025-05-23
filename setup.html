@@ -82,9 +82,13 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    firebase.auth().signInAnonymously().then(() => {
-      document.querySelector("form").style.display = "block";
-    }).catch(console.error);
+    firebase.auth().signInAnonymously().catch(console.error);
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        document.querySelector("form").style.display = "block";
+      }
+    });
 
     function submitForm(e) {
       e.preventDefault();
