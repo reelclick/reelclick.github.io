@@ -129,8 +129,6 @@
     };
     firebase.initializeApp(firebaseConfig);
 
-    document.getElementById('loader').style.display = 'flex';
-
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const uid = user.uid;
