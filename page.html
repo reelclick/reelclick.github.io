@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <header>My Viral Page</header>
+  <header>My Post Links</header>
   <div class="container">
     <img id="previewBanner" src="" alt="Page Banner" style="width:100%; border-radius:8px; margin-bottom:20px; display:none;">
     <div class="title" id="pageTitle">Loading...</div>
@@ -27,8 +27,9 @@
     <div class="telegram-link" id="telegramBtn"></div>
     <div style="margin-top: 20px; text-align: center;">
       <p style="font-size: 15px; color: #ccc;">Want to create your own viral landing page?</p>
-      <a href="https://reelclick.in" style="background:#4dfc91; color:#000; padding:10px 20px; border-radius:6px; text-decoration:none; font-weight:bold;" target="_blank">Create Your Page for Free</a>
+      <a href="https://reelclick.in" style="background:#4dfc91; color:#000; padding:10px 20px; border-radius:6px; text-decoration:none; font-weight:bold;" target="_blank">Create Your Own Page for Free</a>
     </div>
+    <input type="text" id="searchInput" placeholder="Search posts..." style="width:100%;max-width:500px;padding:10px;margin-top:20px;border-radius:8px;border:none;background:#222;color:#fff;">
     <div class="posts" id="postList"></div>
   </div>  <script>
     const firebaseConfig = {
@@ -63,17 +64,29 @@
 
     userRef.child('posts').once('value').then(snapshot => {
       const list = document.getElementById('postList');
+      const allPosts = [];
       snapshot.forEach(child => {
         const post = child.val();
         const item = document.createElement('div');
         item.className = 'post-item';
-        item.addEventListener('click', () => { window.location.href = post.link; });
+        item.onclick = () => window.location.href = post.link;
         item.innerHTML = `
           <img src="${post.image}" alt="Preview">
           <div class="filename">${post.title || 'Untitled File'}</div>
         `;
-        list.appendChild(item);
+        allPosts.push({ title: post.title.toLowerCase(), element: item });
       });
+
+      function renderList(query = '') {
+        list.innerHTML = '';
+        allPosts.filter(p => p.title.includes(query)).forEach(p => list.appendChild(p.element));
+      }
+
+      document.getElementById('searchInput').addEventListener('input', e => {
+        renderList(e.target.value.toLowerCase());
+      });
+
+      renderList();
     });
   </script></body>
 </html>
