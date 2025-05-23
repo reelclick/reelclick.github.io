@@ -21,7 +21,6 @@
       background: #1a1a1a;
       padding: 20px;
       border-radius: 8px;
-      display: none;
     }
     label { display: block; margin-top: 15px; color: #ccc; }
     input, textarea {
@@ -48,13 +47,12 @@
       text-align: center;
       color: #4dfc91;
       font-size: 14px;
-      word-break: break-all;
     }
   </style>
 </head>
 <body>
   <h2>Setup Your Viral Page</h2>
-  <form onsubmit="submitForm(event)">
+  <form id="setupForm">
     <label>Page Title</label>
     <input type="text" id="title" required /><label>Caption</label>
 <textarea id="caption" required></textarea>
@@ -82,29 +80,29 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    firebase.auth().signInAnonymously().catch(console.error);
-
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        document.querySelector("form").style.display = "block";
+      if (!user) {
+        firebase.auth().signInAnonymously().catch(console.error);
       }
     });
 
-    function submitForm(e) {
+    document.getElementById("setupForm").addEventListener("submit", function (e) {
       e.preventDefault();
-      const uid = firebase.auth().currentUser.uid;
-      const title = document.getElementById("title").value;
-      const caption = document.getElementById("caption").value;
-      const image = document.getElementById("image").value;
-      const telegram = document.getElementById("telegram").value;
+      const user = firebase.auth().currentUser;
+      if (!user) return alert("Please wait... authenticating user");
 
-      const pageURL = `https://reelclick.in/page.html?uid=${uid}`;
-      document.getElementById("linkDisplay").innerHTML =
-        `✅ Your page: <a href='${pageURL}' target='_blank'>${pageURL}</a>`;
+      const uid = user.uid;
+      const title = document.getElementById("title").value.trim();
+      const caption = document.getElementById("caption").value.trim();
+      const image = document.getElementById("image").value.trim();
+      const telegram = document.getElementById("telegram").value.trim();
 
       db.ref("users/" + uid + "/meta").set({
         title, caption, image, telegram
+      }, () => {
+        const link = `https://reelclick.in/page.html?uid=${uid}`;
+        document.getElementById("linkDisplay").innerHTML = `✅ Your page: <a href='${link}' target='_blank'>${link}</a>`;
       });
-    }
+    });
   </script></body>
 </html>
