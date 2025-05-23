@@ -21,6 +21,7 @@
       background: #1a1a1a;
       padding: 20px;
       border-radius: 8px;
+      display: none;
     }
     label { display: block; margin-top: 15px; color: #ccc; }
     input, textarea {
@@ -80,7 +81,9 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    firebase.auth().signInAnonymously().catch(console.error);
+    firebase.auth().signInAnonymously().then(() => {
+      document.querySelector("form").style.display = "block";
+    }).catch(console.error);
 
     function submitForm(e) {
       e.preventDefault();
