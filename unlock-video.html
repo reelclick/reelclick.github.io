@@ -1,39 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>File Preview</title>
+  <meta charset="UTF-8" />
+  <title>Unlock Video - ReelClick</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <style>
     body {
-      background: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
+      background: #111; color: #fff; font-family: Arial, sans-serif;
+      text-align: center; padding: 20px;
     }
+    h2 { color: #ff4d4d; }
     .preview-image {
-      max-width: 400px;
-      width: 100%;
-      border-radius: 10px;
-      border: 3px solid #555;
+      max-width: 400px; width: 100%;
+      border-radius: 10px; border: 3px solid #555;
     }
     .button {
-      background: #00c853;
-      color: white;
-      padding: 12px 24px;
-      margin: 10px auto;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
+      background: #00c853; color: white;
+      padding: 12px 24px; margin: 10px auto;
+      border: none; border-radius: 8px;
+      cursor: pointer; font-size: 16px;
       display: block;
     }
     #timer {
-      font-size: 20px;
-      margin-top: 10px;
+      font-size: 20px; margin-top: 10px;
       animation: pulse 1s infinite;
     }
     @keyframes pulse {
@@ -42,9 +33,7 @@
       100% { opacity: 1; }
     }
     #statusText {
-      color: red;
-      font-weight: bold;
-      margin-top: 10px;
+      color: red; font-weight: bold; margin-top: 10px;
     }
     .locked {
       background: #555 !important;
@@ -54,7 +43,7 @@
 </head>
 <body>
   <h2 id="fileTitle">Loading...</h2>
-  <img class="preview-image" id="previewImg" src="" alt="Preview">
+  <img id="previewImg" class="preview-image" src="" alt="Preview">
 
   <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
   <div id="timer">Keep tab open for 10 seconds...</div>
@@ -74,15 +63,15 @@
     };
     firebase.initializeApp(firebaseConfig);
 
-    const pid = new URLSearchParams(window.location.search).get('pid');
+    const pid = new URLSearchParams(window.location.search).get("pid");
     let redirectLink = null;
 
-    firebase.database().ref('videos/' + pid).once('value').then(snapshot => {
+    firebase.database().ref("videos/" + pid).once("value").then(snapshot => {
       const data = snapshot.val();
       if (!data) return alert("Invalid or missing data.");
-      document.getElementById("fileTitle").textContent = data.name || 'Untitled';
-      document.getElementById("previewImg").src = data.thumb || 'https://via.placeholder.com/480x270/000000/FFFFFF?text=Preview';
-      redirectLink = data.embed;
+      document.getElementById("fileTitle").textContent = data.name || "Untitled Video";
+      document.getElementById("previewImg").src = data.thumb || "https://via.placeholder.com/480x270/000000/FFFFFF?text=Preview";
+      redirectLink = "https://reelclick.in/video.html?id=" + pid;
     });
 
     let watchNowBtn = document.getElementById("watchNow");
@@ -93,9 +82,7 @@
     function openAdTab() {
       window.open("https://reelclick.in/ads", "_blank");
       statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
-      setTimeout(() => {
-        unlockNow();
-      }, 10000);
+      setTimeout(() => unlockNow(), 10000);
     }
 
     function unlockNow() {
@@ -109,10 +96,10 @@
 
     watchNowBtn.onclick = () => {
       if (redirectLink) {
-        window.open(redirectLink, '_blank'); // video open in new tab
-        window.location.href = "https://reelclick.in/ads"; // same tab ad open
+        window.open(redirectLink, "_blank"); // Video open in new tab
+        window.location.href = "https://reelclick.in/ads"; // Ad open in same tab
       } else {
-        alert("Video link not loaded.");
+        alert("Video link not found.");
       }
     };
   </script>
