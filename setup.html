@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,13 +49,6 @@
       color: #4dfc91;
       font-size: 14px;
     }
-    #dashboardLink {
-      display: block;
-      text-align: center;
-      margin-top: 10px;
-      font-size: 14px;
-      color: #4dfc91;
-    }
   </style>
 </head>
 <body>
@@ -70,8 +64,9 @@
     <input type="text" id="telegram" required />
     <button type="submit">Generate My Page</button>
     <div id="linkDisplay"></div>
-    <a id="dashboardLink" href="panel.html" target="_blank">Go to Dashboard to Manage Your Page</a>
-  </form>  <script>
+  </form>
+
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCCCdzcSihRv90jtFMEzy1-GyRAM4sX51w",
       authDomain: "landingpage-bd863.firebaseapp.com",
@@ -79,15 +74,15 @@
       projectId: "landingpage-bd863",
       storageBucket: "landingpage-bd863.firebasestorage.app",
       messagingSenderId: "43119176922",
-      appId: "1:43119176922:web:3b196d90ae380f99c709e3",
-      measurementId: "G-QSV0B3G2C1"
+      appId: "1:43119176922:web:3b196d90ae380f99c709e3"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
     firebase.auth().onAuthStateChanged(user => {
       if (!user) {
-        firebase.auth().signInAnonymously().catch(console.error);
+        // not logged in – redirect to main site
+        window.location.href = "index.html";
         return;
       }
       const uid = user.uid;
@@ -95,10 +90,10 @@
 
       metaRef.once("value").then(snapshot => {
         if (snapshot.exists()) {
-          // Page already exists, redirect to dashboard
+          // already has page – go to panel
           window.location.href = "panel.html";
         } else {
-          // Show setup form
+          // show setup form
           document.getElementById("setupForm").style.display = "block";
         }
       });
@@ -116,10 +111,9 @@
       const telegram = document.getElementById("telegram").value.trim();
 
       db.ref("users/" + uid + "/meta").set({ title, caption, image, telegram }, () => {
-        const link = `https://reelclick.in/page.html?uid=${uid}`;
-        document.getElementById("linkDisplay").innerHTML = `✅ Your page: <a href='${link}' target='_blank'>${link}</a>`;
-        document.getElementById("dashboardLink").style.display = "block";
+        window.location.href = "panel.html";
       });
     });
-  </script></body>
+  </script>
+</body>
 </html>
