@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ReelClick - Create & Share Viral Pages</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <style>
     html, body {
       margin: 0;
@@ -112,5 +115,31 @@
     <a href="#">DMCA</a>
     <a href="#">Contact</a>
   </footer>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCCCdzcSihRv90jtFMEzy1-GyRAM4sX51w",
+      authDomain: "landingpage-bd863.firebaseapp.com",
+      databaseURL: "https://landingpage-bd863-default-rtdb.firebaseio.com",
+      projectId: "landingpage-bd863",
+      storageBucket: "landingpage-bd863.firebasestorage.app",
+      messagingSenderId: "43119176922",
+      appId: "1:43119176922:web:3b196d90ae380f99c709e3"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const uid = user.uid;
+        firebase.database().ref("users/" + uid + "/meta").once("value").then(snapshot => {
+          if (snapshot.exists()) {
+            window.location.href = "panel.html";
+          } else {
+            window.location.href = "setup.html";
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
