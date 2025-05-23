@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <title>File Preview</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Interstitial Ad Script -->
-  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
-
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <style>
     body {
       background: #111;
@@ -52,141 +50,71 @@
       background: #555 !important;
       cursor: not-allowed;
     }
-    .ad-container {
-      margin: 0;
-      padding: 0;
-    }
-    .spacer {
-      height: 0;
-    }
   </style>
 </head>
 <body>
-  <h2>File No. 1</h2>
-  <img class="preview-image" src="https://i.imgur.com/Cv0Rj5z.png" alt="Preview">
-
-  <!-- Video Ad Section -->
-  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-  <ins class="eas6a97888e37" data-zoneid="5607450"></ins>
-  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+  <h2 id="fileTitle">Loading...</h2>
+  <img class="preview-image" id="previewImg" src="" alt="Preview">
 
   <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
   <div id="timer">Keep tab open for 10 seconds...</div>
   <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
 
-  <button class="button locked" id="scrollToWatch" disabled>Scroll to Watch Now</button>
-
-  <!-- New Ad Placement -->
-  <script type="text/javascript">
-    atOptions = {
-      'key' : '2d91df4f50fb1625b0c506337ab754aa',
-      'format' : 'iframe',
-      'height' : 250,
-      'width' : 300,
-      'params' : {}
-    };
-  </script>
-  <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
-
-  <div class="ad-container">
-    <div id="button-ad-container"></div>
-  </div>
-
-  <div class="spacer"></div>
-
-  <button class="button" id="scrollToUnlock" onclick="scrollToUnlockFunc()">Scroll to Unlock Video</button>
-
-  <div style="margin: 10px 0;"></div>
   <button class="button locked" id="watchNow" disabled>Watch Now</button>
 
-  <!-- Placing the specified ad script at the end -->
-  <div class="ad-container">
-    <script async="async" data-cfasync="false" src="//bagfulchiefmeant.com/9bb990f01491469e692b96ba2bd2bd8d/invoke.js"></script>
-    <div id="container-9bb990f01491469e692b96ba2bd2bd8d"></div>
-  </div>
-
   <script>
-    let unlockStart = 0;
-    let becameVisibleEarly = false;
-    let wasVisibleBefore10s = false;
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9rvEdcBskD3b-YHebiRz3DptRNhTcQ9Y",
+      authDomain: "videoplayer-e9214.firebaseapp.com",
+      databaseURL: "https://videoplayer-e9214-default-rtdb.firebaseio.com",
+      projectId: "videoplayer-e9214",
+      storageBucket: "videoplayer-e9214.appspot.com",
+      messagingSenderId: "129519902158",
+      appId: "1:129519902158:web:35db9dc21947cd3b881f9f"
+    };
+    firebase.initializeApp(firebaseConfig);
 
+    const pid = new URLSearchParams(window.location.search).get('pid');
+    let redirectLink = null;
+
+    firebase.database().ref('videos/' + pid).once('value').then(snapshot => {
+      const data = snapshot.val();
+      if (!data) return alert("Invalid or missing data.");
+      document.getElementById("fileTitle").textContent = data.name || 'Untitled';
+      document.getElementById("previewImg").src = data.thumb || 'https://via.placeholder.com/480x270/000000/FFFFFF?text=Preview';
+      redirectLink = data.embed;
+    });
+
+    let watchNowBtn = document.getElementById("watchNow");
+    let unlockBtn = document.getElementById("unlockBtn");
     let timerElement = document.getElementById("timer");
     let statusText = document.getElementById("statusText");
-    let watchNowBtn = document.getElementById("watchNow");
-    let scrollBtn = document.getElementById("scrollToWatch");
-    let scrollToUnlock = document.getElementById("scrollToUnlock");
-    let unlockBtn = document.getElementById("unlockBtn");
 
     function openAdTab() {
       window.open("https://reelclick.in/ads", "_blank");
-      unlockStart = Date.now();
       statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
-      becameVisibleEarly = false;
-      wasVisibleBefore10s = false;
-
-      const earlyCheck = setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          wasVisibleBefore10s = true;
-        }
-      }, 9000);
-
       setTimeout(() => {
-        if (wasVisibleBefore10s) {
-          // User returned too early, run 60s fallback
-          start60sTimer();
-        } else {
-          // Assume user stayed in new tab for 10s
-          unlockNowButton();
-        }
+        unlockNow();
       }, 10000);
     }
 
-    function start60sTimer() {
-      let remaining = 60;
-      statusText.textContent = "Aapne tab jaldi band kiya. कृपया 60 सेकंड प्रतीक्षा करें...";
-      let timerInt = setInterval(() => {
-        timerElement.textContent = `Wait ${remaining--}s to unlock...`;
-        if (remaining < 0) {
-          clearInterval(timerInt);
-          unlockNowButton();
-        }
-      }, 1000);
-    }
-
-    function unlockNowButton() {
-      scrollBtn.disabled = false;
-      scrollBtn.classList.remove("locked");
+    function unlockNow() {
       watchNowBtn.disabled = false;
       watchNowBtn.classList.remove("locked");
-      scrollToUnlock.style.display = "none";
       unlockBtn.disabled = true;
       unlockBtn.classList.add("locked");
       timerElement.textContent = "Unlocked!";
       statusText.textContent = "You can now watch the video.";
     }
 
-    function scrollToUnlockFunc() {
-      document.getElementById("unlockBtn").scrollIntoView({ behavior: "smooth" });
-    }
-
-    scrollBtn.addEventListener("click", () => {
-      watchNowBtn.scrollIntoView({ behavior: "smooth" });
-    });
-
-    // Handle Watch Now logic with ad link
-    function handleWatchNow() {
-      const videoUrl = 'https://youtu.be/X40NrruDDqs?si=_To8mXs3xgxjNe9c';
-      const adUrl = 'https://bagfulchiefmeant.com/x130hhvk01?key=b3eda9635aecb68425d872237305eec9';
-      const newTab = window.open(videoUrl, '_blank');
-      if (newTab) {
-        window.location.href = adUrl;
+    watchNowBtn.onclick = () => {
+      if (redirectLink) {
+        window.open(redirectLink, '_blank'); // video open in new tab
+        window.location.href = "https://reelclick.in/ads"; // same tab ad open
       } else {
-        window.location.href = videoUrl;
+        alert("Video link not loaded.");
       }
-    }
-
-    // Update watchNow button onclick
-    watchNowBtn.onclick = handleWatchNow;
+    };
   </script>
 </body>
 </html>
