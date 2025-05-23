@@ -226,9 +226,9 @@
             card.className = 'post-card';
             card.innerHTML = `
               <img src="${post.image}" alt="Preview">
-              <input type="text" value="${post.title}" placeholder="File Title" id="title-${id}" style="background:#111; color:#fff; border:1px solid #444; margin-bottom:6px;">
-              <input type="text" value="${post.image}" placeholder="Image URL" id="img-${id}" style="background:#111; color:#fff; border:1px solid #444; margin-bottom:6px;">
-              <input type="text" value="${post.link}" placeholder="Redirect Link" id="link-${id}" style="background:#111; color:#fff; border:1px solid #444; margin-bottom:6px;">
+              <input type=\"text\" value=\"${post.title}\" placeholder=\"File Title\" id=\"title-${id}\" style=\"$1\" readonly>
+              <input type=\"text\" value=\"${post.image}\" placeholder=\"Image URL\" id=\"img-${id}\" style=\"$1\" readonly>
+              <input type=\"text\" value=\"${post.link}\" placeholder=\"Redirect Link\" id=\"link-${id}\" style=\"$1\" readonly>
               <div class="post-actions">
                 <button onclick="enableEdit('${id}', this)">✏️ Edit</button>
                 <button onclick="deletePost('${id}')">🗑️ Delete</button>
