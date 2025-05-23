@@ -129,18 +129,19 @@
     };
     firebase.initializeApp(firebaseConfig);
 
+    document.getElementById('loader').style.display = 'flex';
+
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const uid = user.uid;
         firebase.database().ref('users/' + uid + '/meta').once('value').then(snapshot => {
           if (snapshot.exists()) {
-            window.location.href = "dashboard.html";
+            window.location.href = "panel.html";
           } else {
             window.location.href = "setup.html";
           }
         });
       } else {
-        // Show content only if not logged in
         document.getElementById('loader').style.display = 'none';
         document.getElementById('mainContent').style.display = 'flex';
       }
