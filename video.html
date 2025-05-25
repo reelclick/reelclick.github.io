@@ -41,7 +41,8 @@
   </div>
 
   <div class="container">
-    <!-- Outstream Video Ad placed before file name -->
+
+    <!-- Outstream Video Ad (placed above file name/title) -->
     <div style="margin: 20px auto; text-align: center;">
       <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
       <ins class="eas6a97888e37" data-zoneid="5621780"></ins>
@@ -69,7 +70,126 @@
   </div>
 
   <script>
-    // ... (same JS code as you have)
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9rvEdcBskD3b-YHebiRz3DptRNhTcQ9Y",
+      authDomain: "videoplayer-e9214.firebaseapp.com",
+      databaseURL: "https://videoplayer-e9214-default-rtdb.firebaseio.com",
+      projectId: "videoplayer-e9214",
+      storageBucket: "videoplayer-e9214.appspot.com",
+      messagingSenderId: "129519902158",
+      appId: "1:129519902158:web:35db9dc21947cd3b881f9f"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const id = new URLSearchParams(window.location.search).get('id');
+    firebase.database().ref('videos/' + id + '/organic').transaction(v => (v || 0) + 1);
+
+    firebase.database().ref('videos/' + id).once('value').then(snapshot => {
+      const data = snapshot.val();
+      if (!data?.embed) return alert('Invalid or missing video.');
+      document.getElementById('videoPlayer').src = data.embed;
+      document.getElementById('videoTitleBar').textContent = data.name || 'Untitled Video';
+    });
+
+    firebase.database().ref('videos').once('value').then(snapshot => {
+      const data = snapshot.val();
+      const trendingList = document.getElementById('trendingList');
+      const searchInput = document.getElementById('searchInput');
+      const noResults = document.getElementById('noResults');
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      const searchBtn = document.getElementById('searchBtn');
+      const playerSection = document.getElementById('playerSection');
+      const playerWarning = document.getElementById('playerWarning');
+      const sectionTitle = document.getElementById('sectionTitle');
+
+      let allCards = Object.entries(data || {}).map(([id, val]) => {
+        const totalViews = (val.views || 0) + (val.organic || 0);
+        return { id, ...val, totalViews };
+      });
+
+      let displayLimit = 12;
+
+      function renderVideos(query = '') {
+        trendingList.innerHTML = '';
+        const results = allCards
+          .filter(v => (v.name || '').toLowerCase().includes(query.toLowerCase()) && v.id !== id)
+          .sort((a, b) => b.totalViews - a.totalViews);
+
+        if (query) {
+          playerSection.style.display = 'none';
+          playerWarning.style.display = 'none';
+          sectionTitle.textContent = 'Search Results';
+        } else {
+          playerSection.style.display = 'block';
+          playerWarning.style.display = 'block';
+          sectionTitle.textContent = 'Trending Videos';
+        }
+
+        if (results.length === 0) {
+          noResults.style.display = 'block';
+          loadMoreBtn.style.display = 'none';
+        } else {
+          noResults.style.display = 'none';
+          const visible = results.slice(0, displayLimit);
+
+          visible.forEach(v => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+
+            const link = document.createElement('a');
+            link.href = `/video.html?id=${v.id}`;
+            link.target = '_blank';
+
+            const img = document.createElement('img');
+            img.src = v.thumb || 'https://via.placeholder.com/480x270/000000/FFFFFF?text=No+Preview';
+            link.appendChild(img);
+
+            const info = document.createElement('div');
+            info.className = 'video-info';
+
+            const title = document.createElement('span');
+            title.className = 'video-title';
+            title.textContent = v.name || 'Untitled Video';
+
+            const meta = document.createElement('div');
+            meta.className = 'video-meta';
+
+            const viewsText = document.createElement('span');
+            viewsText.textContent = (v.totalViews > 999 ? (v.totalViews / 1000).toFixed(1) + 'k' : v.totalViews) + ' Views';
+
+            const timeText = document.createElement('span');
+            timeText.textContent = (v.time || '---') + ' Duration';
+
+            meta.appendChild(viewsText);
+            meta.appendChild(timeText);
+            info.appendChild(title);
+            info.appendChild(meta);
+            link.appendChild(info);
+            card.appendChild(link);
+            trendingList.appendChild(card);
+          });
+
+          loadMoreBtn.style.display = results.length > displayLimit ? 'block' : 'none';
+        }
+      }
+
+      function handleSearch() {
+        displayLimit = 12;
+        renderVideos(searchInput.value);
+      }
+
+      searchInput.addEventListener('keypress', e => {
+        if (e.key === 'Enter') handleSearch();
+      });
+
+      searchBtn.addEventListener('click', handleSearch);
+      loadMoreBtn.addEventListener('click', () => {
+        displayLimit += 12;
+        renderVideos(searchInput.value);
+      });
+
+      renderVideos();
+    });
   </script>
 </body>
 </html>
