@@ -11,6 +11,7 @@
   input[type="file"] { margin: 20px 0; }
   button { background: #4dfc91; color: #000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
   #result { margin-top: 20px; font-size: 16px; background: #222; padding: 10px; border-radius: 5px; word-wrap: break-word; }
+  #openLink { margin-top: 10px; display: none; }
 </style>
 </head>
 <body>
@@ -21,11 +22,15 @@
 <br>
 <input type="file" id="fileInput" accept="image/*">
 <div id="result">Result will appear here...</div>
+<a id="openLink" href="#" target="_blank">
+  <button>Open Link</button>
+</a>
 
 <script src="https://unpkg.com/qr-scanner/qr-scanner.umd.min.js"></script>
 <script>
   const videoElem = document.getElementById('preview');
   const resultElem = document.getElementById('result');
+  const openLinkBtn = document.getElementById('openLink');
 
   function startScan() {
     QrScanner.hasCamera().then(hasCamera => {
@@ -34,7 +39,7 @@
         return;
       }
       const scanner = new QrScanner(videoElem, result => {
-        resultElem.textContent = "Scanned QR Code: " + result;
+        showResult(result);
         scanner.stop();
       });
       scanner.start();
@@ -45,9 +50,22 @@
     const file = e.target.files[0];
     if (!file) return;
     QrScanner.scanImage(file, { returnDetailedScanResult: true })
-      .then(result => resultElem.textContent = "Scanned QR Code: " + result.data)
-      .catch(e => resultElem.textContent = "No QR code found.");
+      .then(result => showResult(result.data))
+      .catch(e => {
+        resultElem.textContent = "No QR code found.";
+        openLinkBtn.style.display = "none";
+      });
   });
+
+  function showResult(text) {
+    resultElem.textContent = "Scanned QR Code: " + text;
+    if (text.startsWith("http://") || text.startsWith("https://")) {
+      openLinkBtn.href = text;
+      openLinkBtn.style.display = "inline-block";
+    } else {
+      openLinkBtn.style.display = "none";
+    }
+  }
 </script>
 </body>
 </html>
