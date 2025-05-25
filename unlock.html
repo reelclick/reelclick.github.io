@@ -2,103 +2,51 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Unlock Video - ReelClick</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Video Player</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Interstitial native ad -->
-<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9305749,document.createElement('script'))</script>
+<!-- Video.js CSS -->
+<link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 
-<!-- Video.js and plugins for in-stream ad -->
-<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
-<script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-ads@6.8.0/dist/videojs-contrib-ads.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/videojs-ima@1.10.1/dist/videojs.ima.min.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<!-- Video.js IMA SDK plugin CSS (optional, for styling) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-ads/6.8.0/videojs.ads.css" rel="stylesheet" />
 
 <style>
-  body { background: #111; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+  body { background: #111; color: #fff; text-align: center; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
   h2 { color: #ff4d4d; }
-  .player-wrapper { width: 100%; max-width: 640px; margin: 20px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 0 15px rgba(0,0,0,0.4); }
-  #timer { font-size: 20px; margin-top: 10px; animation: pulse 1s infinite; }
-  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-  .button { background: #555; color: white; padding: 12px 24px; margin: 10px auto; border: none; border-radius: 8px; cursor: not-allowed; font-size: 16px; display: block; transition: background 0.3s; }
-  .unlocked { background: #00c853 !important; cursor: pointer; }
+  .player-wrapper { margin: 20px auto; width: 320px; border: 3px solid #555; border-radius: 10px; overflow: hidden; }
+  #timer { font-size: 16px; margin-top: 10px; }
 </style>
 </head>
 <body>
-<h2 id="fileTitle">Loading...</h2>
 
+<h2>Watch Now</h2>
 <div class="player-wrapper">
-  <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" poster="https://via.placeholder.com/640x360/000/fff?text=Loading+Ad..."></video>
+  <video id="my-video" class="video-js vjs-default-skin" controls autoplay muted playsinline
+    width="320" height="180" poster="https://via.placeholder.com/320x180/000/fff?text=Loading...">
+  </video>
 </div>
 
 <div id="timer">Please wait 30 seconds...</div>
-<button class="button" id="watchNow" disabled>Watch Now</button>
 
-<!-- Outstream video ad below watch now button -->
-<div style="margin-top:20px;">
-<script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-<ins class="eas6a97888e37" data-zoneid="5607552"></ins>
-<script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-</div>
+<!-- Video.js library -->
+<script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
+
+<!-- IMA SDK -->
+<script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+
+<!-- Video.js IMA plugin -->
+<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-ads@6.8.0/dist/videojs.ads.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-ima@1.9.1/dist/videojs.ima.min.js"></script>
 
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyB9rvEdcBskD3b-YHebiRz3DptRNhTcQ9Y",
-    authDomain: "videoplayer-e9214.firebaseapp.com",
-    databaseURL: "https://videoplayer-e9214-default-rtdb.firebaseio.com",
-    projectId: "videoplayer-e9214",
-    storageBucket: "videoplayer-e9214.appspot.com",
-    messagingSenderId: "129519902158",
-    appId: "1:129519902158:web:35db9dc21947cd3b881f9f"
-  };
-  firebase.initializeApp(firebaseConfig);
-
-  const pid = new URLSearchParams(window.location.search).get("pid");
-  let redirectLink = null;
-
-  firebase.database().ref("videos/" + pid).once("value").then(snapshot => {
-    const data = snapshot.val();
-    if (!data) return alert("Invalid or missing data.");
-    document.getElementById("fileTitle").textContent = data.name || "Untitled Video";
-    redirectLink = "https://reelclick.in/video.html?id=" + pid;
+  const player = videojs('my-video', {
+    autoplay: true,
+    muted: true,
+    controls: true,
+    preload: 'auto'
   });
 
-  let watchNowBtn = document.getElementById("watchNow");
-  let timerElement = document.getElementById("timer");
-
-  let seconds = 30;
-  const interval = setInterval(() => {
-    seconds--;
-    timerElement.textContent = `Please wait ${seconds} seconds...`;
-    if (seconds <= 0) {
-      clearInterval(interval);
-      unlockWatchNow();
-    }
-  }, 1000);
-
-  function unlockWatchNow() {
-    watchNowBtn.disabled = false;
-    watchNowBtn.classList.add("unlocked");
-    timerElement.textContent = "Unlocked!";
-  }
-
-  function openLinks() {
-    if (redirectLink) {
-      window.open(redirectLink, "_blank");
-      window.location.href = "https://reelclick.in/ads";
-    } else {
-      alert("Video link not found.");
-    }
-  }
-
-  watchNowBtn.onclick = openLinks;
-
-  // Initialize Video.js and in-stream ad
-  const player = videojs('my-video');
   player.ima({
     id: 'my-video',
     adTagUrl: 'https://s.magsrv.com/v1/vast.php?idzone=5621794'
@@ -108,30 +56,20 @@
     player.ima.requestAds();
     player.play();
   });
+
+  // 30s timer logic
+  let seconds = 30;
+  const timerElement = document.getElementById("timer");
+  const interval = setInterval(() => {
+    seconds--;
+    timerElement.textContent = `Please wait ${seconds} seconds...`;
+    if (seconds <= 0) {
+      clearInterval(interval);
+      timerElement.textContent = "Unlocked!";
+      // Here you can enable your "Watch Now" button or any other logic
+    }
+  }, 1000);
 </script>
-
-<!-- Footer banner ads (placed at bottom) -->
-<div style="margin-top:30px;">
-  <script type="text/javascript">
-    atOptions = {'key':'2d91df4f50fb1625b0c506337ab754aa','format':'iframe','height':250,'width':300,'params':{}};
-  </script>
-  <script type="text/javascript" src="//bagfulchiefmeant.com/2d91df4f50fb1625b0c506337ab754aa/invoke.js"></script>
-
-  <script type="text/javascript">
-    atOptions = {'key':'b9f05c54b138b3b545e26fca3ddaff07','format':'iframe','height':600,'width':160,'params':{}};
-  </script>
-  <script type="text/javascript" src="//bagfulchiefmeant.com/b9f05c54b138b3b545e26fca3ddaff07/invoke.js"></script>
-
-  <script type="text/javascript">
-    atOptions = {'key':'cf5cb342fae6405df8a7d66c45da223a','format':'iframe','height':300,'width':160,'params':{}};
-  </script>
-  <script type="text/javascript" src="//bagfulchiefmeant.com/cf5cb342fae6405df8a7d66c45da223a/invoke.js"></script>
-</div>
-
-<!-- Slider Ad -->
-<script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-<ins class="eas6a97888e31" data-zoneid="5621784"></ins>
-<script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
 
 </body>
 </html>
