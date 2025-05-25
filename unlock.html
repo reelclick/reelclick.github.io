@@ -7,40 +7,37 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <style>
-    body {
-      background: #111; color: #fff; font-family: Arial, sans-serif;
-      text-align: center; padding: 20px;
-    }
+    body { background: #111; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
     h2 { color: #ff4d4d; }
-    .preview-placeholder {
-      font-size: 24px; font-weight: bold;
-      margin: 20px auto; color: #4dfc91;
+    .preview-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4dfc91;
+      cursor: not-allowed;
+      margin: 20px 0;
+      transition: transform 0.3s, opacity 0.3s;
     }
     .button {
-      background: #555; color: white;
-      padding: 12px 24px; margin: 20px auto;
-      border: none; border-radius: 8px;
-      cursor: not-allowed; font-size: 16px;
-      display: block; opacity: 0.6; transition: all 0.3s ease;
+      background: #555;
+      color: white;
+      padding: 12px 24px;
+      margin: 10px auto;
+      border: none;
+      border-radius: 8px;
+      cursor: not-allowed;
+      font-size: 16px;
+      display: block;
+      transition: background 0.3s;
     }
-    .button.unlocked {
-      background: #00c853; cursor: pointer; opacity: 1;
-      animation: pulse 1s infinite;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 10px rgba(0, 200, 83, 0.7); }
-      50% { box-shadow: 0 0 20px rgba(0, 200, 83, 1); }
-      100% { box-shadow: 0 0 10px rgba(0, 200, 83, 0.7); }
-    }
-    #timer {
-      font-size: 18px; margin-top: 10px; color: #aaa;
-    }
+    #timer { font-size: 20px; margin-top: 10px; animation: pulse 1s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    .unlocked { background: #00c853 !important; cursor: pointer; animation: pulse 1s infinite; }
+    .preview-unlocked { cursor: pointer; animation: pulse 1s infinite; }
   </style>
 </head>
 <body>
   <h2 id="fileTitle">Loading...</h2>
-  <div class="preview-placeholder">Watch Now</div>
-
+  <div id="previewText" class="preview-text">Watch Now</div>
   <div id="timer">Please wait 30 seconds...</div>
   <button class="button" id="watchNow" disabled>Watch Now</button>
 
@@ -58,8 +55,6 @@
 
     const pid = new URLSearchParams(window.location.search).get("pid");
     let redirectLink = null;
-    const watchNowBtn = document.getElementById("watchNow");
-    const timerElement = document.getElementById("timer");
 
     firebase.database().ref("videos/" + pid).once("value").then(snapshot => {
       const data = snapshot.val();
@@ -68,29 +63,40 @@
       redirectLink = "https://reelclick.in/video.html?id=" + pid;
     });
 
-    // Start 30s timer
-    let remaining = 30;
-    const countdown = setInterval(() => {
-      timerElement.textContent = `Please wait ${remaining--} seconds...`;
-      if (remaining < 0) {
-        clearInterval(countdown);
-        unlockNow();
+    let watchNowBtn = document.getElementById("watchNow");
+    let previewText = document.getElementById("previewText");
+    let timerElement = document.getElementById("timer");
+
+    let seconds = 30;
+    const interval = setInterval(() => {
+      seconds--;
+      timerElement.textContent = `Please wait ${seconds} seconds...`;
+      if (seconds <= 0) {
+        clearInterval(interval);
+        unlockWatchNow();
       }
     }, 1000);
 
-    function unlockNow() {
+    function unlockWatchNow() {
       watchNowBtn.disabled = false;
       watchNowBtn.classList.add("unlocked");
+      previewText.classList.add("preview-unlocked");
+      previewText.style.cursor = "pointer";
       timerElement.textContent = "Unlocked!";
     }
 
-    watchNowBtn.onclick = () => {
+    function openLinks() {
       if (redirectLink) {
-        window.open(redirectLink, "_blank"); // Video in new tab
-        window.location.href = "https://reelclick.in/ads"; // Ad in same tab
+        window.open(redirectLink, "_blank");
+        window.location.href = "https://reelclick.in/ads";
       } else {
         alert("Video link not found.");
       }
+    }
+
+    watchNowBtn.onclick = openLinks;
+    previewText.onclick = () => {
+      if (seconds <= 0) openLinks();
     };
   </script>
 </body>
