@@ -8,36 +8,31 @@
 <!-- Interstitial native ad -->
 <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9305749,document.createElement('script'))</script>
 
+<!-- Video.js and plugins for in-stream ad -->
+<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+<script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-ads@6.8.0/dist/videojs-contrib-ads.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-ima@1.10.1/dist/videojs.ima.min.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <style>
   body { background: #111; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
   h2 { color: #ff4d4d; }
-  .player-wrapper {
-    position: relative; width: 100%; max-width: 640px; aspect-ratio: 16/9;
-    background: #000; border-radius: 10px; margin: 20px auto;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    font-size: 26px; font-weight: bold; color: #4dfc91;
-    user-select: none; cursor: not-allowed;
-  }
-  .unlocked-player { cursor: pointer; animation: pulse 1s infinite; }
-  .button {
-    background: #555; color: white; padding: 12px 24px; margin: 10px auto;
-    border: none; border-radius: 8px; cursor: not-allowed; font-size: 16px; display: block;
-    transition: background 0.3s;
-  }
+  .player-wrapper { width: 100%; max-width: 640px; margin: 20px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 0 15px rgba(0,0,0,0.4); }
   #timer { font-size: 20px; margin-top: 10px; animation: pulse 1s infinite; }
   @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+  .button { background: #555; color: white; padding: 12px 24px; margin: 10px auto; border: none; border-radius: 8px; cursor: not-allowed; font-size: 16px; display: block; transition: background 0.3s; }
   .unlocked { background: #00c853 !important; cursor: pointer; }
 </style>
 </head>
 <body>
 <h2 id="fileTitle">Loading...</h2>
 
-<div id="previewPlayer" class="player-wrapper">
-  Watch Now
+<div class="player-wrapper">
+  <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" poster="https://via.placeholder.com/640x360/000/fff?text=Loading+Ad..."></video>
 </div>
 
 <div id="timer">Please wait 30 seconds...</div>
@@ -73,7 +68,6 @@
   });
 
   let watchNowBtn = document.getElementById("watchNow");
-  let previewPlayer = document.getElementById("previewPlayer");
   let timerElement = document.getElementById("timer");
 
   let seconds = 30;
@@ -89,8 +83,6 @@
   function unlockWatchNow() {
     watchNowBtn.disabled = false;
     watchNowBtn.classList.add("unlocked");
-    previewPlayer.classList.add("unlocked-player");
-    previewPlayer.style.cursor = "pointer";
     timerElement.textContent = "Unlocked!";
   }
 
@@ -104,7 +96,18 @@
   }
 
   watchNowBtn.onclick = openLinks;
-  previewPlayer.onclick = () => { if (seconds <= 0) openLinks(); };
+
+  // Initialize Video.js and in-stream ad
+  const player = videojs('my-video');
+  player.ima({
+    id: 'my-video',
+    adTagUrl: 'https://s.magsrv.com/v1/vast.php?idzone=5621794'
+  });
+
+  player.ready(function () {
+    player.ima.requestAds();
+    player.play();
+  });
 </script>
 
 <!-- Footer banner ads (placed at bottom) -->
