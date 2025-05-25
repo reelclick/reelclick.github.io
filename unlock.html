@@ -13,7 +13,7 @@
 
 <style>
   body { background: #111; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-  h2 { color: #ff4d4d; }
+  h2 { color: #ff4d4d; margin-bottom: 10px; }
   .button {
     background: #555; color: white; padding: 12px 24px; margin: 10px auto;
     border: none; border-radius: 8px; cursor: not-allowed; font-size: 16px; display: block;
@@ -25,16 +25,18 @@
 </style>
 </head>
 <body>
-<h2 id="fileTitle">Loading...</h2>
 
-<div id="timer">Please wait 30 seconds...</div>
+<!-- Professional placeholder title instead of file title -->
+<h2>Watch Video - Unlock to Continue</h2>
 
-<!-- Outstream video ad placed right after the timer -->
+<!-- Outstream video ad placed above the timer -->
 <div style="margin: 20px auto;">
   <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
   <ins class="eas6a97888e37" data-zoneid="5607552"></ins>
   <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
 </div>
+
+<div id="timer">Please wait 30 seconds...</div>
 
 <button class="button" id="watchNow" disabled>Watch Now</button>
 
@@ -51,14 +53,7 @@
   firebase.initializeApp(firebaseConfig);
 
   const pid = new URLSearchParams(window.location.search).get("pid");
-  let redirectLink = null;
-
-  firebase.database().ref("videos/" + pid).once("value").then(snapshot => {
-    const data = snapshot.val();
-    if (!data) return alert("Invalid or missing data.");
-    document.getElementById("fileTitle").textContent = data.name || "Untitled Video";
-    redirectLink = "https://reelclick.in/video.html?id=" + pid;
-  });
+  let redirectLink = "https://reelclick.in/video.html?id=" + pid;
 
   let watchNowBtn = document.getElementById("watchNow");
   let timerElement = document.getElementById("timer");
@@ -80,12 +75,8 @@
   }
 
   watchNowBtn.onclick = () => {
-    if (redirectLink) {
-      window.open(redirectLink, "_blank"); // Video opens in new tab
-      window.location.href = "https://reelclick.in/ads"; // Ad opens in same tab
-    } else {
-      alert("Video link not found.");
-    }
+    window.open(redirectLink, "_blank"); // Video opens in new tab
+    window.location.href = "https://reelclick.in/ads"; // Ad opens in same tab
   };
 </script>
 
