@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Unlock Video - ReelClick</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -12,44 +12,37 @@
       text-align: center; padding: 20px;
     }
     h2 { color: #ff4d4d; }
-    .preview-image {
-      max-width: 400px; width: 100%;
-      border-radius: 10px; border: 3px solid #555;
+    .preview-placeholder {
+      font-size: 24px; font-weight: bold;
+      margin: 20px auto; color: #4dfc91;
     }
     .button {
-      background: #00c853; color: white;
-      padding: 12px 24px; margin: 10px auto;
+      background: #555; color: white;
+      padding: 12px 24px; margin: 20px auto;
       border: none; border-radius: 8px;
-      cursor: pointer; font-size: 16px;
-      display: block;
+      cursor: not-allowed; font-size: 16px;
+      display: block; opacity: 0.6; transition: all 0.3s ease;
     }
-    #timer {
-      font-size: 20px; margin-top: 10px;
+    .button.unlocked {
+      background: #00c853; cursor: pointer; opacity: 1;
       animation: pulse 1s infinite;
     }
     @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
+      0% { box-shadow: 0 0 10px rgba(0, 200, 83, 0.7); }
+      50% { box-shadow: 0 0 20px rgba(0, 200, 83, 1); }
+      100% { box-shadow: 0 0 10px rgba(0, 200, 83, 0.7); }
     }
-    #statusText {
-      color: red; font-weight: bold; margin-top: 10px;
-    }
-    .locked {
-      background: #555 !important;
-      cursor: not-allowed;
+    #timer {
+      font-size: 18px; margin-top: 10px; color: #aaa;
     }
   </style>
 </head>
 <body>
   <h2 id="fileTitle">Loading...</h2>
-  <img id="previewImg" class="preview-image" src="" alt="Preview">
+  <div class="preview-placeholder">Watch Now</div>
 
-  <button class="button" id="unlockBtn" onclick="openAdTab()">Unlock Video</button>
-  <div id="timer">Keep tab open for 10 seconds...</div>
-  <div id="statusText">Please keep the tab open for 10 seconds to unlock video</div>
-
-  <button class="button locked" id="watchNow" disabled>Watch Now</button>
+  <div id="timer">Please wait 30 seconds...</div>
+  <button class="button" id="watchNow" disabled>Watch Now</button>
 
   <script>
     const firebaseConfig = {
@@ -65,39 +58,36 @@
 
     const pid = new URLSearchParams(window.location.search).get("pid");
     let redirectLink = null;
+    const watchNowBtn = document.getElementById("watchNow");
+    const timerElement = document.getElementById("timer");
 
     firebase.database().ref("videos/" + pid).once("value").then(snapshot => {
       const data = snapshot.val();
       if (!data) return alert("Invalid or missing data.");
       document.getElementById("fileTitle").textContent = data.name || "Untitled Video";
-      document.getElementById("previewImg").src = data.thumb || "https://via.placeholder.com/480x270/000000/FFFFFF?text=Preview";
       redirectLink = "https://reelclick.in/video.html?id=" + pid;
     });
 
-    let watchNowBtn = document.getElementById("watchNow");
-    let unlockBtn = document.getElementById("unlockBtn");
-    let timerElement = document.getElementById("timer");
-    let statusText = document.getElementById("statusText");
-
-    function openAdTab() {
-      window.open("https://reelclick.in/ads", "_blank");
-      statusText.textContent = "Ad tab opened, stay there for 10 seconds...";
-      setTimeout(() => unlockNow(), 10000);
-    }
+    // Start 30s timer
+    let remaining = 30;
+    const countdown = setInterval(() => {
+      timerElement.textContent = `Please wait ${remaining--} seconds...`;
+      if (remaining < 0) {
+        clearInterval(countdown);
+        unlockNow();
+      }
+    }, 1000);
 
     function unlockNow() {
       watchNowBtn.disabled = false;
-      watchNowBtn.classList.remove("locked");
-      unlockBtn.disabled = true;
-      unlockBtn.classList.add("locked");
+      watchNowBtn.classList.add("unlocked");
       timerElement.textContent = "Unlocked!";
-      statusText.textContent = "You can now watch the video.";
     }
 
     watchNowBtn.onclick = () => {
       if (redirectLink) {
-        window.open(redirectLink, "_blank"); // Video open in new tab
-        window.location.href = "https://reelclick.in/ads"; // Ad open in same tab
+        window.open(redirectLink, "_blank"); // Video in new tab
+        window.location.href = "https://reelclick.in/ads"; // Ad in same tab
       } else {
         alert("Video link not found.");
       }
