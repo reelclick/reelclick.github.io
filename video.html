@@ -8,6 +8,7 @@
   <meta name="6a97888e-site-verification" content="21b919f2ba8ad5fa768287f5f9f36822" />
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <!-- Interstitial Ad Script -->
   <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
   <style>
     body { margin: 0; background: #000; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; }
@@ -20,7 +21,6 @@
     .title-bar { font-size: 1.3rem; font-weight: bold; margin-bottom: 12px; text-align: center; margin-top: 30px; }
     .player-wrapper { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1); margin-bottom: 10px; }
     .player-wrapper iframe { width: 100%; height: 100%; border: none; }
-    video { width: 100%; border-radius: 10px; margin-bottom: 10px; }
     .warning { color: #ff4d4d; font-size: 14px; margin-top: 10px; text-align: center; font-weight: bold; }
     .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
     .video-card { background: #222; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
@@ -42,16 +42,25 @@
 
   <div class="container">
     <div class="title-bar" id="videoTitleBar">Video Player</div>
-
-    <!-- In-Stream Video Ad -->
-    <video id="vastPlayer" controls autoplay muted playsinline></video>
-
-    <!-- Main Video Iframe -->
-    <div class="player-wrapper" id="playerSection" style="display: none;">
+    <div class="player-wrapper" id="playerSection">
       <iframe id="videoPlayer" allowfullscreen sandbox="allow-scripts allow-same-origin allow-presentation"></iframe>
     </div>
 
+    <!-- Slider Video Ad of Exoclick -->
+    <div style="margin-bottom: 20px;">
+      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+      <ins class="eas6a97888e31" data-zoneid="5607610"></ins>
+      <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+    </div>
+
     <div class="warning" id="playerWarning">Tap many time on play button to play the video</div>
+
+    <!-- Outstream Video Ad (below the warning) -->
+    <div style="margin: 20px auto; text-align: center;">
+      <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+      <ins class="eas6a97888e37" data-zoneid="5621780"></ins>
+      <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+    </div>
 
     <div class="title-bar" id="sectionTitle">Trending Videos</div>
     <div class="video-grid" id="trendingList"></div>
@@ -81,17 +90,6 @@
       document.getElementById('videoTitleBar').textContent = data.name || 'Untitled Video';
     });
 
-    // In-Stream Video Ad Logic
-    const vastPlayer = document.getElementById('vastPlayer');
-    const vastAdTag = 'https://s.magsrv.com/v1/vast.php?idzone=5621794';
-    vastPlayer.src = vastAdTag;
-
-    vastPlayer.onended = () => {
-      document.getElementById('playerSection').style.display = 'block';
-      vastPlayer.style.display = 'none';
-    };
-
-    // Trending video logic remains the same
     firebase.database().ref('videos').once('value').then(snapshot => {
       const data = snapshot.val();
       const trendingList = document.getElementById('trendingList');
