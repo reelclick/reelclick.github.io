@@ -5,18 +5,8 @@
 <title>Unlock Video - ReelClick</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Provided meta tag for in-stream ad -->
-<meta http-equiv="Delegate-CH" content="Sec-CH-UA https://s.magsrv.com; Sec-CH-UA-Mobile https://s.magsrv.com; Sec-CH-UA-Arch https://s.magsrv.com; Sec-CH-UA-Model https://s.magsrv.com; Sec-CH-UA-Platform https://s.magsrv.com; Sec-CH-UA-Platform-Version https://s.magsrv.com; Sec-CH-UA-Bitness https://s.magsrv.com; Sec-CH-UA-Full-Version-List https://s.magsrv.com; Sec-CH-UA-Full-Version https://s.magsrv.com;">
-
 <!-- Interstitial native ad -->
 <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9305749,document.createElement('script'))</script>
-
-<!-- Video.js & plugins for in-stream ad -->
-<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
-<script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-ads@6.8.0/dist/videojs-contrib-ads.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/videojs-ima@1.10.1/dist/videojs.ima.min.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -24,35 +14,31 @@
 <style>
   body { background: #111; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
   h2 { color: #ff4d4d; }
-  .player-wrapper { max-width: 640px; margin: 20px auto; }
-  .button { background: #555; color: white; padding: 12px 24px; margin: 10px auto; border: none; border-radius: 8px; cursor: not-allowed; font-size: 16px; display: block; transition: background 0.3s; }
+  .button {
+    background: #555; color: white; padding: 12px 24px; margin: 10px auto;
+    border: none; border-radius: 8px; cursor: not-allowed; font-size: 16px; display: block;
+    transition: background 0.3s;
+  }
   #timer { font-size: 20px; margin-top: 10px; animation: pulse 1s infinite; }
   @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
   .unlocked { background: #00c853 !important; cursor: pointer; }
 </style>
 </head>
 <body>
-
 <h2 id="fileTitle">Loading...</h2>
 
-<div class="player-wrapper">
-  <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" poster="https://via.placeholder.com/640x360/000/fff?text=Watch+Now" data-setup="{}">
-    <source src="https://your-main-video-url-here.mp4" type="video/mp4" />
-  </video>
+<div id="timer">Please wait 30 seconds...</div>
+
+<!-- Outstream video ad placed right after the timer -->
+<div style="margin: 20px auto;">
+  <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+  <ins class="eas6a97888e37" data-zoneid="5607552"></ins>
+  <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
 </div>
 
-<div id="timer">Please wait 30 seconds...</div>
 <button class="button" id="watchNow" disabled>Watch Now</button>
 
-<!-- Outstream video ad below watch now button -->
-<div style="margin-top:20px;">
-<script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-<ins class="eas6a97888e37" data-zoneid="5607552"></ins>
-<script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-</div>
-
 <script>
-  // Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyB9rvEdcBskD3b-YHebiRz3DptRNhTcQ9Y",
     authDomain: "videoplayer-e9214.firebaseapp.com",
@@ -93,28 +79,14 @@
     timerElement.textContent = "Unlocked!";
   }
 
-  function openLinks() {
+  watchNowBtn.onclick = () => {
     if (redirectLink) {
-      window.open(redirectLink, "_blank");
-      window.location.href = "https://reelclick.in/ads";
+      window.open(redirectLink, "_blank"); // Video opens in new tab
+      window.location.href = "https://reelclick.in/ads"; // Ad opens in same tab
     } else {
       alert("Video link not found.");
     }
-  }
-
-  watchNowBtn.onclick = openLinks;
-
-  // In-stream ad integration
-  const player = videojs('my-video');
-  player.ima({
-    id: 'my-video',
-    adTagUrl: 'https://s.magsrv.com/v1/vast.php?idzone=5621794'
-  });
-
-  player.ready(function () {
-    player.ima.requestAds();
-    player.play();
-  });
+  };
 </script>
 
 <!-- Footer banner ads (placed at bottom) -->
