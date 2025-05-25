@@ -1,103 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Unlock Video - ReelClick</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <style>
-    body { background: #111; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-    h2 { color: #ff4d4d; }
-    .preview-text {
-      font-size: 24px;
-      font-weight: bold;
-      color: #4dfc91;
-      cursor: not-allowed;
-      margin: 20px 0;
-      transition: transform 0.3s, opacity 0.3s;
-    }
-    .button {
-      background: #555;
-      color: white;
-      padding: 12px 24px;
-      margin: 10px auto;
-      border: none;
-      border-radius: 8px;
-      cursor: not-allowed;
-      font-size: 16px;
-      display: block;
-      transition: background 0.3s;
-    }
-    #timer { font-size: 20px; margin-top: 10px; animation: pulse 1s infinite; }
-    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-    .unlocked { background: #00c853 !important; cursor: pointer; animation: pulse 1s infinite; }
-    .preview-unlocked { cursor: pointer; animation: pulse 1s infinite; }
-  </style>
+<meta charset="UTF-8" />
+<title>Unlock Video - ReelClick</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<style>
+  body { background: #111; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+  h2 { color: #ff4d4d; }
+  .player-wrapper {
+    position: relative; width: 100%; max-width: 640px; aspect-ratio: 16/9;
+    background: #000; border-radius: 10px; margin: 20px auto;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    font-size: 26px; font-weight: bold; color: #4dfc91;
+    user-select: none; cursor: not-allowed;
+  }
+  .unlocked-player { cursor: pointer; animation: pulse 1s infinite; }
+  .button {
+    background: #555; color: white; padding: 12px 24px; margin: 10px auto;
+    border: none; border-radius: 8px; cursor: not-allowed; font-size: 16px; display: block;
+    transition: background 0.3s;
+  }
+  #timer { font-size: 20px; margin-top: 10px; animation: pulse 1s infinite; }
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+  .unlocked { background: #00c853 !important; cursor: pointer; }
+</style>
 </head>
 <body>
-  <h2 id="fileTitle">Loading...</h2>
-  <div id="previewText" class="preview-text">Watch Now</div>
-  <div id="timer">Please wait 30 seconds...</div>
-  <button class="button" id="watchNow" disabled>Watch Now</button>
+<h2 id="fileTitle">Loading...</h2>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyB9rvEdcBskD3b-YHebiRz3DptRNhTcQ9Y",
-      authDomain: "videoplayer-e9214.firebaseapp.com",
-      databaseURL: "https://videoplayer-e9214-default-rtdb.firebaseio.com",
-      projectId: "videoplayer-e9214",
-      storageBucket: "videoplayer-e9214.appspot.com",
-      messagingSenderId: "129519902158",
-      appId: "1:129519902158:web:35db9dc21947cd3b881f9f"
-    };
-    firebase.initializeApp(firebaseConfig);
+<div id="previewPlayer" class="player-wrapper">
+  Watch Now
+</div>
 
-    const pid = new URLSearchParams(window.location.search).get("pid");
-    let redirectLink = null;
+<div id="timer">Please wait 30 seconds...</div>
+<button class="button" id="watchNow" disabled>Watch Now</button>
 
-    firebase.database().ref("videos/" + pid).once("value").then(snapshot => {
-      const data = snapshot.val();
-      if (!data) return alert("Invalid or missing data.");
-      document.getElementById("fileTitle").textContent = data.name || "Untitled Video";
-      redirectLink = "https://reelclick.in/video.html?id=" + pid;
-    });
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB9rvEdcBskD3b-YHebiRz3DptRNhTcQ9Y",
+    authDomain: "videoplayer-e9214.firebaseapp.com",
+    databaseURL: "https://videoplayer-e9214-default-rtdb.firebaseio.com",
+    projectId: "videoplayer-e9214",
+    storageBucket: "videoplayer-e9214.appspot.com",
+    messagingSenderId: "129519902158",
+    appId: "1:129519902158:web:35db9dc21947cd3b881f9f"
+  };
+  firebase.initializeApp(firebaseConfig);
 
-    let watchNowBtn = document.getElementById("watchNow");
-    let previewText = document.getElementById("previewText");
-    let timerElement = document.getElementById("timer");
+  const pid = new URLSearchParams(window.location.search).get("pid");
+  let redirectLink = null;
 
-    let seconds = 30;
-    const interval = setInterval(() => {
-      seconds--;
-      timerElement.textContent = `Please wait ${seconds} seconds...`;
-      if (seconds <= 0) {
-        clearInterval(interval);
-        unlockWatchNow();
-      }
-    }, 1000);
+  firebase.database().ref("videos/" + pid).once("value").then(snapshot => {
+    const data = snapshot.val();
+    if (!data) return alert("Invalid or missing data.");
+    document.getElementById("fileTitle").textContent = data.name || "Untitled Video";
+    redirectLink = "https://reelclick.in/video.html?id=" + pid;
+  });
 
-    function unlockWatchNow() {
-      watchNowBtn.disabled = false;
-      watchNowBtn.classList.add("unlocked");
-      previewText.classList.add("preview-unlocked");
-      previewText.style.cursor = "pointer";
-      timerElement.textContent = "Unlocked!";
+  let watchNowBtn = document.getElementById("watchNow");
+  let previewPlayer = document.getElementById("previewPlayer");
+  let timerElement = document.getElementById("timer");
+
+  let seconds = 30;
+  const interval = setInterval(() => {
+    seconds--;
+    timerElement.textContent = `Please wait ${seconds} seconds...`;
+    if (seconds <= 0) {
+      clearInterval(interval);
+      unlockWatchNow();
     }
+  }, 1000);
 
-    function openLinks() {
-      if (redirectLink) {
-        window.open(redirectLink, "_blank");
-        window.location.href = "https://reelclick.in/ads";
-      } else {
-        alert("Video link not found.");
-      }
+  function unlockWatchNow() {
+    watchNowBtn.disabled = false;
+    watchNowBtn.classList.add("unlocked");
+    previewPlayer.classList.add("unlocked-player");
+    previewPlayer.style.cursor = "pointer";
+    timerElement.textContent = "Unlocked!";
+  }
+
+  function openLinks() {
+    if (redirectLink) {
+      window.open(redirectLink, "_blank");
+      window.location.href = "https://reelclick.in/ads";
+    } else {
+      alert("Video link not found.");
     }
+  }
 
-    watchNowBtn.onclick = openLinks;
-    previewText.onclick = () => {
-      if (seconds <= 0) openLinks();
-    };
-  </script>
+  watchNowBtn.onclick = openLinks;
+  previewPlayer.onclick = () => { if (seconds <= 0) openLinks(); };
+</script>
 </body>
 </html>
