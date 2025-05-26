@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Blank Page with Ads</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+    body {
+      padding: 25px;
+    }
+    .title {
+      color: #5C6AC4;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .loading {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
 
-  <!-- Interstitial Ad -->
-  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9379305,document.createElement('script'))</script>
+  <script>
+    function loadAd(d, z) {
+      const s = document.createElement('script');
+      s.src = 'https://' + d + '/400/' + z;
+      s.onerror = function() {
+        console.error('Failed to load ad from ' + d);
+        document.getElementById('adError').innerText = 'Ad failed to load.';
+      };
+      (document.body || document.documentElement).appendChild(s);
+    }
 
-  <!-- Native Ad -->
-  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9379323,document.createElement('script'))</script>
-
-  <!-- Vintage Ad -->
-  <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',9303129,document.createElement('script'))</script>
-
-  <!-- In-Page Push Ad -->
-  <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vemtoutcheeg.com',9303129,document.createElement('script'))</script>
-
+    // Load ads
+    loadAd('groleegni.net', 9379305); // Interstitial ad
+    loadAd('vemtoutcheeg.com', 9303129); // Native banner ad
+    loadAd('vemtoutcheeg.com', 9303102); // In-page push ad
+  </script>
 </head>
 <body>
-  <h1 style="text-align: center; margin-top: 50px;">This is a Blank Page with Ads</h1>
+  <h1 class="title">This is a Blank Page with Ads</h1>
+  <div id="adError" class="loading"></div>
 </body>
 </html>
