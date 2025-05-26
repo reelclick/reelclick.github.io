@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Watch Video - ReelClick</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Watch trending and viral videos on ReelClick. Powered by Firebase." />
-  <meta name="6a97888e-site-verification" content="21b919f2ba8ad5fa768287f5f9f36822" />
+<meta charset="UTF-8" />
+<title>Watch Video - ReelClick</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Watch trending and viral videos on ReelClick. Powered by Firebase." />
+<meta name="6a97888e-site-verification" content="21b919f2ba8ad5fa768287f5f9f36822" />
 
-  <!-- Interstitial Ad Script -->
-  <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<!-- Interstitial Ad Script -->
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9303011,document.createElement('script'))</script>
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
-  <style>
-    body { margin: 0; background: #000; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; }
-    header { background: #fff; color: #000; padding: 10px 20px; text-align: center; font-size: 24px; font-weight: bold; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; }
-    header a { color: #000; text-decoration: none; }
-    .search-box { background: #fff; padding: 10px 20px; border-bottom: 1px solid #ccc; display: flex; justify-content: center; gap: 10px; }
-    .search-box input { width: 100%; max-width: 600px; padding: 10px; border-radius: 20px; border: 1px solid #ccc; font-size: 16px; color: #000; }
-    .search-box button { background: #ff4d4d; color: #fff; padding: 10px 20px; border: none; border-radius: 20px; font-size: 16px; cursor: pointer; }
-    .container { max-width: 720px; margin: 0 auto; padding: 16px; position: relative; }
-    .title-bar { font-size: 1.3rem; font-weight: bold; margin-bottom: 12px; text-align: center; margin-top: 30px; }
-    .player-wrapper { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1); margin-bottom: 10px; }
-    .player-wrapper iframe { width: 100%; height: 100%; border: none; }
-    .warning { color: #ff4d4d; font-size: 14px; margin-top: 10px; text-align: center; font-weight: bold; }
-    .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
-    .video-card { background: #222; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
-    .video-card img { width: 100%; display: block; aspect-ratio: 16 / 9; object-fit: cover; }
-    .video-info { padding: 12px; }
-    .video-title { font-size: 16px; font-weight: bold; margin-bottom: 6px; color: #fff; text-decoration: none; display: block; }
-    .video-meta { font-size: 14px; color: #aaa; display: flex; justify-content: space-between; align-items: center; }
-    .video-meta span { background: #333; padding: 2px 8px; border-radius: 4px; font-size: 13px; }
-    .no-results { text-align: center; font-size: 16px; color: #bbb; margin-top: 20px; }
-    #loadMoreBtn { background: #ff4d4d; border: none; color: #fff; padding: 10px 20px; margin: 20px auto; display: block; border-radius: 5px; font-size: 16px; cursor: pointer; }
-  </style>
+<style>
+  body { margin: 0; background: #000; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; }
+  header { background: #fff; color: #000; padding: 10px 20px; text-align: center; font-size: 24px; font-weight: bold; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; }
+  header a { color: #000; text-decoration: none; }
+  .search-box { background: #fff; padding: 10px 20px; border-bottom: 1px solid #ccc; display: flex; justify-content: center; gap: 10px; }
+  .search-box input { width: 100%; max-width: 600px; padding: 10px; border-radius: 20px; border: 1px solid #ccc; font-size: 16px; color: #000; }
+  .search-box button { background: #ff4d4d; color: #fff; padding: 10px 20px; border: none; border-radius: 20px; font-size: 16px; cursor: pointer; }
+  .container { max-width: 720px; margin: 0 auto; padding: 16px; position: relative; }
+  .title-bar { font-size: 1.3rem; font-weight: bold; margin-bottom: 12px; text-align: center; margin-top: 30px; }
+  .player-wrapper { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.1); margin-bottom: 10px; }
+  .player-wrapper iframe { width: 100%; height: 100%; border: none; }
+  .warning { color: #ff4d4d; font-size: 14px; margin-top: 10px; text-align: center; font-weight: bold; }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
+  .video-card { background: #222; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
+  .video-card img { width: 100%; display: block; aspect-ratio: 16 / 9; object-fit: cover; }
+  .video-info { padding: 12px; }
+  .video-title { font-size: 16px; font-weight: bold; margin-bottom: 6px; color: #fff; text-decoration: none; display: block; }
+  .video-meta { font-size: 14px; color: #aaa; display: flex; justify-content: space-between; align-items: center; }
+  .video-meta span { background: #333; padding: 2px 8px; border-radius: 4px; font-size: 13px; }
+  .no-results { text-align: center; font-size: 16px; color: #bbb; margin-top: 20px; }
+  #loadMoreBtn { background: #ff4d4d; border: none; color: #fff; padding: 10px 20px; margin: 20px auto; display: block; border-radius: 5px; font-size: 16px; cursor: pointer; }
+</style>
 </head>
 <body>
   <header><a href="/index.html">ReelClick</a></header>
@@ -44,6 +43,7 @@
   </div>
 
   <div class="container">
+
     <!-- Outstream Video Ad (above title) -->
     <div style="margin: 20px auto; text-align: center;">
       <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
@@ -72,7 +72,126 @@
   </div>
 
   <script>
-    // Firebase initialization and video listing code (as you already have it)
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9rvEdcBskD3b-YHebiRz3DptRNhTcQ9Y",
+      authDomain: "videoplayer-e9214.firebaseapp.com",
+      databaseURL: "https://videoplayer-e9214-default-rtdb.firebaseio.com",
+      projectId: "videoplayer-e9214",
+      storageBucket: "videoplayer-e9214.appspot.com",
+      messagingSenderId: "129519902158",
+      appId: "1:129519902158:web:35db9dc21947cd3b881f9f"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const id = new URLSearchParams(window.location.search).get('id');
+    firebase.database().ref('videos/' + id + '/organic').transaction(v => (v || 0) + 1);
+
+    firebase.database().ref('videos/' + id).once('value').then(snapshot => {
+      const data = snapshot.val();
+      if (!data?.embed) return alert('Invalid or missing video.');
+      document.getElementById('videoPlayer').src = data.embed;
+      document.getElementById('videoTitleBar').textContent = data.name || 'Untitled Video';
+    });
+
+    firebase.database().ref('videos').once('value').then(snapshot => {
+      const data = snapshot.val();
+      const trendingList = document.getElementById('trendingList');
+      const searchInput = document.getElementById('searchInput');
+      const noResults = document.getElementById('noResults');
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      const searchBtn = document.getElementById('searchBtn');
+      const playerSection = document.getElementById('playerSection');
+      const playerWarning = document.getElementById('playerWarning');
+      const sectionTitle = document.getElementById('sectionTitle');
+
+      let allCards = Object.entries(data || {}).map(([id, val]) => {
+        const totalViews = (val.views || 0) + (val.organic || 0);
+        return { id, ...val, totalViews };
+      });
+
+      let displayLimit = 12;
+
+      function renderVideos(query = '') {
+        trendingList.innerHTML = '';
+        const results = allCards
+          .filter(v => (v.name || '').toLowerCase().includes(query.toLowerCase()) && v.id !== id)
+          .sort((a, b) => b.totalViews - a.totalViews);
+
+        if (query) {
+          playerSection.style.display = 'none';
+          playerWarning.style.display = 'none';
+          sectionTitle.textContent = 'Search Results';
+        } else {
+          playerSection.style.display = 'block';
+          playerWarning.style.display = 'block';
+          sectionTitle.textContent = 'Trending Videos';
+        }
+
+        if (results.length === 0) {
+          noResults.style.display = 'block';
+          loadMoreBtn.style.display = 'none';
+        } else {
+          noResults.style.display = 'none';
+          const visible = results.slice(0, displayLimit);
+
+          visible.forEach(v => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+
+            const link = document.createElement('a');
+            link.href = `/video.html?id=${v.id}`;
+            link.target = '_blank';
+
+            const img = document.createElement('img');
+            img.src = v.thumb || 'https://via.placeholder.com/480x270/000000/FFFFFF?text=No+Preview';
+            link.appendChild(img);
+
+            const info = document.createElement('div');
+            info.className = 'video-info';
+
+            const title = document.createElement('span');
+            title.className = 'video-title';
+            title.textContent = v.name || 'Untitled Video';
+
+            const meta = document.createElement('div');
+            meta.className = 'video-meta';
+
+            const viewsText = document.createElement('span');
+            viewsText.textContent = (v.totalViews > 999 ? (v.totalViews / 1000).toFixed(1) + 'k' : v.totalViews) + ' Views';
+
+            const timeText = document.createElement('span');
+            timeText.textContent = (v.time || '---') + ' Duration';
+
+            meta.appendChild(viewsText);
+            meta.appendChild(timeText);
+            info.appendChild(title);
+            info.appendChild(meta);
+            link.appendChild(info);
+            card.appendChild(link);
+            trendingList.appendChild(card);
+          });
+
+          loadMoreBtn.style.display = results.length > displayLimit ? 'block' : 'none';
+        }
+      }
+
+      function handleSearch() {
+        displayLimit = 12;
+        renderVideos(searchInput.value);
+      }
+
+      searchInput.addEventListener('keypress', e => {
+        if (e.key === 'Enter') handleSearch();
+      });
+
+      searchBtn.addEventListener('click', handleSearch);
+      loadMoreBtn.addEventListener('click', () => {
+        displayLimit += 12;
+        renderVideos(searchInput.value);
+      });
+
+      renderVideos();
+    });
   </script>
 </body>
 </html>
